@@ -14,6 +14,9 @@ import { getSiteSEOSettings } from '@/lib/data'
 import { stripJsonLdFromText } from '@/lib/jsonld'
 import { WORDPRESS_CONFIG } from '@/lib/config'
 
+// Enable ISR with 60-second revalidation for real-time WordPress updates
+export const revalidate = 60
+
 interface PostPageProps {
   params: Promise<{
     slug: string

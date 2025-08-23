@@ -12,6 +12,9 @@ import { getPageSEOData, COMMON_PAGE_SLUGS } from '@/lib/page-queries'
 import { convertYoastToMetadata } from '@/lib/yoast-seo'
 import { ConditionalYoastSEOHead } from '@/components/seo'
 
+// Enable ISR with 60-second revalidation for real-time WordPress updates
+export const revalidate = 60
+
 // Generate metadata with SEO-friendly pagination links
 export async function generateMetadata(): Promise<Metadata> {
   try {

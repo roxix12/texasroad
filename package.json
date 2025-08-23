@@ -10,6 +10,7 @@
     "format": "prettier --write .",
     "fix-ports": "node scripts/fix-port-conflict.js",
     "dev:clean": "npm run fix-ports && npm run dev",
+    "test-wp": "node scripts/test-wp-connection.js",
     "update-coupons": "node scripts/update-coupons.js",
     "verify-production": "node scripts/verify-production.js",
     "deploy": "npm run verify-production && npm run build"

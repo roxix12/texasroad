@@ -4,6 +4,9 @@ import { PageHero } from '@/components/layout'
 import { PostGrid, CategoryPills, Pagination, PaginationSkeleton } from '@/components/blog'
 import { getPosts, getCategories } from '@/lib/data'
 
+// Enable ISR with 60-second revalidation for real-time WordPress updates
+export const revalidate = 60
+
 interface PostsContentProps {
   searchParams: { after?: string; before?: string }
 }

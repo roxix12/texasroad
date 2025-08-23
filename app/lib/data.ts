@@ -24,7 +24,7 @@ export async function getPosts(
     }
 
     const response = await wpFetch<PostsResponse>(POSTS_QUERY, variables, {
-      revalidate: 3600, // 1 hour for better performance
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['posts']
     })
     
@@ -50,7 +50,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<PostResponse>(POST_BY_SLUG_QUERY, { slug }, {
-      revalidate: 3600, // 1 hour for better performance
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['posts', `post-${slug}`]
     })
     
@@ -93,7 +93,7 @@ export async function getPostsByCategory(
     }
 
     const response = await wpFetch<PostsResponse>(POSTS_BY_CATEGORY_QUERY, variables, {
-      revalidate: 3600, // 1 hour for better performance
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['posts', `category-${categorySlug}`]
     })
 
@@ -119,7 +119,7 @@ export async function getMenus(first: number = 20, after?: string): Promise<Menu
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<MenusResponse>(MENUS_QUERY, { first, after }, {
-      revalidate: 1800, // 30 minutes for better performance
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['menus']
     })
     
@@ -149,7 +149,7 @@ export async function getMenuBySlug(slug: string): Promise<Menu | null> {
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<MenuResponse>(MENU_BY_SLUG_QUERY, { slug }, {
-      revalidate: 1800, // 30 minutes for better performance
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['menus', `menu-${slug}`]
     })
     
@@ -227,7 +227,7 @@ export async function getCategories(): Promise<WPCategory[]> {
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<CategoriesResponse>(CATEGORIES_QUERY, {}, {
-      revalidate: 1800, // 30 minutes for better performance (categories change less frequently)
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['categories']
     })
     
@@ -284,7 +284,7 @@ export function sortMenus(menus: Menu[], sortBy: 'price' | 'name' | 'popularity'
 export async function getSiteSEOSettings(): Promise<SiteSEOResponse | null> {
   try {
     const response = await wpFetch<{ generalSettings: GeneralSettings }>(SITE_SEO_QUERY, {}, {
-      revalidate: 7200, // 2 hours cache for site-wide settings
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['site-seo', 'general-settings']
     })
     

@@ -29,7 +29,7 @@ export async function wpFetch<T>(
         variables,
       }),
       next: {
-        revalidate: options?.revalidate ?? 300, // 5 minutes default
+        revalidate: options?.revalidate ?? 60, // 60 seconds default for real-time updates
         tags: options?.tags,
       },
     })
@@ -379,7 +379,7 @@ export async function getSiteSEO(): Promise<SiteSEOResponse | null> {
   `
   try {
     const response = await wpFetch<SiteSEOResponse>(query, {}, {
-      revalidate: 7200, // 2 hours cache for site-wide settings
+      revalidate: 60, // 60 seconds for real-time updates
       tags: ['site-seo', 'general-settings']
     })
     return response

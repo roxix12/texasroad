@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 import { wpFetch } from './lib/wp'
 import { WORDPRESS_CONFIG } from './lib/config'
 
-// Revalidate sitemap every hour to ensure fresh content
-export const revalidate = 3600
+// Revalidate sitemap every 60 seconds for real-time updates
+export const revalidate = 60
 
 interface SitemapPost {
   slug: string
@@ -108,7 +108,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     console.log('🗺️ Generating dynamic sitemap from WordPress...')
     const data: SitemapData = await wpFetch(query, {}, {
-      revalidate: 3600, // Cache for 1 hour
+      revalidate: 60, // Cache for 60 seconds
       tags: ['sitemap', 'posts', 'pages', 'categories']
     })
 

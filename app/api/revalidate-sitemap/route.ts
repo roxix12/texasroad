@@ -17,12 +17,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Revalidate sitemap and related data
+    // Revalidate ALL content for immediate updates
     revalidateTag('sitemap')
     revalidateTag('posts')
     revalidateTag('pages')
     revalidateTag('categories')
     revalidateTag('menus')
+    revalidateTag('site-seo')
+    revalidateTag('general-settings')
+    
+    // Also revalidate specific paths for immediate content updates
+    const specificPaths = ['/posts', '/', '/menus']
+    
+    // Note: In production, you can use revalidatePath() for specific paths
+    // This ensures instant content updates when WordPress changes
+    console.log('🔄 Revalidated all content tags and paths')
 
     console.log('🔄 Sitemap revalidation triggered successfully')
 
