@@ -11,6 +11,7 @@ import { NavItem } from '@/lib/types'
 const navigation: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Menu & Prices', href: '/menus-prices' },
+  { label: 'Coupons', href: '/coupons' },
   { label: 'Blog', href: '/posts' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
@@ -64,7 +65,7 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex">
-            <Link href="/#coupons">
+            <Link href="/coupons">
               <Button variant="primary">
                 View Coupons
               </Button>
