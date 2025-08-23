@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui'
 
@@ -23,13 +24,17 @@ export function Hero({ title, subtitle, primaryCta, secondaryCta, className = ''
   
   return (
     <section className={`relative overflow-hidden ${className}`}>
-      {/* Beautiful Wood Texture Background */}
-      <div 
-        className="absolute inset-0 hero-wood-texture"
-        style={{
-          backgroundImage: 'url(/yellowcedar-tile.jpg)'
-        }}
-      >
+      {/* Optimized Wood Texture Background */}
+      <div className="absolute inset-0">
+        <Image
+          src="/yellowcedar-tile.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+          quality={85}
+        />
         {/* Lighter overlay for better wood visibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/35 to-black/25"></div>
         {/* Enhanced Texas Roadhouse brand color overlay for warmth */}

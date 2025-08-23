@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Roboto_Slab } from 'next/font/google'
+import Script from 'next/script'
 import { generateOrganizationSchema, generateWebSiteSchema } from './lib/seo'
 import { defaultSEO, defaultViewport, pageSpeedOptimizations } from './lib/seo-config'
 import './globals.css'
@@ -7,12 +8,17 @@ import './globals.css'
 const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  preload: true,
 })
 
 const robotoSlab = Roboto_Slab({ 
   subsets: ['latin'],
   variable: '--font-roboto-slab',
-  weight: ['700', '800']
+  weight: ['700', '800'],
+  display: 'swap',
+  preload: true,
 })
 
 export const metadata: Metadata = defaultSEO
@@ -37,15 +43,19 @@ export default function RootLayout({
           <link key={url} rel="dns-prefetch" href={url} />
         ))}
         
-        {/* Structured Data */}
-        <script
+        {/* Structured Data - Optimized for Core Web Vitals */}
+        <Script
+          id="organization-schema"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema),
           }}
         />
-        <script
+        <Script
+          id="website-schema"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteSchema),
           }}
@@ -63,8 +73,8 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             html { scroll-behavior: smooth; }
-            body { font-family: 'Inter', sans-serif; }
-            .font-slab { font-family: 'Roboto Slab', serif; }
+            body { font-family: var(--font-inter), sans-serif; }
+            .font-slab { font-family: var(--font-roboto-slab), serif; }
           `
         }} />
       </head>

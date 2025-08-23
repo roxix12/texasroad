@@ -24,7 +24,7 @@ export async function getPosts(
     }
 
     const response = await wpFetch<PostsResponse>(POSTS_QUERY, variables, {
-      revalidate: 300, // 5 minutes
+      revalidate: 3600, // 1 hour for better performance
       tags: ['posts']
     })
     
@@ -50,7 +50,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<PostResponse>(POST_BY_SLUG_QUERY, { slug }, {
-      revalidate: 300,
+      revalidate: 3600, // 1 hour for better performance
       tags: ['posts', `post-${slug}`]
     })
     
@@ -87,7 +87,7 @@ export async function getPostsByCategory(
     }
 
     const response = await wpFetch<PostsResponse>(POSTS_BY_CATEGORY_QUERY, variables, {
-      revalidate: 300,
+      revalidate: 3600, // 1 hour for better performance
       tags: ['posts', `category-${categorySlug}`]
     })
 
@@ -113,7 +113,7 @@ export async function getMenus(first: number = 20, after?: string): Promise<Menu
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<MenusResponse>(MENUS_QUERY, { first, after }, {
-      revalidate: 600, // 10 minutes
+      revalidate: 1800, // 30 minutes for better performance
       tags: ['menus']
     })
     
@@ -143,7 +143,7 @@ export async function getMenuBySlug(slug: string): Promise<Menu | null> {
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<MenuResponse>(MENU_BY_SLUG_QUERY, { slug }, {
-      revalidate: 600,
+      revalidate: 1800, // 30 minutes for better performance
       tags: ['menus', `menu-${slug}`]
     })
     
@@ -221,7 +221,7 @@ export async function getCategories(): Promise<WPCategory[]> {
   // Always use WordPress - no fallback to dummy data
   try {
     const response = await wpFetch<CategoriesResponse>(CATEGORIES_QUERY, {}, {
-      revalidate: 600, // 10 minutes (categories change less frequently)
+      revalidate: 1800, // 30 minutes for better performance (categories change less frequently)
       tags: ['categories']
     })
     
