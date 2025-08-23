@@ -200,7 +200,7 @@ async function FeaturedContent() {
               From legendary steaks to fresh salads, discover all the flavors that make every meal memorable
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/menus">
+              <Link href="/menus-prices">
                 <Button variant="secondary" size="lg" className="bg-texas-green hover:bg-texas-green/90 text-white">
                   Browse Menus
                 </Button>
@@ -262,7 +262,7 @@ async function FeaturedContent() {
               From legendary steaks to fresh salads, discover all the flavors that make every meal memorable
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/menus">
+              <Link href="/menus-prices">
                 <Button variant="secondary" size="lg" className="bg-texas-green hover:bg-texas-green/90 text-white">
                   Browse Menus
                 </Button>
@@ -363,7 +363,7 @@ export default async function HomePage() {
         subtitle={`Complete menu guide with calories, nutrition & family meal deals • Updated ${getFormattedDate()}`}
         primaryCta={{
           text: "View Full Menu & Prices",
-          href: "/menus"
+          href: "/menus-prices"
         }}
         secondaryCta={{
           text: "Find Current Deals", 

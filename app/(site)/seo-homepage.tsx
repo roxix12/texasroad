@@ -123,7 +123,7 @@ export default function SEOHomepage() {
               Complete menu guide with calories, nutrition & deals • Updated August 22, 2025
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/menus">
+              <Link href="/menus-prices">
                 <Button size="lg" className="w-full sm:w-auto bg-texas-red hover:bg-texas-red/90 text-white px-8 py-4 text-lg font-semibold">
                   View Full Menu & Prices
                 </Button>
@@ -365,7 +365,7 @@ export default function SEOHomepage() {
               Browse our complete menu database with detailed pricing, nutritional information, and the latest deals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/menus">
+              <Link href="/menus-prices">
                 <Button size="lg" className="w-full sm:w-auto bg-texas-red hover:bg-texas-red/90 text-white px-8 py-4 text-lg font-semibold">
                   View Complete Menu
                 </Button>

@@ -97,11 +97,11 @@ export function MenuBreadcrumbs({
   category?: string 
 }) {
   const items: BreadcrumbItem[] = [
-    { label: 'Menus', href: '/menus' }
+            { label: 'Menus', href: '/menus-prices' }
   ]
   
   if (category) {
-    items.push({ label: category, href: `/menus?category=${encodeURIComponent(category)}` })
+            items.push({ label: category, href: `/menus-prices?category=${encodeURIComponent(category)}` })
   }
   
   items.push({ label: menuTitle })

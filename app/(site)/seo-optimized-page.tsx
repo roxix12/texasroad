@@ -141,7 +141,7 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       "position": 2,
       "name": "Texas Roadhouse Menu",
-      "item": "https://texasroadhousemenu.me/menus"
+      "item": "https://texasroadhousemenu.me/menus-prices"
     }
   ]
 }
@@ -223,7 +223,7 @@ export default function SEOOptimizedPage() {
                   <h3 className="text-lg font-slab font-bold text-black mb-2">Premium Steaks</h3>
                   <p className="text-red-cmyk font-bold text-lg mb-3">$14.99 - $24.99</p>
                   <p className="text-stone/70 text-sm mb-4">Hand-cut USDA Choice beef, seasoned and grilled to perfection</p>
-                  <Link href="/menus?category=steaks" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
+                  <Link href="/menus-prices?category=steaks" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
                     View All Steaks →
                   </Link>
                 </div>
@@ -238,7 +238,7 @@ export default function SEOOptimizedPage() {
                   <h3 className="text-lg font-slab font-bold text-black mb-2">Fall-off-the-Bone Ribs</h3>
                   <p className="text-red-cmyk font-bold text-lg mb-3">$19.99 - $22.99</p>
                   <p className="text-stone/70 text-sm mb-4">Slow-cooked baby back ribs with signature BBQ sauce</p>
-                  <Link href="/menus?category=ribs" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
+                  <Link href="/menus-prices?category=ribs" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
                     View All Ribs →
                   </Link>
                 </div>
@@ -253,7 +253,7 @@ export default function SEOOptimizedPage() {
                   <h3 className="text-lg font-slab font-bold text-black mb-2">Appetizers</h3>
                   <p className="text-red-cmyk font-bold text-lg mb-3">$8.99 - $12.99</p>
                   <p className="text-stone/70 text-sm mb-4">Famous Cactus Blossom, potato skins, and shareable favorites</p>
-                  <Link href="/menus?category=appetizers" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
+                  <Link href="/menus-prices?category=appetizers" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
                     View Appetizers →
                   </Link>
                 </div>
@@ -268,7 +268,7 @@ export default function SEOOptimizedPage() {
                   <h3 className="text-lg font-slab font-bold text-black mb-2">Family Meals</h3>
                   <p className="text-red-cmyk font-bold text-lg mb-3">$39.99 - $59.99</p>
                   <p className="text-stone/70 text-sm mb-4">Complete meals for 4-6 people with sides and fresh bread</p>
-                  <Link href="/menus?category=family" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
+                  <Link href="/menus-prices?category=family" className="text-red-cmyk hover:text-red-cmyk/80 font-medium text-sm">
                     View Family Deals →
                   </Link>
                 </div>
@@ -373,7 +373,7 @@ export default function SEOOptimizedPage() {
                     <span className="font-semibold text-black">150-400 calories</span>
                   </div>
                 </div>
-                <Link href="/menus" className="inline-flex items-center mt-6 text-red-cmyk hover:text-red-cmyk/80 font-medium">
+                <Link href="/menus-prices" className="inline-flex items-center mt-6 text-red-cmyk hover:text-red-cmyk/80 font-medium">
                   View Complete Menu Guide →
                 </Link>
               </div>
@@ -487,7 +487,7 @@ export default function SEOOptimizedPage() {
               Browse our comprehensive menu database with detailed pricing, complete nutritional information, allergen data, and the latest family meal deals. Updated daily for accuracy.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-              <Link href="/menus">
+              <Link href="/menus-prices">
                 <Button size="lg" className="w-full sm:w-auto bg-texas-red hover:bg-texas-red/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all">
                   View Complete Menu & Prices
                 </Button>

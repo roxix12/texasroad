@@ -15,7 +15,7 @@ export function MenuCard({ menu, showCategory = false }: MenuCardProps) {
     <article className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       {menu.featuredImage && (
         <div className="relative h-32 overflow-hidden">
-          <Link href={`/menus/${menu.slug}`}>
+          <Link href="/menus-prices">
             <Image
               src={menu.featuredImage.node.sourceUrl}
               alt={menu.featuredImage.node.altText || menu.title}
@@ -39,7 +39,7 @@ export function MenuCard({ menu, showCategory = false }: MenuCardProps) {
         <div className="flex justify-between items-start mb-2">
           <h3 className="font-slab font-slab-bold text-lg text-stone line-clamp-2 flex-1">
             <Link 
-              href={`/menus/${menu.slug}`}
+              href="/menus-prices"
               className="hover:text-orange transition-colors duration-200"
             >
               {menu.title}
@@ -122,7 +122,7 @@ export function MenuListItem({ menu }: MenuListItemProps) {
                 <div className="flex-1">
                   <h3 className="font-slab font-slab-bold text-lg text-stone mb-1">
                     <Link 
-                      href={`/menus/${menu.slug}`}
+                      href="/menus-prices"
                       className="hover:text-orange transition-colors duration-200"
                     >
                       {menu.title}

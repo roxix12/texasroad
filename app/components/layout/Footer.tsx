@@ -9,11 +9,11 @@ import { isValidEmail } from '@/lib/format'
 
 const footerLinks = {
   menu: [
-    { label: 'All Menus', href: '/menus' },
-    { label: 'Steaks', href: '/menus?category=Steaks' },
-    { label: 'Ribs', href: '/menus?category=Ribs' },
-    { label: 'Chicken', href: '/menus?category=Chicken' },
-    { label: 'Appetizers', href: '/menus?category=Appetizers' },
+            { label: 'All Menus', href: '/menus-prices' },
+        { label: 'Steaks', href: '/menus-prices?category=Steaks' },
+        { label: 'Ribs', href: '/menus-prices?category=Ribs' },
+        { label: 'Chicken', href: '/menus-prices?category=Chicken' },
+        { label: 'Appetizers', href: '/menus-prices?category=Appetizers' },
   ],
   company: [
     { label: 'About Us', href: '/about' },
