@@ -1,4 +1,4 @@
-import { APIResponse } from './types'
+import { APIResponse, SiteSEOResponse } from './types'
 import { WORDPRESS_CONFIG } from './config'
 
 // Use centralized configuration
@@ -60,8 +60,13 @@ export async function wpFetch<T>(
     return result.data
   } catch (error) {
     console.error('❌ WordPress fetch error:', error)
-    // Instead of throwing, we'll let the calling function handle the error
-    // This prevents the entire app from crashing
+    // For Yoast SEO integration, we need to handle missing fields gracefully
+    // Return null data instead of throwing to prevent 500 errors
+    if (query.includes('fullHead') || query.includes('seo')) {
+      console.error('SEO query failed, returning null data to prevent crash')
+      return null as T
+    }
+    // For other critical queries, still throw
     throw error
   }
 }
@@ -172,6 +177,31 @@ export const POST_BY_SLUG_QUERY = `
           raw
         }
         fullHead
+      }
+    }
+  }
+`
+
+// Query for site-wide Yoast SEO settings with enhanced schema and logo support
+export const SITE_SEO_QUERY = `
+  query GET_SITE_SEO {
+    generalSettings {
+      title
+      description
+      url
+    }
+    seo {
+      schema {
+        companyName
+        companyLogo {
+          sourceUrl
+          altText
+        }
+      }
+      webmaster {
+        googleVerify
+        msVerify
+        yandexVerify
       }
     }
   }
@@ -321,3 +351,40 @@ export const POSTS_BY_CATEGORY_QUERY = `
     }
   }
 `
+
+// Helper function to fetch site-wide SEO settings from WordPress/Yoast
+export async function getSiteSEO(): Promise<SiteSEOResponse | null> {
+  const query = `
+    query GET_SITE_SEO {
+      generalSettings {
+        title
+        description
+        url
+      }
+      seo {
+        schema {
+          companyName
+          companyLogo {
+            sourceUrl
+            altText
+          }
+        }
+        webmaster {
+          googleVerify
+          msVerify
+          yandexVerify
+        }
+      }
+    }
+  `
+  try {
+    const response = await wpFetch<SiteSEOResponse>(query, {}, {
+      revalidate: 7200, // 2 hours cache for site-wide settings
+      tags: ['site-seo', 'general-settings']
+    })
+    return response
+  } catch (error) {
+    console.error('❌ Error fetching site SEO settings:', error)
+    return null
+  }
+}

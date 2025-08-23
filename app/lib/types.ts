@@ -18,32 +18,114 @@ export interface WPCategory extends WPNode {
 }
 
 export interface WPSEO {
-  title?: string
-  metaDesc?: string
-  canonical?: string
-  metaKeywords?: string
-  metaRobotsNoindex?: string
-  metaRobotsNofollow?: string
-  opengraphTitle?: string
-  opengraphDescription?: string
+  title?: string | null
+  metaDesc?: string | null
+  canonical?: string | null
+  metaKeywords?: string | null
+  metaRobotsNoindex?: string | null
+  metaRobotsNofollow?: string | null
+  opengraphTitle?: string | null
+  opengraphDescription?: string | null
   opengraphImage?: {
     sourceUrl: string
     altText: string
-  }
-  twitterTitle?: string
-  twitterDescription?: string
+  } | null
+  twitterTitle?: string | null
+  twitterDescription?: string | null
   twitterImage?: {
     sourceUrl: string
     altText: string
-  }
+  } | null
   breadcrumbs?: Array<{
     text: string
     url: string
-  }>
+  }> | null
   schema?: {
     raw: string
+  } | null
+  fullHead?: string | null
+}
+
+// Site-wide Yoast SEO settings
+export interface YoastSiteSEO {
+  webmaster?: {
+    googleVerify?: string
+    msVerify?: string
+    yandexVerify?: string
+    baiduVerify?: string
   }
-  fullHead?: string
+  schema?: {
+    companyName?: string
+    companyLogo?: {
+      sourceUrl: string
+      altText: string
+    }
+    siteName?: string
+    siteUrl?: string
+    wordpressSiteName?: string
+  }
+  social?: {
+    facebook?: {
+      url?: string
+      defaultImage?: {
+        sourceUrl: string
+      }
+    }
+    twitter?: {
+      username?: string
+      cardType?: string
+    }
+    instagram?: {
+      url?: string
+    }
+    linkedIn?: {
+      url?: string
+    }
+    youTube?: {
+      url?: string
+    }
+  }
+  openGraph?: {
+    frontPage?: {
+      title?: string
+      description?: string
+      image?: {
+        sourceUrl: string
+      }
+    }
+    defaultImage?: {
+      sourceUrl: string
+    }
+  }
+  contentTypes?: {
+    post?: {
+      title?: string
+      metaDesc?: string
+    }
+    page?: {
+      title?: string
+      metaDesc?: string
+    }
+  }
+  breadcrumbs?: {
+    enabled?: boolean
+    separator?: string
+    searchPrefix?: string
+    prefix?: string
+    homeText?: string
+    showBlogPage?: boolean
+  }
+}
+
+export interface GeneralSettings {
+  title?: string
+  description?: string
+  url?: string
+}
+
+export interface SiteSEOResponse {
+  seo?: YoastSiteSEO
+  generalSettings?: GeneralSettings
 }
 
 // Post Types
@@ -56,7 +138,7 @@ export interface Post extends WPNode {
   categories: {
     nodes: WPCategory[]
   }
-  seo?: WPSEO
+  seo?: WPSEO | null
 }
 
 export interface PostsResponse {

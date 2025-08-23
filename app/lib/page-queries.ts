@@ -9,7 +9,7 @@ export interface WordPressPage {
   content: string
   excerpt: string
   date: string
-  seo?: WPSEO
+  seo?: WPSEO | null
 }
 
 export interface PageResponse {
@@ -89,23 +89,34 @@ export const COMMON_PAGE_SLUGS = {
 
 // Helper function to get page SEO data with fallbacks
 export async function getPageSEOData(slug: string, fallbackTitle: string, fallbackDescription: string) {
-  const page = await getPageBySlug(slug)
-  
-  if (page?.seo) {
-    return {
-      hasYoastSEO: true,
-      seoData: page.seo,
-      title: page.seo.title || page.title || fallbackTitle,
-      description: page.seo.metaDesc || page.excerpt || fallbackDescription,
-      content: page.content,
+  try {
+    const page = await getPageBySlug(slug)
+    
+    if (page?.seo && page.seo.title) {
+      return {
+        hasYoastSEO: true,
+        seoData: page.seo,
+        title: page.seo.title || page.title || fallbackTitle,
+        description: page.seo.metaDesc || page.excerpt || fallbackDescription,
+        content: page.content,
+      }
     }
-  }
-  
-  return {
-    hasYoastSEO: false,
-    seoData: null,
-    title: fallbackTitle,
-    description: fallbackDescription,
-    content: page?.content || null,
+    
+    return {
+      hasYoastSEO: false,
+      seoData: null,
+      title: fallbackTitle,
+      description: fallbackDescription,
+      content: page?.content || null,
+    }
+  } catch (error) {
+    console.error(`Error fetching page SEO data for slug "${slug}":`, error)
+    return {
+      hasYoastSEO: false,
+      seoData: null,
+      title: fallbackTitle,
+      description: fallbackDescription,
+      content: null,
+    }
   }
 }

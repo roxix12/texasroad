@@ -1,59 +1,129 @@
 import Script from 'next/script'
-import { WPSEO } from '@/lib/types'
-import { extractYoastFullHead, injectYoastSchema, sanitizeYoastHTML } from '@/lib/yoast-seo'
+import { WPSEO, YoastSiteSEO } from '@/lib/types'
+import { processYoastSEOHead, sanitizeYoastHTML } from '@/lib/yoast-seo'
 
 interface YoastSEOHeadProps {
-  seoData: WPSEO
+  seoData?: WPSEO | null | undefined
+  siteSEO?: YoastSiteSEO | null | undefined
   fallbackSchema?: string
+  fallbackTitle?: string
+  fallbackDescription?: string
+  fallbackFavicon?: string
 }
 
 /**
- * Component to inject Yoast SEO data into the page head
- * Handles schema injection and additional meta tags from Yoast fullHead
+ * Component to inject comprehensive Yoast SEO data into the page head
+ * Handles schema injection, meta tags, favicon, and webmaster verification
  */
-export function YoastSEOHead({ seoData, fallbackSchema }: YoastSEOHeadProps) {
-  // Extract data from Yoast fullHead
-  const yoastHeadData = extractYoastFullHead(seoData)
-  
-  // Get schema data from various sources
-  const schemaFromFullHead = yoastHeadData.schemaData
-  const schemaFromField = injectYoastSchema(seoData)
-  const finalSchema = schemaFromFullHead || schemaFromField || fallbackSchema
+export function YoastSEOHead({ 
+  seoData, 
+  siteSEO, 
+  fallbackSchema,
+  fallbackTitle,
+  fallbackDescription,
+  fallbackFavicon 
+}: YoastSEOHeadProps) {
+  try {
+    // Process all Yoast SEO data
+    const processed = processYoastSEOHead(seoData, siteSEO, fallbackTitle, fallbackDescription)
+    
+    // Determine final values with fallbacks
+    const finalSchema = processed.schemaData || fallbackSchema
+    const finalFavicon = processed.favicon || fallbackFavicon
 
-  return (
-    <>
-      {/* Yoast SEO Schema Injection */}
-      {finalSchema && (
-        <Script
-          id="yoast-seo-schema"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: finalSchema }}
-        />
-      )}
-      
-      {/* Additional Yoast Meta Tags from fullHead */}
-      {yoastHeadData.metaTags && (
-        <div 
-          dangerouslySetInnerHTML={{ 
-            __html: sanitizeYoastHTML(yoastHeadData.metaTags) 
-          }} 
-        />
-      )}
-    </>
-  )
+    return (
+      <>
+        {/* Yoast SEO Schema Injection */}
+        {finalSchema && (
+          <Script
+            id="yoast-seo-schema"
+            type="application/ld+json"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{ __html: finalSchema }}
+          />
+        )}
+        
+        {/* Yoast Meta Tags from fullHead */}
+        {processed.metaTags && (
+          <div 
+            dangerouslySetInnerHTML={{ 
+              __html: sanitizeYoastHTML(processed.metaTags) 
+            }} 
+          />
+        )}
+
+        {/* Webmaster Verification Tags */}
+        {processed.webmasterTags && (
+          <div 
+            dangerouslySetInnerHTML={{ 
+              __html: processed.webmasterTags 
+            }} 
+          />
+        )}
+
+        {/* Dynamic Favicon from Yoast */}
+        {finalFavicon && (
+          <>
+            <link rel="icon" type="image/x-icon" href={finalFavicon} />
+            <link rel="icon" type="image/png" href={finalFavicon} />
+            <link rel="shortcut icon" href={finalFavicon} />
+          </>
+        )}
+      </>
+    )
+  } catch (error) {
+    console.error('Error rendering Yoast SEO head:', error)
+    
+    // Fallback rendering on error
+    return (
+      <>
+        {fallbackSchema && (
+          <Script
+            id="fallback-schema-error"
+            type="application/ld+json"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{ __html: fallbackSchema }}
+          />
+        )}
+        {fallbackFavicon && (
+          <link rel="icon" type="image/x-icon" href={fallbackFavicon} />
+        )}
+      </>
+    )
+  }
 }
 
 interface ConditionalYoastSEOHeadProps {
-  seoData?: WPSEO | null
+  seoData?: WPSEO | null | undefined
+  siteSEO?: YoastSiteSEO | null | undefined
   fallbackSchema?: string
+  fallbackTitle?: string
+  fallbackDescription?: string
+  fallbackFavicon?: string
 }
 
 /**
- * Conditional wrapper that only renders if Yoast SEO data exists
+ * Conditional wrapper that always renders something useful
  */
-export function ConditionalYoastSEOHead({ seoData, fallbackSchema }: ConditionalYoastSEOHeadProps) {
-  if (!seoData) return null
+export function ConditionalYoastSEOHead(props: ConditionalYoastSEOHeadProps) {
+  return <YoastSEOHead {...props} />
+}
+
+interface SimpleYoastSEOHeadProps {
+  seo?: { fullHead?: string }
+}
+
+/**
+ * Simple component for basic fullHead injection (as requested in user prompt)
+ */
+export function SimpleYoastSEOHead({ seo }: SimpleYoastSEOHeadProps) {
+  if (!seo?.fullHead) return null
   
-  return <YoastSEOHead seoData={seoData} fallbackSchema={fallbackSchema} />
+  return (
+    <div 
+      dangerouslySetInnerHTML={{ 
+        __html: sanitizeYoastHTML(seo.fullHead) 
+      }} 
+    />
+  )
 }

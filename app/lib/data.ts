@@ -1,5 +1,5 @@
-import { Menu, MenusResponse, MenuResponse, Post, PostsResponse, PostResponse, CategoriesResponse, WPCategory, MenuFilters } from './types'
-import { wpFetch, POSTS_QUERY, POST_BY_SLUG_QUERY, MENUS_QUERY, MENU_BY_SLUG_QUERY, CATEGORIES_QUERY, POSTS_BY_CATEGORY_QUERY } from './wp'
+import { Menu, MenusResponse, MenuResponse, Post, PostsResponse, PostResponse, CategoriesResponse, WPCategory, MenuFilters, SiteSEOResponse, GeneralSettings } from './types'
+import { wpFetch, POSTS_QUERY, POST_BY_SLUG_QUERY, MENUS_QUERY, MENU_BY_SLUG_QUERY, CATEGORIES_QUERY, POSTS_BY_CATEGORY_QUERY, SITE_SEO_QUERY } from './wp'
 import { WORDPRESS_CONFIG } from './config'
 
 // Posts functions
@@ -53,6 +53,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       revalidate: 3600, // 1 hour for better performance
       tags: ['posts', `post-${slug}`]
     })
+    
+    // Handle case where WordPress query fails but we still get a response
+    if (!response) {
+      console.error(`No response received for post "${slug}"`)
+      return null
+    }
     
     if (response.post && response.post.id) {
       return response.post
@@ -272,4 +278,22 @@ export function sortMenus(menus: Menu[], sortBy: 'price' | 'name' | 'popularity'
     if (aValue > bValue) return direction === 'asc' ? 1 : -1
     return 0
   })
+}
+
+// Site-wide SEO settings (simplified to avoid GraphQL conflicts)
+export async function getSiteSEOSettings(): Promise<SiteSEOResponse | null> {
+  try {
+    const response = await wpFetch<{ generalSettings: GeneralSettings }>(SITE_SEO_QUERY, {}, {
+      revalidate: 7200, // 2 hours cache for site-wide settings
+      tags: ['site-seo', 'general-settings']
+    })
+    
+    return response ? {
+      seo: undefined, // Yoast site-wide settings disabled due to GraphQL schema conflicts
+      generalSettings: response.generalSettings
+    } : null
+  } catch (error) {
+    console.error('❌ Error fetching site SEO settings:', error)
+    return null
+  }
 }

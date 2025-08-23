@@ -5,25 +5,26 @@ import { PostGrid, CategoryPills, Pagination, PaginationSkeleton } from '@/compo
 import { getPosts, getCategories } from '@/lib/data'
 
 interface PostsContentProps {
-  searchParams?: { after?: string; before?: string }
+  searchParams: { after?: string; before?: string }
 }
 
-async function PostsContent({ searchParams = {} }: PostsContentProps) {
+async function PostsContent({ searchParams }: PostsContentProps) {
   const postsPerPage = 12
   const { after, before } = searchParams
 
-  const [postsResponse, categories] = await Promise.all([
-    getPosts(
-      before ? undefined : postsPerPage, // first
-      after, // after cursor
-      before, // before cursor  
-      before ? postsPerPage : undefined // last
-    ),
-    getCategories(),
-  ])
+  try {
+    const [postsResponse, categories] = await Promise.all([
+      getPosts(
+        before ? undefined : postsPerPage, // first
+        after, // after cursor
+        before, // before cursor  
+        before ? postsPerPage : undefined // last
+      ),
+      getCategories(),
+    ])
 
-  const { posts } = postsResponse
-  const { nodes: postNodes, pageInfo } = posts
+    const { posts } = postsResponse
+    const { nodes: postNodes, pageInfo } = posts
 
   return (
     <>
@@ -60,6 +61,19 @@ async function PostsContent({ searchParams = {} }: PostsContentProps) {
       )}
     </>
   )
+  } catch (error) {
+    console.error('Error loading posts:', error)
+    return (
+      <div className="text-center py-12">
+        <h3 className="text-2xl font-slab font-bold text-stone mb-4">
+          Unable to Load Posts
+        </h3>
+        <p className="text-stone/70 max-w-md mx-auto">
+          We're having trouble loading the blog posts right now. Please try refreshing the page or check back later.
+        </p>
+      </div>
+    )
+  }
 }
 
 function PostsContentSkeleton() {

@@ -10,6 +10,7 @@ import { formatDate } from '@/lib/format'
 import { processContent } from '@/lib/heading'
 import { convertYoastToMetadata } from '@/lib/yoast-seo'
 import { ConditionalYoastSEOHead } from '@/components/seo'
+import { getSiteSEOSettings } from '@/lib/data'
 import { stripJsonLdFromText } from '@/lib/jsonld'
 import { WORDPRESS_CONFIG } from '@/lib/config'
 
@@ -37,28 +38,31 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   
   // Use Yoast SEO data if available, otherwise fallback to basic metadata
   if (post.seo) {
-    const metadata = convertYoastToMetadata(post.seo, fallbackTitle, fallbackDescription)
+    const baseMetadata = convertYoastToMetadata(post.seo, fallbackTitle, fallbackDescription)
     
     // Ensure canonical URL is properly formatted
-    if (metadata.alternates?.canonical && !metadata.alternates.canonical.startsWith('http')) {
-      metadata.alternates.canonical = metadata.alternates.canonical.startsWith('/') 
-        ? `${siteUrl}${metadata.alternates.canonical}`
-        : `${siteUrl}/${metadata.alternates.canonical}`
-    }
+    const canonicalUrl = baseMetadata.alternates?.canonical
+    const formattedCanonical = canonicalUrl && !canonicalUrl.startsWith('http') 
+      ? canonicalUrl.startsWith('/') 
+        ? `${siteUrl}${canonicalUrl}`
+        : `${siteUrl}/${canonicalUrl}`
+      : canonicalUrl || fallbackCanonical
     
-    // Add article-specific OpenGraph data  
-    if (metadata.openGraph) {
-      const existingOG = metadata.openGraph
-      metadata.openGraph = {
-        ...existingOG,
+    // Create enhanced metadata without mutation
+    return {
+      ...baseMetadata,
+      alternates: {
+        ...baseMetadata.alternates,
+        canonical: formattedCanonical,
+      },
+      openGraph: {
+        ...baseMetadata.openGraph,
         type: 'article',
         publishedTime: post.date,
         siteName,
-        url: metadata.alternates?.canonical || fallbackCanonical,
-      } as any // TypeScript workaround for OpenGraph type limitations
+        url: formattedCanonical,
+      },
     }
-    
-    return metadata
   }
   
   // Fallback metadata when Yoast SEO is not available
@@ -88,7 +92,10 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const [post, siteSEOResponse] = await Promise.all([
+    getPostBySlug(slug),
+    getSiteSEOSettings()
+  ])
 
   if (!post) {
     notFound()
@@ -104,8 +111,13 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <>
-      {/* Yoast SEO Integration */}
-      <ConditionalYoastSEOHead seoData={post.seo} />
+      {/* Enhanced Yoast SEO Integration with Site-wide Settings */}
+      <ConditionalYoastSEOHead 
+        seoData={post.seo}
+        siteSEO={siteSEOResponse?.seo}
+        fallbackTitle={post.title}
+        fallbackDescription={post.excerpt}
+      />
       <PageHero
         title={post.title}
         breadcrumbs={

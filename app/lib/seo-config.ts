@@ -1,7 +1,8 @@
 import { Metadata } from 'next'
+import { WORDPRESS_CONFIG } from './config'
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Texas Roadhouse Menu'
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3001'
+const siteName = WORDPRESS_CONFIG.SITE_NAME
+const siteUrl = WORDPRESS_CONFIG.SITE_URL
 
 export const defaultSEO: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -28,6 +29,20 @@ export const defaultSEO: Metadata = {
     email: false,
     address: false,
     telephone: false,
+  },
+  // Favicon and Icon Configuration
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48', type: 'image/x-icon' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+    ],
   },
   alternates: {
     canonical: '/',

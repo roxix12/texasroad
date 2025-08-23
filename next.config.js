@@ -10,6 +10,14 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'texasroadhousemenu.me',
+      },
+      {
+        protocol: 'https',
+        hostname: 'texasroadhouse-menus.us',
+      },
+      {
+        protocol: 'https',
         hostname: '**',
       },
     ],

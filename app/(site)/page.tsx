@@ -23,12 +23,15 @@ export async function generateMetadata(): Promise<Metadata> {
     )
     
     // If Yoast SEO data exists, use it
-    if (homePageSEO.hasYoastSEO && homePageSEO.seoData) {
-      return convertYoastToMetadata(
+    if (homePageSEO?.hasYoastSEO && homePageSEO?.seoData) {
+      const yoastMetadata = convertYoastToMetadata(
         homePageSEO.seoData,
         homePageSEO.title,
         homePageSEO.description
       )
+      if (yoastMetadata) {
+        return yoastMetadata
+      }
     }
     
     // Fallback to static SEO data
@@ -321,7 +324,13 @@ function FeaturedContentSkeleton() {
 
 export default async function HomePage() {
   // Get Yoast SEO data for head injection
-  const homePageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.HOME, '', '')
+  let homePageSEO = null
+  try {
+    homePageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.HOME, '', '')
+  } catch (error) {
+    console.error('❌ Error fetching homepage SEO data:', error)
+    homePageSEO = { hasYoastSEO: false, seoData: null }
+  }
   
   return (
     <>

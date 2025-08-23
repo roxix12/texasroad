@@ -7,20 +7,27 @@ import { getPageSEOData, COMMON_PAGE_SLUGS } from '@/lib/page-queries'
 import { convertYoastToMetadata } from '@/lib/yoast-seo'
 
 export async function generateMetadata(): Promise<Metadata> {
-  // Try to get Yoast SEO data from WordPress about page
-  const aboutPageSEO = await getPageSEOData(
-    COMMON_PAGE_SLUGS.ABOUT,
-    'About Us',
-    'Learn about Texas Roadhouse Menu - your independent source for menu information, prices, and nutritional details.'
-  )
-  
-  // If Yoast SEO data exists, use it
-  if (aboutPageSEO.hasYoastSEO && aboutPageSEO.seoData) {
-    return convertYoastToMetadata(
-      aboutPageSEO.seoData,
-      aboutPageSEO.title,
-      aboutPageSEO.description
+  try {
+    // Try to get Yoast SEO data from WordPress about page
+    const aboutPageSEO = await getPageSEOData(
+      COMMON_PAGE_SLUGS.ABOUT,
+      'About Us',
+      'Learn about Texas Roadhouse Menu - your independent source for menu information, prices, and nutritional details.'
     )
+    
+    // If Yoast SEO data exists, use it
+    if (aboutPageSEO?.hasYoastSEO && aboutPageSEO?.seoData) {
+      const yoastMetadata = convertYoastToMetadata(
+        aboutPageSEO.seoData,
+        aboutPageSEO.title,
+        aboutPageSEO.description
+      )
+      if (yoastMetadata) {
+        return yoastMetadata
+      }
+    }
+  } catch (error) {
+    console.error('❌ Error generating about page metadata:', error)
   }
   
   // Fallback to static metadata
@@ -35,7 +42,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
   // Get Yoast SEO data for head injection
-  const aboutPageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.ABOUT, '', '')
+  let aboutPageSEO = null
+  try {
+    aboutPageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.ABOUT, '', '')
+  } catch (error) {
+    console.error('❌ Error fetching about page SEO data:', error)
+    aboutPageSEO = { hasYoastSEO: false, seoData: null }
+  }
   
   return (
     <>

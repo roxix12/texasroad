@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
+    "fix-ports": "node scripts/fix-port-conflict.js",
+    "dev:clean": "npm run fix-ports && npm run dev",
     "update-coupons": "node scripts/update-coupons.js",
     "verify-production": "node scripts/verify-production.js",
     "deploy": "npm run verify-production && npm run build"
