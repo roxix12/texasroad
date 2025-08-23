@@ -227,79 +227,107 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
   }
 
   const renderCouponCard = (coupon: CouponCode, index: number) => (
-    <div key={index} className="bg-white rounded-2xl shadow-xl border-2 border-texas-green hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:border-texas-red">
-      <div className="p-6">
-        {/* Header with Type Badge */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <span className="text-xs font-bold text-white uppercase tracking-wide bg-texas-green px-3 py-1 rounded-full">
-              {coupon.type}
-            </span>
-          </div>
-          <span className="text-xs text-texas-black bg-texas-yellow px-2 py-1 rounded-full">{coupon.verified}</span>
+    <div key={index} className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 hover:border-orange-200 transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
+      {/* Card Header - Clean and Professional */}
+      <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4">
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white bg-white/20">
+            {coupon.type}
+          </span>
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-orange-900 bg-yellow-400">
+            {coupon.verified}
+          </span>
         </div>
-        
-        {/* Discount and Description */}
+      </div>
+
+      {/* Card Content */}
+      <div className="p-6">
+        {/* Discount Section - Clean Layout */}
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-3xl font-bold text-texas-red">{coupon.discount}</span>
-            <span className="text-sm text-texas-black bg-texas-yellow px-3 py-1 rounded-full border border-texas-green">
-              Valid until: {coupon.validUntil}
-            </span>
+          <div className="flex items-baseline justify-between mb-3">
+            <div className="flex items-baseline space-x-1">
+              <span className="text-4xl font-black text-red-600">{coupon.discount}</span>
+              {coupon.discount.includes('%') && (
+                <span className="text-xl font-bold text-gray-700">OFF</span>
+              )}
+            </div>
+            <div className="text-right">
+              <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-md">
+                Valid: {coupon.validUntil}
+              </span>
+            </div>
           </div>
-          <p className="text-gray-700 text-base leading-relaxed font-medium">{coupon.description}</p>
+          
+          {/* Description */}
+          <p className="text-gray-700 text-sm leading-relaxed">
+            {coupon.description}
+          </p>
         </div>
 
-        {/* Copy Code Section */}
-        <div className="bg-texas-yellow rounded-xl p-4 mb-4 border border-texas-green">
+        {/* Code Section - Simplified */}
+        <div className="bg-gray-50 rounded-xl p-4">
           {coupon.code && coupon.code !== 'NO CODE' ? (
             <>
-              <div className="flex items-center justify-between">
-                <code className="text-xl font-mono font-bold text-texas-black bg-white px-4 py-3 rounded-lg border-2 border-texas-green shadow-sm flex-1 mr-3">
-                  {coupon.code}
-                </code>
-                <Button
+              <div className="flex items-center gap-3">
+                <div className="flex-1 bg-white border-2 border-dashed border-gray-300 rounded-lg px-4 py-3">
+                  <code className="text-lg font-mono font-bold text-gray-900 tracking-wide">
+                    {coupon.code}
+                  </code>
+                </div>
+                <button
                   onClick={() => copyToClipboard(coupon.code)}
-                  variant="outline"
-                  size="sm"
-                  className="border-2 border-texas-red text-texas-red hover:bg-texas-red hover:text-white transition-colors duration-200"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2 font-medium"
+                  title="Copy code"
                 >
                   {copiedCode === coupon.code ? (
-                    <CheckCircle className="h-5 w-5 text-texas-green" />
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      <span className="hidden sm:inline">Copied!</span>
+                    </>
                   ) : (
-                    <Copy className="h-5 w-5" />
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span className="hidden sm:inline">Copy</span>
+                    </>
                   )}
-                </Button>
+                </button>
               </div>
               {copiedCode === coupon.code && (
-                <p className="text-texas-green text-sm mt-3 text-center font-medium bg-white py-2 rounded-lg">
-                  ✅ Code copied to clipboard!
-                </p>
+                <div className="mt-3 text-center">
+                  <span className="text-green-600 text-sm font-medium">✓ Code copied to clipboard!</span>
+                </div>
               )}
             </>
           ) : (
             <>
-              <div className="flex items-center justify-between">
-                <span className="text-base font-bold text-texas-black bg-white px-4 py-3 rounded-lg border-2 border-texas-green shadow-sm flex-1 mr-3 text-center">
-                  No code needed - Show this offer
-                </span>
-                <Button
+              <div className="flex items-center gap-3">
+                <div className="flex-1 bg-blue-50 border-2 border-blue-200 rounded-lg px-4 py-3">
+                  <span className="text-sm font-semibold text-blue-900">
+                    No code needed - Show this offer
+                  </span>
+                </div>
+                <button
                   onClick={() => copyToClipboard(coupon.description)}
-                  variant="outline"
-                  size="sm"
-                  className="border-2 border-texas-black text-texas-black hover:bg-texas-black hover:text-white transition-colors duration-200"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-colors duration-200 flex items-center gap-2 font-medium"
+                  title="Copy offer details"
                 >
                   {copiedCode === coupon.description ? (
-                    <CheckCircle className="h-5 w-5 text-texas-green" />
+                    <>
+                      <CheckCircle className="w-4 h-4" />
+                      <span className="hidden sm:inline">Copied!</span>
+                    </>
                   ) : (
-                    <Copy className="h-5 w-5" />
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span className="hidden sm:inline">Copy</span>
+                    </>
                   )}
-                </Button>
+                </button>
               </div>
               {copiedCode === coupon.description && (
-                <p className="text-texas-green text-sm mt-3 text-center font-medium bg-white py-2 rounded-lg">
-                  ✅ Offer details copied!
-                </p>
+                <div className="mt-3 text-center">
+                  <span className="text-green-600 text-sm font-medium">✓ Offer details copied!</span>
+                </div>
               )}
             </>
           )}
@@ -396,7 +424,7 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
         }}
       />
 
-      <section className="py-20 bg-white relative overflow-hidden">
+      <section id="coupons" className="py-20 bg-white relative overflow-hidden">
         
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
@@ -476,7 +504,7 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
                 Verified discount codes for maximum savings on steaks, family meals, and more
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 mb-8">
               {couponCodes.map((coupon, index) => renderCouponCard(coupon, index))}
             </div>
           </div>
@@ -491,7 +519,7 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
                 Smart strategies and exclusive offers for even more value
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
               {otherSavings.map((saving, index) => renderCouponCard(saving, index))}
             </div>
           </div>

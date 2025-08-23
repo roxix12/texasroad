@@ -10,7 +10,7 @@ import { NavItem } from '@/lib/types'
 
 const navigation: NavItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Menus', href: '/menus' },
+  { label: 'Menu & Prices', href: '/menus-prices' },
   { label: 'Blog', href: '/posts' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
@@ -64,9 +64,9 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex">
-            <Link href="/menus">
+            <Link href="/#coupons">
               <Button variant="primary">
-                View Menus
+                View Coupons
               </Button>
             </Link>
           </div>
@@ -105,9 +105,9 @@ export function Header() {
               ))}
               
               <div className="px-3 py-2">
-                <Link href="/menus" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/#coupons" onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="primary" className="w-full">
-                    View Menus
+                    View Coupons
                   </Button>
                 </Link>
               </div>
