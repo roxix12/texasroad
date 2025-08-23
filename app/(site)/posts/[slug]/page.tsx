@@ -8,7 +8,8 @@ import { ArticleLayout, TableOfContents, ArticleProse } from '@/components/artic
 import { getPostBySlug } from '@/lib/data'
 import { formatDate } from '@/lib/format'
 import { processContent } from '@/lib/heading'
-import { convertYoastToMetadata, injectYoastSchema } from '@/lib/yoast-seo'
+import { convertYoastToMetadata } from '@/lib/yoast-seo'
+import { ConditionalYoastSEOHead } from '@/components/seo'
 import { stripJsonLdFromText } from '@/lib/jsonld'
 import { WORDPRESS_CONFIG } from '@/lib/config'
 
@@ -29,26 +30,58 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   }
 
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Texas Roadhouse Menu'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
   const fallbackTitle = post.title
   const fallbackDescription = post.excerpt || `Read ${post.title} on ${siteName}`
+  const fallbackCanonical = `${siteUrl}/posts/${post.slug}`
   
   // Use Yoast SEO data if available, otherwise fallback to basic metadata
   if (post.seo) {
-    return convertYoastToMetadata(post.seo, fallbackTitle, fallbackDescription)
+    const metadata = convertYoastToMetadata(post.seo, fallbackTitle, fallbackDescription)
+    
+    // Ensure canonical URL is properly formatted
+    if (metadata.alternates?.canonical && !metadata.alternates.canonical.startsWith('http')) {
+      metadata.alternates.canonical = metadata.alternates.canonical.startsWith('/') 
+        ? `${siteUrl}${metadata.alternates.canonical}`
+        : `${siteUrl}/${metadata.alternates.canonical}`
+    }
+    
+    // Add article-specific OpenGraph data  
+    if (metadata.openGraph) {
+      const existingOG = metadata.openGraph
+      metadata.openGraph = {
+        ...existingOG,
+        type: 'article',
+        publishedTime: post.date,
+        siteName,
+        url: metadata.alternates?.canonical || fallbackCanonical,
+      } as any // TypeScript workaround for OpenGraph type limitations
+    }
+    
+    return metadata
   }
   
+  // Fallback metadata when Yoast SEO is not available
   return {
     title: fallbackTitle,
     description: fallbackDescription,
     openGraph: {
-      title: post.title,
+      title: fallbackTitle,
       description: fallbackDescription,
       type: 'article',
       publishedTime: post.date,
+      siteName,
+      url: fallbackCanonical,
+      images: post.featuredImage ? [post.featuredImage.node.sourceUrl] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: fallbackTitle,
+      description: fallbackDescription,
       images: post.featuredImage ? [post.featuredImage.node.sourceUrl] : [],
     },
     alternates: {
-      canonical: `/posts/${post.slug}`,
+      canonical: fallbackCanonical,
     },
   }
 }
@@ -71,6 +104,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <>
+      {/* Yoast SEO Integration */}
+      <ConditionalYoastSEOHead seoData={post.seo} />
       <PageHero
         title={post.title}
         breadcrumbs={

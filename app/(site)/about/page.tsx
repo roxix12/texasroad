@@ -1,19 +1,46 @@
 import { Metadata } from 'next'
 import { PageHero } from '@/components/layout'
 import { Button } from '@/components/ui'
+import { ConditionalYoastSEOHead } from '@/components/seo'
 import Link from 'next/link'
+import { getPageSEOData, COMMON_PAGE_SLUGS } from '@/lib/page-queries'
+import { convertYoastToMetadata } from '@/lib/yoast-seo'
 
-export const metadata: Metadata = {
-  title: 'About Us',
-  description: 'Learn about Texas Roadhouse Menu - your independent source for menu information, prices, and nutritional details.',
-  alternates: {
-    canonical: '/about',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  // Try to get Yoast SEO data from WordPress about page
+  const aboutPageSEO = await getPageSEOData(
+    COMMON_PAGE_SLUGS.ABOUT,
+    'About Us',
+    'Learn about Texas Roadhouse Menu - your independent source for menu information, prices, and nutritional details.'
+  )
+  
+  // If Yoast SEO data exists, use it
+  if (aboutPageSEO.hasYoastSEO && aboutPageSEO.seoData) {
+    return convertYoastToMetadata(
+      aboutPageSEO.seoData,
+      aboutPageSEO.title,
+      aboutPageSEO.description
+    )
+  }
+  
+  // Fallback to static metadata
+  return {
+    title: 'About Us',
+    description: 'Learn about Texas Roadhouse Menu - your independent source for menu information, prices, and nutritional details.',
+    alternates: {
+      canonical: '/about',
+    },
+  }
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  // Get Yoast SEO data for head injection
+  const aboutPageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.ABOUT, '', '')
+  
   return (
     <>
+      {/* Yoast SEO Integration */}
+      <ConditionalYoastSEOHead seoData={aboutPageSEO.seoData} />
       <PageHero
         title="About Texas Roadhouse Menu"
         subtitle="Your independent source for menu information and prices"

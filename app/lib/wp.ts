@@ -111,6 +111,7 @@ export const POSTS_QUERY = `
           schema {
             raw
           }
+          fullHead
         }
       }
       pageInfo {
@@ -170,6 +171,7 @@ export const POST_BY_SLUG_QUERY = `
         schema {
           raw
         }
+        fullHead
       }
     }
   }

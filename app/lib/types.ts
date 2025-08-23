@@ -43,6 +43,7 @@ export interface WPSEO {
   schema?: {
     raw: string
   }
+  fullHead?: string
 }
 
 // Post Types

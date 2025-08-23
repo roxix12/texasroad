@@ -8,10 +8,30 @@ import { Button } from '@/components/ui'
 import { getFeaturedMenus, getPosts } from '@/lib/data'
 import { getCouponsWithUpdateCheck } from '@/lib/coupon-storage'
 import { getFormattedDate, getISODate, getStructuredDate } from '@/lib/date'
+import { getPageSEOData, COMMON_PAGE_SLUGS } from '@/lib/page-queries'
+import { convertYoastToMetadata } from '@/lib/yoast-seo'
+import { ConditionalYoastSEOHead } from '@/components/seo'
 
 // Generate metadata with SEO-friendly pagination links
 export async function generateMetadata(): Promise<Metadata> {
   try {
+    // Try to get Yoast SEO data from WordPress homepage
+    const homePageSEO = await getPageSEOData(
+      COMMON_PAGE_SLUGS.HOME,
+      `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()} - Texas Roadhouse Menu`,
+      `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`
+    )
+    
+    // If Yoast SEO data exists, use it
+    if (homePageSEO.hasYoastSEO && homePageSEO.seoData) {
+      return convertYoastToMetadata(
+        homePageSEO.seoData,
+        homePageSEO.title,
+        homePageSEO.description
+      )
+    }
+    
+    // Fallback to static SEO data
     return {
       title: `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()} - Texas Roadhouse Menu`,
       description: `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`,
@@ -299,18 +319,31 @@ function FeaturedContentSkeleton() {
   )
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Get Yoast SEO data for head injection
+  const homePageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.HOME, '', '')
+  
   return (
     <>
-      {/* JSON-LD Schemas for Rich Snippets */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      {/* Yoast SEO Integration */}
+      <ConditionalYoastSEOHead 
+        seoData={homePageSEO.seoData} 
+        fallbackSchema={JSON.stringify(websiteSchema)}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
+      
+      {/* Fallback JSON-LD Schemas for Rich Snippets (when no Yoast) */}
+      {!homePageSEO.hasYoastSEO && (
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          />
+        </>
+      )}
 
       {/* Hero Section */}
       <Hero
