@@ -270,6 +270,8 @@ For technical questions about the codebase:
 ---
 
 **Remember:** This is an independent project not affiliated with Texas Roadhouse. Always respect intellectual property rights and trademarks when creating similar projects.
-#   t e x a s r o a d  
- #   t e x a s r o a d  
+#   t e x a s r o a d 
+ 
+ #   t e x a s r o a d 
+ 
  
