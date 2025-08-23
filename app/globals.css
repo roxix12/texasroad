@@ -1,0 +1,677 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+  }
+  
+  /* Heading scroll offset for sticky header */
+  .prose :where(h2, h3, h4, h5, h6) {
+    scroll-margin-top: 80px;
+  }
+  
+  @media (min-width: 768px) {
+    .prose :where(h2, h3, h4, h5, h6) {
+      scroll-margin-top: 96px;
+    }
+  }
+  
+  body {
+    @apply bg-cream text-stone antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Slab', serif;
+    @apply text-stone;
+  }
+  
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-orange;
+  }
+  
+  /* Mobile-first responsive typography */
+  .prose {
+    @apply text-sm leading-relaxed;
+  }
+  
+  @media (min-width: 640px) {
+    .prose {
+      @apply text-base leading-relaxed;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .prose {
+      @apply text-lg leading-relaxed;
+    }
+  }
+  
+  /* Mobile-friendly prose headings - black and left-aligned */
+  .prose h1 {
+    @apply text-xl font-bold mb-4 leading-tight text-black text-left;
+  }
+  
+  .prose h2 {
+    @apply text-lg font-bold mt-6 mb-3 leading-tight text-black text-left;
+  }
+  
+  .prose h3 {
+    @apply text-base font-bold mt-5 mb-2 leading-tight text-black text-left;
+  }
+  
+  .prose h4 {
+    @apply text-sm font-bold mt-4 mb-2 leading-tight text-black text-left;
+  }
+  
+  .prose h5 {
+    @apply text-sm font-bold mt-3 mb-2 leading-tight text-black text-left;
+  }
+  
+  .prose h6 {
+    @apply text-xs font-bold mt-3 mb-1 leading-tight text-black text-left;
+  }
+  
+  @media (min-width: 640px) {
+    .prose h1 {
+      @apply text-2xl mb-5 text-black text-left;
+    }
+    
+    .prose h2 {
+      @apply text-xl mt-7 mb-4 text-black text-left;
+    }
+    
+    .prose h3 {
+      @apply text-lg mt-6 mb-3 text-black text-left;
+    }
+    
+    .prose h4 {
+      @apply text-base mt-5 mb-3 text-black text-left;
+    }
+    
+    .prose h5 {
+      @apply text-sm mt-4 mb-2 text-black text-left;
+    }
+    
+    .prose h6 {
+      @apply text-sm mt-4 mb-2 text-black text-left;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .prose h1 {
+      @apply text-3xl mb-6 text-black text-left;
+    }
+    
+    .prose h2 {
+      @apply text-2xl mt-8 mb-4 text-black text-left;
+    }
+    
+    .prose h3 {
+      @apply text-xl mt-6 mb-3 text-black text-left;
+    }
+    
+    .prose h4 {
+      @apply text-lg mt-5 mb-3 text-black text-left;
+    }
+    
+    .prose h5 {
+      @apply text-base mt-4 mb-2 text-black text-left;
+    }
+    
+    .prose h6 {
+      @apply text-base mt-4 mb-2 text-black text-left;
+    }
+  }
+  
+  /* Mobile-friendly prose content */
+  .prose p {
+    @apply mb-3;
+  }
+  
+  @media (min-width: 640px) {
+    .prose p {
+      @apply mb-4;
+    }
+  }
+  
+  /* Note: Prose image styling is overridden by .article-content img styles below for better responsive control */
+  
+  /* Responsive article container with Google readability guidelines */
+  .responsive-article-container {
+    @apply w-full overflow-hidden;
+  }
+  
+  /* Optimal line length for readability (45-75 characters per line) */
+  .article-content {
+    max-width: 75ch; /* 75 characters for optimal readability */
+    @apply mx-auto;
+  }
+  
+  /* Improved contrast ratios for accessibility */
+  .article-content p {
+    line-height: 1.6; /* Google recommends 1.4-1.6 */
+    color: rgb(51 65 85 / 0.85); /* Higher contrast ratio */
+  }
+  
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    color: rgb(51 65 85); /* High contrast for headings */
+    line-height: 1.3; /* Tighter line height for headings */
+  }
+  
+  /* Responsive blog images with consistent styling */
+  .article-content img {
+    /* Core Web Vitals optimization */
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 400px;
+    
+    /* Loading state styling */
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    
+    /* Responsive sizing and centering */
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    
+    /* Consistent styling */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Centering and spacing */
+    display: block;
+    margin: 1.5rem auto; /* Center horizontally with vertical spacing */
+    
+    /* Aspect ratio consistency - 16:10 works well for most content */
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    object-position: center;
+    
+    /* Mobile responsive spacing */
+    @media (max-width: 640px) {
+      margin: 1rem auto;
+      border-radius: 0.375rem; /* rounded-md on mobile */
+    }
+    
+    /* Larger screens - more spacing */
+    @media (min-width: 1024px) {
+      margin: 2rem auto;
+      max-width: 90%; /* Slightly smaller on very large screens for better proportions */
+    }
+  }
+  
+  /* WordPress figure elements (images with captions) */
+  .article-content figure {
+    margin: 1.5rem auto !important;
+    text-align: center;
+    
+    @media (max-width: 640px) {
+      margin: 1rem auto !important;
+    }
+    
+    @media (min-width: 1024px) {
+      margin: 2rem auto !important;
+      max-width: 90%;
+    }
+  }
+  
+  .article-content figure img {
+    margin: 0 auto !important; /* Override default image margins for figures */
+  }
+  
+  .article-content figcaption {
+    font-size: 0.875rem;
+    color: rgb(120 113 108 / 0.7);
+    font-style: italic;
+    margin-top: 0.75rem;
+    text-align: center;
+    line-height: 1.5;
+    
+    @media (max-width: 640px) {
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+  }
+  
+  /* WordPress image alignment classes */
+  .article-content .wp-caption,
+  .article-content .aligncenter {
+    display: block !important;
+    margin: 1.5rem auto !important;
+    text-align: center;
+  }
+  
+  .article-content .alignleft {
+    float: none !important; /* Remove float on mobile */
+    display: block !important;
+    margin: 1.5rem auto !important;
+    
+    @media (min-width: 768px) {
+      float: left !important;
+      margin: 0 1.5rem 1rem 0 !important;
+      max-width: 50% !important;
+    }
+  }
+  
+  .article-content .alignright {
+    float: none !important; /* Remove float on mobile */
+    display: block !important;
+    margin: 1.5rem auto !important;
+    
+    @media (min-width: 768px) {
+      float: right !important;
+      margin: 0 0 1rem 1.5rem !important;
+      max-width: 50% !important;
+    }
+  }
+  
+  /* Responsive image size variants for different screen sizes */
+  .article-content .size-small img,
+  .article-content .wp-image-small img {
+    max-width: 300px !important;
+    
+    @media (max-width: 640px) {
+      max-width: 100% !important;
+    }
+  }
+  
+  .article-content .size-medium img,
+  .article-content .wp-image-medium img {
+    max-width: 500px !important;
+    
+    @media (max-width: 640px) {
+      max-width: 100% !important;
+    }
+  }
+  
+  .article-content .size-large img,
+  .article-content .wp-image-large img {
+    max-width: 800px !important;
+    
+    @media (max-width: 640px) {
+      max-width: 100% !important;
+    }
+  }
+  
+  .article-content .size-full img,
+  .article-content .wp-image-full img {
+    max-width: 100% !important;
+  }
+  
+  /* Force consistent aspect ratio for hero/banner type images */
+  .article-content img[width]:not([height]),
+  .article-content img[height]:not([width]) {
+    aspect-ratio: 16/10 !important;
+  }
+  
+  /* Beautiful, modern table design with brand colors */
+  .article-content table {
+    @apply text-xs sm:text-sm lg:text-base;
+    @apply border-collapse w-full;
+    @apply shadow-lg rounded-xl overflow-hidden;
+    @apply bg-white;
+    min-width: 100%;
+    border-spacing: 0;
+    font-feature-settings: "tnum"; /* Better number alignment */
+  }
+  
+  .article-content .table-wrapper {
+    @apply overflow-x-auto rounded-xl;
+    @apply -mx-3 sm:-mx-0;
+    @apply px-3 sm:px-0;
+    @apply mb-6 sm:mb-8;
+    scrollbar-width: thin;
+    border: 1px solid rgba(113, 147, 114, 0.1); /* reseda-green border */
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(113, 147, 114, 0.05);
+  }
+  
+  /* Header styling with brand colors */
+  .article-content table th {
+    background: linear-gradient(135deg, #719372 0%, #6B8A6B 100%); /* reseda-green gradient */
+    @apply font-bold text-white;
+    @apply px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-5;
+    @apply text-left text-xs sm:text-sm lg:text-base;
+    @apply tracking-wide uppercase;
+    white-space: nowrap;
+    border-bottom: 2px solid rgba(252, 215, 5, 0.3); /* school-bus-yellow accent */
+    position: relative;
+  }
+  
+  .article-content table th:first-child {
+    border-top-left-radius: 0.75rem;
+  }
+  
+  .article-content table th:last-child {
+    border-top-right-radius: 0.75rem;
+  }
+  
+  /* Add subtle icon or accent to headers */
+  .article-content table th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #FCD705 0%, #ED1C24 100%); /* yellow to red gradient */
+    opacity: 0.8;
+  }
+  
+  /* Body cell styling */
+  .article-content table td {
+    @apply px-3 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-5;
+    @apply text-stone/90 leading-relaxed;
+    @apply align-top;
+    border-bottom: 1px solid rgba(113, 147, 114, 0.1);
+    transition: all 0.2s ease;
+  }
+  
+  /* Price column styling (assuming second column contains prices) */
+  .article-content table td:nth-child(2) {
+    @apply font-semibold;
+    color: #ED1C24; /* red-cmyk for prices */
+    font-feature-settings: "tnum"; /* Tabular numbers for better alignment */
+  }
+  
+  /* Alternating row colors for better readability */
+  .article-content table tbody tr:nth-child(even) {
+    background-color: rgba(113, 147, 114, 0.02); /* very light reseda-green */
+  }
+  
+  .article-content table tbody tr:nth-child(odd) {
+    @apply bg-white;
+  }
+  
+  /* Remove border from last row */
+  .article-content table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Beautiful hover effects */
+  .article-content table tbody tr:hover {
+    background-color: rgba(252, 215, 5, 0.08) !important; /* light yellow hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .article-content table tbody tr:hover td {
+    color: #110302; /* licorice color on hover */
+  }
+  
+  /* First column (item names) styling */
+  .article-content table td:first-child {
+    @apply font-medium text-stone;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  
+  .article-content table tbody tr:hover td:first-child {
+    border-left-color: #FCD705; /* yellow accent on hover */
+  }
+  
+  /* Last column (description) styling for better readability */
+  .article-content table td:last-child {
+    @apply text-stone/70 text-xs sm:text-sm;
+    line-height: 1.6;
+    max-width: 300px;
+  }
+  
+  /* Responsive enhancements */
+  @media (max-width: 640px) {
+    .article-content table {
+      min-width: 600px; /* Ensure table has minimum width on mobile */
+      font-size: 0.75rem;
+    }
+    
+    .article-content table th,
+    .article-content table td {
+      @apply px-2 py-3;
+    }
+    
+    .article-content table th {
+      @apply text-xs;
+    }
+    
+    .article-content .table-wrapper {
+      @apply -mx-4;
+      @apply px-4;
+      border-radius: 0;
+    }
+    
+    /* Custom scrollbar for mobile */
+    .article-content .table-wrapper::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    .article-content .table-wrapper::-webkit-scrollbar-track {
+      background: rgba(113, 147, 114, 0.1);
+      border-radius: 4px;
+    }
+    
+    .article-content .table-wrapper::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #719372, #6B8A6B);
+      border-radius: 4px;
+    }
+    
+    .article-content .table-wrapper::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(90deg, #6B8A6B, #5F7A60);
+    }
+  }
+  
+  /* Tablet styling */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .article-content table {
+      @apply text-sm;
+    }
+    
+    .article-content table th,
+    .article-content table td {
+      @apply px-4 py-4;
+    }
+  }
+  
+  /* Desktop enhancements */
+  @media (min-width: 1025px) {
+    .article-content table {
+      @apply text-base;
+    }
+    
+    .article-content table th,
+    .article-content table td {
+      @apply px-6 py-5;
+    }
+    
+    /* Add subtle animations on desktop */
+    .article-content table tbody tr {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .article-content table tbody tr:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  /* Article content headings - ensure black color and left alignment on all devices */
+  .article-content h1,
+  .article-content h2, 
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6 {
+    color: #000000 !important;
+    text-align: left !important;
+    font-family: 'Roboto Slab', serif !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Mobile-specific heading adjustments */
+  @media (max-width: 640px) {
+    .article-content h1,
+    .article-content h2, 
+    .article-content h3,
+    .article-content h4,
+    .article-content h5,
+    .article-content h6 {
+      text-align: left !important;
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    background: linear-gradient(135deg, theme('colors.brand-black') 0%, theme('colors.brand-red') 50%, theme('colors.brand-yellow') 100%);
+  }
+  
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  .angled-bg {
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+  }
+  
+  .angled-bg-reverse {
+    clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-sm border border-white/20;
+  }
+  
+  .card-shadow {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-primary {
+    @apply bg-brand-red hover:bg-brand-red/90 text-white font-medium px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 touch-manipulation text-sm sm:text-base;
+  }
+  
+  .btn-secondary {
+    @apply bg-brand-green hover:bg-brand-green/90 text-white font-medium px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 touch-manipulation text-sm sm:text-base;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white font-medium px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg transition-all duration-200 touch-manipulation text-sm sm:text-base;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Responsive font sizing using clamp() for better mobile scaling */
+  .text-responsive-xs {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+  
+  .text-responsive-sm {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .text-responsive-base {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+  }
+  
+  .text-responsive-lg {
+    font-size: clamp(1.125rem, 3.5vw, 1.25rem);
+  }
+  
+  .text-responsive-xl {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+  
+  .text-responsive-2xl {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+  
+  .text-responsive-3xl {
+    font-size: clamp(1.875rem, 6vw, 2.5rem);
+  }
+  
+  .text-responsive-4xl {
+    font-size: clamp(2.25rem, 7vw, 3rem);
+  }
+  
+  /* Optimal spacing utilities */
+  .spacing-content {
+    @apply space-y-4 sm:space-y-5 lg:space-y-6;
+  }
+  
+  .spacing-sections {
+    @apply space-y-6 sm:space-y-8 lg:space-y-12;
+  }
+  
+  /* Responsive page title utilities for consistent mobile optimization */
+  .page-title-responsive {
+    font-size: clamp(1.5rem, 5vw, 3rem) !important;
+    line-height: clamp(1.2, 1.3, 1.4) !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+  }
+  
+  .page-subtitle-responsive {
+    font-size: clamp(0.875rem, 3vw, 1.25rem) !important;
+    line-height: clamp(1.4, 1.6, 1.8) !important;
+  }
+  
+  /* Mobile-first page hero padding */
+  .page-hero-spacing {
+    padding-top: clamp(1.5rem, 4vw, 4rem);
+    padding-bottom: clamp(1.5rem, 4vw, 4rem);
+  }
+  
+  /* Mobile-optimized breadcrumb container */
+  .breadcrumb-container {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .breadcrumb-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hero background optimizations for wood texture */
+  .hero-wood-texture {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    will-change: transform;
+  }
+  
+  @media (max-width: 768px) {
+    .hero-wood-texture {
+      background-attachment: scroll; /* Better performance on mobile */
+      background-size: cover;
+    }
+  }
+}

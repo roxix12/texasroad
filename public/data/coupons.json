@@ -1,0 +1,65 @@
+{
+  "coupons": [
+    {
+      "code": "AUGUST25",
+      "title": "August Savings Special",
+      "description": "Get 25% off your entire order this August",
+      "discount": "25% OFF",
+      "expiryDate": "August 31, 2025",
+      "terms": "Valid on orders $30+. Cannot combine with other offers.",
+      "type": "code",
+      "verified": "Verified August 2025",
+      "validUntil": "August 31, 2025"
+    },
+    {
+      "code": "VIPCLUB",
+      "title": "VIP Member Exclusive",
+      "description": "Join VIP Club and get 15% off your first visit",
+      "discount": "15% OFF",
+      "expiryDate": "Ongoing",
+      "terms": "New VIP members only. Valid on first visit.",
+      "type": "deal",
+      "verified": "Verified August 2025",
+      "validUntil": "Ongoing"
+    },
+    {
+      "code": "MILITARY",
+      "title": "Military & Veteran Discount",
+      "description": "Special pricing for active and retired military",
+      "discount": "20% OFF",
+      "expiryDate": "Always Available",
+      "terms": "Valid ID required. Cannot combine with other offers.",
+      "type": "discount",
+      "verified": "Verified August 2025",
+      "validUntil": "Always Available"
+    },
+    {
+      "code": "FAMILY25",
+      "title": "Family Meal Bundle",
+      "description": "Save on family-sized portions and combos",
+      "discount": "30% OFF",
+      "expiryDate": "August 31, 2025",
+      "terms": "Valid on family meal packages only.",
+      "type": "deal",
+      "verified": "Verified August 2025",
+      "validUntil": "August 31, 2025"
+    },
+    {
+      "code": "WELCOME10",
+      "title": "New Customer Welcome",
+      "description": "10% off for first-time customers",
+      "discount": "10% OFF",
+      "expiryDate": "August 31, 2025",
+      "terms": "First-time customers only. Valid ID may be required.",
+      "type": "code",
+      "verified": "Verified August 2025",
+      "validUntil": "August 31, 2025"
+    }
+  ],
+  "metadata": {
+    "total_count": 5,
+    "last_updated": "2025-08-23T05:20:41.547Z",
+    "source": "Gemini AI",
+    "version": "1.0.0"
+  }
+}

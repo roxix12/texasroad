@@ -1,0 +1,41 @@
+{
+  "name": "texas-roadhouse-menu",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "update-coupons": "node scripts/update-coupons.js",
+    "verify-production": "node scripts/verify-production.js",
+    "deploy": "npm run verify-production && npm run build"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.0",
+    "clsx": "^2.0.0",
+    "dotenv": "^17.2.1",
+    "googleapis": "^157.0.0",
+    "lucide-react": "^0.294.0",
+    "next": "^15.0.0",
+    "postcss": "^8.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^15.0.0",
+    "prettier": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.0"
+  }
+}

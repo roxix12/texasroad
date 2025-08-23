@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+Sitemap: https://texas-roadhouse-menu.com/sitemap.xml

@@ -1,0 +1,62 @@
+{
+  "categories": {
+    "nodes": [
+      {
+        "id": "1",
+        "name": "Menu Guides",
+        "slug": "menu-guides",
+        "description": "Comprehensive guides to Texas Roadhouse menu items, prices, and recommendations.",
+        "count": 4
+      },
+      {
+        "id": "2",
+        "name": "Steaks",
+        "slug": "steaks",
+        "description": "Everything about Texas Roadhouse steaks, from cuts to cooking methods.",
+        "count": 1
+      },
+      {
+        "id": "3",
+        "name": "Appetizers",
+        "slug": "appetizers",
+        "description": "Guide to Texas Roadhouse appetizers and shareable starters.",
+        "count": 1
+      },
+      {
+        "id": "4",
+        "name": "Ribs",
+        "slug": "ribs",
+        "description": "All about Texas Roadhouse's famous fall-off-the-bone ribs.",
+        "count": 1
+      },
+      {
+        "id": "5",
+        "name": "Family Meals",
+        "slug": "family-meals",
+        "description": "Family meal options and value packages for groups.",
+        "count": 1
+      },
+      {
+        "id": "6",
+        "name": "Value Meals",
+        "slug": "value-meals",
+        "description": "Best value options and money-saving meal combinations.",
+        "count": 1
+      },
+      {
+        "id": "7",
+        "name": "Bread & Sides",
+        "slug": "bread-sides",
+        "description": "Side dishes, bread, and complementary items.",
+        "count": 1
+      },
+      {
+        "id": "8",
+        "name": "Restaurant Secrets",
+        "slug": "restaurant-secrets",
+        "description": "Behind-the-scenes information and cooking secrets.",
+        "count": 1
+      }
+    ]
+  }
+}
