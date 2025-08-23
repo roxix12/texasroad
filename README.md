@@ -1,151 +1,120 @@
-# 🍽️ Texas Roadhouse Menu
+# 🏠 Texas Roadhouse Menu - Next.js Application
 
-A **production-ready blog and menu showcase** built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **WPGraphQL**.  
-This is an **independent, unofficial informational website** about Texas Roadhouse menu items, coupons, and pricing.
-
----
-
-## ⚠️ Legal Disclaimer
-This website is **NOT affiliated with Texas Roadhouse**.  
-It is an independent project created for **educational and reference purposes only**.  
-
-Menu items, prices, and nutrition info may not reflect the latest restaurant offerings.  
-For official information, visit [texasroadhouse.com](https://www.texasroadhouse.com).
-
----
+A modern, high-performance Next.js application for displaying Texas Roadhouse menu items and blog content, powered by WordPress as a headless CMS.
 
 ## 🚀 Features
 
-- ⚡ **Next.js 15** with App Router & Server Components  
-- 🟦 **TypeScript** for type safety  
-- 🎨 **Tailwind CSS** with steakhouse-inspired theme  
-- 🔗 **WordPress + WPGraphQL integration** (with JSON fallback)  
-- 🔍 **SEO optimized** with structured data, sitemap, and RSS  
-- 📱 **Responsive mobile-first design**  
-- ♿ **Accessibility features** (ARIA, keyboard navigation)  
-- 🚀 **Performance optimized** (ISR + Image Optimization)  
-- 🤖 **AI-powered coupons** (Gemini API)  
-- 📈 **Google Indexing API** for faster SEO updates  
+- **Dynamic Content**: Real-time data from WordPress GraphQL API
+- **SEO Optimized**: Full Yoast SEO integration with automatic URL sanitization
+- **Auto-Updating Sitemap**: Dynamic XML sitemap generation
+- **Performance**: Optimized caching and image handling
+- **Responsive Design**: Mobile-first, modern UI
+- **Domain Separation**: Frontend (`texasroadhouse-menus.us`) + WordPress backend
 
----
+## 🛠️ Quick Start
 
-## 🛠️ Tech Stack
+### Development
 
-- **Framework:** Next.js 15  
-- **Language:** TypeScript  
-- **Styling:** Tailwind CSS  
-- **CMS:** WordPress + WPGraphQL (optional)  
-- **Deployment:** Vercel / Netlify  
-- **APIs:** Gemini AI, Google Indexing API  
-
----
-
-## 📂 Project Structure
-
-app/
-├── (site)/ # Main routes (Home, Menus, Blog, etc.)
-├── api/ # API routes (RSS, indexing, coupons)
-├── components/ # Reusable UI components
-├── data/ # JSON fallback data
-├── lib/ # Utilities (SEO, WPGraphQL, data fetching)
-└── globals.css # Global styles
-
-yaml
-Copy
-Edit
-
----
-
-## ⚡ Quick Start
-
-### Prerequisites
-- Node.js **18.17+**
-- npm / yarn / pnpm
-
-### Setup
 ```bash
-# Clone repo
-git clone https://github.com/roxix12/texasroad.git
-cd texasroad
-
 # Install dependencies
 npm install
 
-# Copy environment variables
-cp env.example .env.local
-Run Development Server
-bash
-Copy
-Edit
+# Start development server
 npm run dev
-Now open 👉 http://localhost:3000
 
-🔧 Environment Variables
-Create a .env.local file:
+# Clean start (fixes port conflicts)
+npm run dev:clean
+```
 
-env
-Copy
-Edit
-# WordPress GraphQL (optional)
-NEXT_PUBLIC_WORDPRESS_API_URL=https://your-wordpress-site.com/graphql
+### Production
 
-# Site Info
+```bash
+# Build for production
+npm run build
+
+# Start production server
+npm start
+
+# Deploy (with verification)
+npm run deploy
+```
+
+## 📁 Project Structure
+
+```
+├── app/                    # Next.js App Router
+│   ├── (site)/            # Main site pages
+│   ├── api/               # API routes
+│   ├── components/        # React components
+│   └── lib/               # Utilities and configurations
+├── docs/                  # Documentation
+│   ├── guides/           # Operational guides
+│   └── setup/            # Installation & setup
+├── public/               # Static assets
+├── scripts/              # Build and utility scripts
+└── data/                 # Static data files
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create `.env.local`:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://texasroadhouse-menus.us
+NEXT_PUBLIC_WORDPRESS_API_URL=https://texasroadhousemenu.me/graphql
 NEXT_PUBLIC_SITE_NAME=Texas Roadhouse Menu
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+```
 
-# Gemini AI
-GEMINI_API_KEY=your_gemini_api_key
+### Key Scripts
 
-# Google Indexing API
-GOOGLE_CLIENT_EMAIL=your_service_account_email
-GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_KEY\n-----END PRIVATE KEY-----\n"
-📊 SEO Features
-✅ Structured Data (Organization, BlogPosting, MenuItem)
+| Command | Description |
+|---------|------------|
+| `npm run dev` | Development server (port 3002) |
+| `npm run dev:clean` | Clean development start |
+| `npm run build` | Production build |
+| `npm run fix-ports` | Fix port conflicts |
+| `npm run update-coupons` | Update coupon data |
 
-✅ Dynamic Sitemap (/sitemap.xml)
+## 📖 Documentation
 
-✅ RSS Feed (/api/rss)
+- **[Setup Guides](docs/setup/)** - Installation and configuration
+- **[Operational Guides](docs/guides/)** - SEO, deployment, and maintenance
 
-✅ Canonical URLs & robots.txt
+## 🌐 Architecture
 
-✅ OpenGraph + Twitter Card tags
+- **Frontend**: Next.js 15 with App Router
+- **Backend**: WordPress with GraphQL (WPGraphQL + Yoast SEO)
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel-ready
+- **SEO**: Automated sitemap + Yoast integration
 
-🚀 Deployment
-Vercel (Recommended)
-Push to GitHub
+## 🎯 Key Features
 
-Connect repo on Vercel
+### ✅ SEO & Performance
+- Dynamic sitemap generation
+- Yoast SEO metadata integration
+- URL sanitization for domain separation
+- Image optimization
+- Static generation where possible
 
-Add environment variables
+### ✅ Content Management
+- WordPress admin for content
+- Real-time content updates
+- Webhook support for instant revalidation
+- Comprehensive error handling
 
-Deploy 🚀
+### ✅ Developer Experience
+- TypeScript throughout
+- ESLint + Prettier
+- Hot reload in development
+- Automated deployment checks
 
-Netlify
-Build command: npm run build
+## 📞 Support
 
-Publish directory: .next
-
-🤝 Contributing
-This is a demo project. If you want to use it in production:
-
-Replace branding & legal disclaimers
-
-Update schema, posts, and content
-
-Configure your own SEO settings
-
-📄 License
-This project is for educational use only.
-Do not use without respecting trademarks and copyrights.
-
-✨ Built with ❤️ using Next.js + Tailwind + WPGraphQL + Gemini AI
-
-yaml
-Copy
-Edit
+For setup questions, check the [documentation](docs/) or the specific guide files in `docs/setup/` and `docs/guides/`.
 
 ---
 
-👉 This version is **shorter, cleanly structured, and GitHub-ready**. It highlights features, setup, environment variables, and deployment in a professional way.
-
-Do you want me to also **add screenshots / preview section with badges** (like Vercel deploy button, demo link, tech badges)? That will make your README look 🔥 professional.
+Built with ❤️ using Next.js and WordPress
