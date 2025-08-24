@@ -47,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${siteUrl}/menus`,
+      url: `${siteUrl}/menus-prices`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
@@ -123,7 +123,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add blog posts
     if (sitemapData?.posts?.nodes) {
       const postUrls = sitemapData.posts.nodes.map((post) => ({
-        url: `${siteUrl}/posts/${post.slug}`,
+        url: `${siteUrl}/${post.slug}`,
         lastModified: new Date(post.date),
         changeFrequency: 'monthly' as const,
         priority: 0.6,
@@ -133,7 +133,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     // Add WordPress pages (if any)
-    if (data?.pages?.nodes) {
+    if (sitemapData?.pages?.nodes) {
       const pageUrls = sitemapData.pages.nodes
         .filter(page => page.slug !== 'home') // Exclude home page if it exists
         .map((page) => ({
@@ -147,7 +147,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     // Add category pages
-    if (data?.categories?.nodes) {
+    if (sitemapData?.categories?.nodes) {
       const categoryUrls = sitemapData.categories.nodes.map((category) => ({
         url: `${siteUrl}/categories/${category.slug}`,
         lastModified: new Date(),
@@ -161,10 +161,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Also add menu items from our existing data functions
     try {
       const { getMenus } = await import('./lib/data')
-      const menus = await getMenus(1000) // Get all menu items
+      const menuResponse = await getMenus(1000) // Get all menu items
+      const menus = menuResponse.menus?.nodes || []
       
       const menuUrls = menus.map((menu) => ({
-        url: `${siteUrl}/menus/${menu.slug}`,
+        url: `${siteUrl}/menus-prices#${menu.slug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.7,
