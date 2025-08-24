@@ -18,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '*',
       },
     ],
     formats: ['image/webp', 'image/avif'],
@@ -33,6 +33,33 @@ const nextConfig = {
   // Performance optimizations
   poweredByHeader: false,
   reactStrictMode: true,
+
+  // 🚀 REDIRECTS ADDED HERE
+  async redirects() {
+    return [
+      {
+        source: '/old-post-slug',
+        destination: '/new-post-slug',
+        permanent: true, // 301 Redirect
+      },
+      {
+        source: '/old-category/:path*',
+        destination: '/new-category/:path*',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug*',  // Example: old WordPress blog URLs
+        destination: '/posts/:slug*', // New Next.js posts route
+        permanent: true,
+      },
+      // 🆕 NEW: Redirect /posts/ to root for clean URLs
+      {
+        source: '/posts/:slug*',
+        destination: '/:slug*',
+        permanent: true, // 301 Redirect for SEO
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

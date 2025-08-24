@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
   const fallbackTitle = post.title
   const fallbackDescription = post.excerpt || `Read ${post.title} on ${siteName}`
+  // 🆕 UPDATED: Remove /posts/ prefix from canonical URL
   const fallbackCanonical = `${siteUrl}/${post.slug}`
   
   // Use Yoast SEO data if available, otherwise fallback to basic metadata

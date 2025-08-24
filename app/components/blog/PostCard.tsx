@@ -16,7 +16,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
     <article className={`bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${featured ? 'lg:flex' : ''}`}>
       {post.featuredImage && (
         <div className={`relative ${featured ? 'lg:w-1/2' : 'h-48'} overflow-hidden`}>
-          <Link href={`/posts/${post.slug}`}>
+          <Link href={`/${post.slug}`}>
             <Image
               src={post.featuredImage.node.sourceUrl}
               alt={post.featuredImage.node.altText || post.title}
@@ -42,7 +42,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           
           <h2 className={`font-slab font-slab-bold text-stone mb-3 line-clamp-2 ${featured ? 'text-2xl lg:text-3xl' : 'text-xl'}`}>
             <Link 
-              href={`/posts/${post.slug}`}
+              href={`/${post.slug}`}
               className="hover:text-orange transition-colors duration-200"
             >
               {post.title}
@@ -62,7 +62,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           </time>
           
           <Link 
-            href={`/posts/${post.slug}`}
+            href={`/${post.slug}`}
             className="font-medium text-orange hover:text-orange/80 transition-colors duration-200"
           >
             Read More →
