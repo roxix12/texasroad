@@ -59,6 +59,19 @@ const nextConfig = {
       //   destination: '/:slug',
       //   permanent: true, // 301 Redirect for SEO
       // },
+      
+      // 🆕 CATEGORY URL HANDLING - CHOOSE ONE OPTION:
+      
+      // OPTION A: Keep category pages (SEO-friendly, shows WordPress category content)
+      // Comment out the redirect below to enable category pages
+      
+      // OPTION B: Redirect category URLs to menu page (cleaner URL structure)
+      // Uncomment the redirect below to redirect all category URLs to /menus-prices
+      // {
+      //   source: '/category/:slug*',
+      //   destination: '/menus-prices',
+      //   permanent: true, // 301 Redirect for SEO
+      // },
     ]
   },
 }

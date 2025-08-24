@@ -239,6 +239,26 @@ export async function getCategories(): Promise<WPCategory[]> {
   }
 }
 
+export async function getCategoryBySlug(slug: string): Promise<WPCategory | null> {
+  // Always use WordPress - no fallback to dummy data
+  try {
+    const response = await wpFetch<CategoriesResponse>(CATEGORIES_QUERY, {}, {
+      revalidate: 60, // 60 seconds for real-time updates
+      tags: ['categories', `category-${slug}`]
+    })
+    
+    if (!response || !response.categories || !response.categories.nodes) {
+      return null
+    }
+    
+    const category = response.categories.nodes.find(cat => cat.slug === slug)
+    return category || null
+  } catch (error) {
+    console.error(`❌ Error fetching category "${slug}" from WordPress:`, error)
+    return null
+  }
+}
+
 // Utility functions
 export function getPriceRange(menus: Menu[]): { min: number; max: number } {
   if (menus.length === 0) {
