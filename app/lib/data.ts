@@ -16,33 +16,68 @@ export async function getPosts(
   first: number = 10, 
   after?: string
 ): Promise<{ posts: { nodes: WPPost[] }, pageInfo: any }> {
-  const { posts, pageInfo, error } = await fetchPosts(first, after)
-  
-  if (error) {
-    console.error('Error in getPosts:', error)
-    // Return empty structure instead of throwing
+  try {
+    // Validate parameters
+    if (!first || first < 1) first = 10
+    if (after && typeof after !== 'string') after = undefined
+
+    const { posts, pageInfo, error } = await fetchPosts(first, after)
+    
+    if (error) {
+      console.error('Error in getPosts:', error)
+      // Return empty structure instead of throwing
+      return {
+        posts: { nodes: [] },
+        pageInfo: {
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: null,
+          endCursor: null
+        }
+      }
+    }
+    
+    // Ensure posts is an array
+    const safePosts = Array.isArray(posts) ? posts : []
+    
+    return {
+      posts: { nodes: safePosts },
+      pageInfo: pageInfo || {}
+    }
+  } catch (error) {
+    console.error('Critical error in getPosts:', error)
     return {
       posts: { nodes: [] },
-      pageInfo: {}
+      pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: null,
+        endCursor: null
+      }
     }
-  }
-  
-  return {
-    posts: { nodes: posts },
-    pageInfo
   }
 }
 
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {
-  const { post, error } = await fetchPostBySlug(slug)
-  
-  if (error) {
-    console.error(`Error fetching post "${slug}":`, error)
-    console.error('No response received for post', `"${slug}"`)
+  try {
+    // Validate slug parameter
+    if (!slug || typeof slug !== 'string' || slug.trim() === '') {
+      console.error('Invalid slug provided to getPostBySlug:', slug)
+      return null
+    }
+
+    const { post, error } = await fetchPostBySlug(slug.trim())
+    
+    if (error) {
+      console.error(`Error fetching post "${slug}":`, error)
       return null
     }
     
-  return post
+    return post
+  } catch (error) {
+    console.error('Critical error in getPostBySlug:', error)
+    return null
+  }
 }
 
 // Categories functions - Refactored to use Apollo Client

@@ -15,6 +15,10 @@ const client = getApolloClient()
 // Fetch multiple posts with pagination
 export async function fetchPosts(first: number = 10, after?: string) {
   try {
+    // Ensure parameters are valid
+    if (!first || first < 1) first = 10
+    if (after && typeof after !== 'string') after = undefined
+
     const { data, error } = await client.query({
       query: GET_POSTS,
       variables: { first, after },
@@ -26,16 +30,28 @@ export async function fetchPosts(first: number = 10, after?: string) {
       console.error('Apollo Client error:', error)
     }
 
+    // Safe data extraction with null checks
+    const posts = (data as any)?.posts?.nodes || []
+    const pageInfo = (data as any)?.posts?.pageInfo || {}
+
+    // Ensure posts is an array
+    const safePosts = Array.isArray(posts) ? posts : []
+
     return {
-      posts: (data as any)?.posts?.nodes || [],
-      pageInfo: (data as any)?.posts?.pageInfo || {},
+      posts: safePosts,
+      pageInfo,
       error
     }
   } catch (error) {
     console.error('Error fetching posts:', error)
     return {
       posts: [],
-      pageInfo: {},
+      pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: null,
+        endCursor: null
+      },
       error
     }
   }
@@ -44,9 +60,14 @@ export async function fetchPosts(first: number = 10, after?: string) {
 // Fetch a single post by slug
 export async function fetchPostBySlug(slug: string) {
   try {
+    // Validate slug parameter
+    if (!slug || typeof slug !== 'string' || slug.trim() === '') {
+      throw new Error('Invalid slug provided')
+    }
+
     const { data, error } = await client.query({
       query: GET_POST_BY_SLUG,
-      variables: { slug },
+      variables: { slug: slug.trim() },
       errorPolicy: 'all',
       fetchPolicy: 'cache-first',
     })
@@ -55,8 +76,11 @@ export async function fetchPostBySlug(slug: string) {
       console.error('Apollo Client error:', error)
     }
 
+    // Safe post extraction
+    const post = (data as any)?.post || null
+
     return {
-      post: (data as any)?.post || null,
+      post,
       error
     }
   } catch (error) {
@@ -81,8 +105,11 @@ export async function fetchCategories() {
       console.error('Apollo Client error:', error)
     }
 
+    const categories = (data as any)?.categories?.nodes || []
+    const safeCategories = Array.isArray(categories) ? categories : []
+
     return {
-      categories: (data as any)?.categories?.nodes || [],
+      categories: safeCategories,
       error
     }
   } catch (error) {
@@ -180,16 +207,31 @@ export async function fetchMenuItems(first: number = 50, after?: string) {
 
 // Helper function to get category by slug
 export async function fetchCategoryBySlug(slug: string) {
-  const { categories, error } = await fetchCategories()
-  
-  if (error) {
-    return { category: null, error }
-  }
+  try {
+    // Validate slug parameter
+    if (!slug || typeof slug !== 'string' || slug.trim() === '') {
+      throw new Error('Invalid category slug provided')
+    }
 
-  const category = categories.find((cat: WPCategory) => cat.slug === slug)
-  
-  return {
-    category: category || null,
-    error: category ? null : new Error(`Category with slug "${slug}" not found`)
+    const { categories, error } = await fetchCategories()
+    
+    if (error) {
+      return { category: null, error }
+    }
+
+    // Ensure categories is an array before using find
+    const safeCategories = Array.isArray(categories) ? categories : []
+    const category = safeCategories.find((cat: WPCategory) => cat?.slug === slug.trim())
+    
+    return {
+      category: category || null,
+      error: category ? null : new Error(`Category with slug "${slug}" not found`)
+    }
+  } catch (error) {
+    console.error('Error fetching category by slug:', error)
+    return {
+      category: null,
+      error
+    }
   }
 }

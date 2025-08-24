@@ -75,8 +75,8 @@ export async function getPageBySlug(slug: string): Promise<WordPressPage | null>
       console.error('Apollo Client error:', error)
     }
 
-    if (data?.page && data.page.id) {
-      return data.page
+    if ((data as any)?.page && (data as any).page.id) {
+      return (data as any).page
     }
     
     return null

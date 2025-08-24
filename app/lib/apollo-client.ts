@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { WORDPRESS_CONFIG } from './config'
 
 // Create HTTP link to GraphQL endpoint

@@ -116,7 +116,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       fetchPolicy: 'cache-first',
     })
     
-    const sitemapData: SitemapData = data
+    const sitemapData: SitemapData = (data as any) || {}
 
     const dynamicUrls: MetadataRoute.Sitemap = []
 
