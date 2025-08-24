@@ -1,5 +1,6 @@
-// WordPress Page Queries for Static Pages with Yoast SEO
-import { wpFetch } from './wp'
+// WordPress Page Queries for Static Pages with Yoast SEO - Updated to use Apollo Client
+import { gql } from '@apollo/client'
+import { getApolloClient } from './apollo-client'
 import { WPSEO } from './types'
 
 export interface WordPressPage {
@@ -16,9 +17,9 @@ export interface PageResponse {
   page: WordPressPage
 }
 
-// Query for a WordPress page by slug
-export const PAGE_BY_SLUG_QUERY = `
-  query PageBySlug($slug: ID!) {
+// GraphQL query for a WordPress page by slug
+export const GET_PAGE_BY_SLUG = gql`
+  query GetPageBySlug($slug: ID!) {
     page(id: $slug, idType: URI) {
       id
       title
@@ -58,16 +59,24 @@ export const PAGE_BY_SLUG_QUERY = `
   }
 `
 
-// Get a WordPress page by slug
+// Get a WordPress page by slug using Apollo Client
 export async function getPageBySlug(slug: string): Promise<WordPressPage | null> {
   try {
-    const response = await wpFetch<PageResponse>(PAGE_BY_SLUG_QUERY, { slug }, {
-      revalidate: 3600, // 1 hour cache for pages
-      tags: ['pages', `page-${slug}`]
-    })
+    const client = getApolloClient()
     
-    if (response.page && response.page.id) {
-      return response.page
+    const { data, error } = await client.query({
+      query: GET_PAGE_BY_SLUG,
+      variables: { slug },
+      errorPolicy: 'all',
+      fetchPolicy: 'cache-first',
+    })
+
+    if (error) {
+      console.error('Apollo Client error:', error)
+    }
+
+    if (data?.page && data.page.id) {
+      return data.page
     }
     
     return null

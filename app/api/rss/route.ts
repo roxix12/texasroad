@@ -39,7 +39,7 @@ ${posts.map(post => `
       <link>${siteUrl}/posts/${post.slug}</link>
       <guid isPermaLink="true">${siteUrl}/posts/${post.slug}</guid>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <category><![CDATA[${post.categories.nodes.map(cat => cat.name).join(', ')}]]></category>
+      <category><![CDATA[${post.categories.nodes.map((cat: any) => cat.name).join(', ')}]]></category>
       ${post.featuredImage ? `<enclosure url="${post.featuredImage.node.sourceUrl}" type="image/jpeg" />` : ''}
     </item>`).join('')}
   </channel>

@@ -17,17 +17,15 @@ async function PostsContent({ searchParams }: PostsContentProps) {
 
   try {
     const [postsResponse, categories] = await Promise.all([
-      getPosts(
-        before ? undefined : postsPerPage, // first
-        after, // after cursor
-        before, // before cursor  
-        before ? postsPerPage : undefined // last
+            getPosts(
+        postsPerPage, // first
+        after // after cursor
       ),
       getCategories(),
     ])
 
-    const { posts } = postsResponse
-    const { nodes: postNodes, pageInfo } = posts
+    const { posts, pageInfo } = postsResponse
+    const postNodes = posts.nodes
 
   return (
     <>
@@ -138,13 +136,11 @@ export async function generateMetadata({ searchParams }: PostsPageProps): Promis
   try {
     // Get current page info to determine prev/next links
     const postsResponse = await getPosts(
-      before ? undefined : 12,
-      after,
-      before,
-      before ? 12 : undefined
+      12,
+      after
     )
     
-    const { pageInfo } = postsResponse.posts
+    const { pageInfo } = postsResponse
     
     if (pageInfo.hasNextPage && pageInfo.endCursor) {
       if (!metadata.alternates) metadata.alternates = {}

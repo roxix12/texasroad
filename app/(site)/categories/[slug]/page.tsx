@@ -60,13 +60,11 @@ export async function generateMetadata({ params, searchParams }: CategoryPagePro
   try {
     const postsResponse = await getPostsByCategory(
       slug,
-      before ? undefined : 12,
-      after,
-      before,
-      before ? 12 : undefined
+      12,
+      after
     )
     
-    const { pageInfo } = postsResponse.posts
+    const { pageInfo } = postsResponse
     
     if (pageInfo.hasNextPage && pageInfo.endCursor) {
       if (!metadata.alternates) metadata.alternates = {}
@@ -100,10 +98,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     getCategories(),
     getPostsByCategory(
       slug, 
-      before ? undefined : 12, // first
-      after, // after cursor
-      before, // before cursor
-      before ? 12 : undefined // last
+      12, // first
+      after // after cursor
     ),
   ])
   
@@ -113,8 +109,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     notFound()
   }
 
-  const { posts } = postsResponse
-  const { nodes: postNodes, pageInfo } = posts
+  const { posts, pageInfo } = postsResponse
+  const postNodes = posts.nodes
 
   return (
     <>

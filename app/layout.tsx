@@ -3,7 +3,7 @@ import { Inter, Roboto_Slab } from 'next/font/google'
 import Script from 'next/script'
 import { generateOrganizationSchema, generateWebSiteSchema } from './lib/seo'
 import { defaultSEO, defaultViewport, pageSpeedOptimizations } from './lib/seo-config'
-import { getSiteSEO } from './lib/wp'
+import { getSiteSEOSettings } from './lib/data'
 import { YoastSEOHead } from './components/seo'
 import './globals.css'
 
@@ -26,7 +26,7 @@ const robotoSlab = Roboto_Slab({
 // Generate dynamic metadata from WordPress/Yoast SEO
 export async function generateMetadata(): Promise<Metadata> {
   try {
-    const siteSEOResponse = await getSiteSEO()
+    const siteSEOResponse = await getSiteSEOSettings()
     const wpTitle = siteSEOResponse?.generalSettings?.title
     const wpDescription = siteSEOResponse?.generalSettings?.description
     const logoUrl = siteSEOResponse?.seo?.schema?.companyLogo?.sourceUrl
@@ -70,7 +70,7 @@ export default async function RootLayout({
   const websiteSchema = generateWebSiteSchema()
   
   // Fetch site-wide Yoast SEO settings
-  const siteSEOResponse = await getSiteSEO()
+  const siteSEOResponse = await getSiteSEOSettings()
 
   return (
     <html lang="en" className={`${inter.variable} ${robotoSlab.variable}`}>

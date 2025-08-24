@@ -1,6 +1,6 @@
-// WordPress Configuration
+// WordPress Configuration - Updated to use new GraphQL endpoint
 export const WORDPRESS_CONFIG = {
-  API_URL: process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://texasroadhousemenu.me/graphql',
+  API_URL: process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://admin.texasroadhouse-menus.us/graphql',
   SITE_NAME: process.env.NEXT_PUBLIC_SITE_NAME || 'Texas Roadhouse Menu',
   SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhouse-menus.us'
 }
@@ -9,6 +9,6 @@ export const WORDPRESS_CONFIG = {
 export const DOMAIN_CONFIG = {
   // Frontend domain (where Next.js is hosted)
   FRONTEND_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhouse-menus.us',
-  // WordPress backend domain (to be replaced in Yoast data)
-  WORDPRESS_URL: 'https://texasroadhousemenu.me'
+  // WordPress backend domain (updated to new endpoint)
+  WORDPRESS_URL: 'https://admin.texasroadhouse-menus.us'
 }

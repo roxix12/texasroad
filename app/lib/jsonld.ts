@@ -70,7 +70,7 @@ export function isValidJson(str: string): boolean {
  */
 export function processWordPressContent(html: string): JsonLdResult {
   // First try to extract proper script tags
-  let result = splitContentAndJsonLd(html)
+  const result = splitContentAndJsonLd(html)
   
   // If no script tags found, try to clean up any JSON text that may be visible
   if (result.jsonLd.length === 0) {

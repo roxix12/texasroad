@@ -153,7 +153,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     <div>
                       <span className="font-medium text-stone/80 block mb-2">Categories:</span>
                       <div className="flex flex-wrap gap-2">
-                        {post.categories.nodes.slice(0, 3).map((category) => (
+                        {post.categories.nodes.slice(0, 3).map((category: any) => (
                           <Badge key={category.slug} variant="category" size="sm">
                             {category.name}
                           </Badge>
@@ -177,7 +177,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <header className="mb-6 sm:mb-8">
             {post.categories.nodes.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
-                {post.categories.nodes.slice(0, 3).map((category) => (
+                {post.categories.nodes.slice(0, 3).map((category: any) => (
                   <Badge key={category.slug} variant="category" size="sm">
                     {category.name}
                   </Badge>

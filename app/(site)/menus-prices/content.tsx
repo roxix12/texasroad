@@ -54,7 +54,7 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
 
   // Advanced filtering and sorting
   const filteredAndSortedItems = useMemo(() => {
-    let filtered = menuItems.filter(item => {
+    const filtered = menuItems.filter(item => {
       // Search filter
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -109,7 +109,7 @@ export async function notifyGoogle(url: string): Promise<GoogleIndexingResponse>
  * Notify Google about homepage updates
  */
 export async function notifyHomepageUpdate(): Promise<GoogleIndexingResponse> {
-  const siteUrl = process.env.SITE_URL || 'https://texasroadhousemenu.me';
+  const siteUrl = process.env.SITE_URL || 'https://texasroadhouse-menus.us';
   const homepageUrl = siteUrl.endsWith('/') ? siteUrl : `${siteUrl}/`;
   
   console.log('🏠 Notifying Google about homepage update:', homepageUrl);
@@ -120,7 +120,7 @@ export async function notifyHomepageUpdate(): Promise<GoogleIndexingResponse> {
  * Notify Google about coupon page updates
  */
 export async function notifyCouponPageUpdate(): Promise<GoogleIndexingResponse> {
-  const siteUrl = process.env.SITE_URL || 'https://texasroadhousemenu.me';
+  const siteUrl = process.env.SITE_URL || 'https://texasroadhouse-menus.us';
   const couponUrl = `${siteUrl}/coupons`;
   
   console.log('🎫 Notifying Google about coupon page update:', couponUrl);

@@ -87,7 +87,7 @@ export async function notifyGoogleIndexing(
  * Notify Google about homepage updates
  */
 export async function notifyHomepageUpdate(): Promise<IndexingResponse> {
-  const homepageUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhousemenu.me';
+  const homepageUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhouse-menus.us';
   return notifyGoogleIndexing(homepageUrl, 'URL_UPDATED');
 }
 
@@ -95,7 +95,7 @@ export async function notifyHomepageUpdate(): Promise<IndexingResponse> {
  * Notify Google about coupon page updates
  */
 export async function notifyCouponPageUpdate(): Promise<IndexingResponse> {
-  const couponUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhousemenu.me'}/coupons`;
+  const couponUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhouse-menus.us'}/coupons`;
   return notifyGoogleIndexing(couponUrl, 'URL_UPDATED');
 }
 

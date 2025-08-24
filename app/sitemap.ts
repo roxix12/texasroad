@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
-import { wpFetch } from './lib/wp'
+import { getApolloClient } from './lib/apollo-client'
+import { gql } from '@apollo/client'
 import { WORDPRESS_CONFIG } from './lib/config'
 
 // Revalidate sitemap every 60 seconds for real-time updates
@@ -107,16 +108,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     `
 
     console.log('🗺️ Generating dynamic sitemap from WordPress...')
-    const data: SitemapData = await wpFetch(query, {}, {
-      revalidate: 60, // Cache for 60 seconds
-      tags: ['sitemap', 'posts', 'pages', 'categories']
+    
+    const client = getApolloClient()
+    const { data } = await client.query({
+      query: gql`${query}`,
+      errorPolicy: 'all',
+      fetchPolicy: 'cache-first',
     })
+    
+    const sitemapData: SitemapData = data
 
     const dynamicUrls: MetadataRoute.Sitemap = []
 
     // Add blog posts
-    if (data?.posts?.nodes) {
-      const postUrls = data.posts.nodes.map((post) => ({
+    if (sitemapData?.posts?.nodes) {
+      const postUrls = sitemapData.posts.nodes.map((post) => ({
         url: `${siteUrl}/posts/${post.slug}`,
         lastModified: new Date(post.date),
         changeFrequency: 'monthly' as const,
@@ -128,7 +134,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Add WordPress pages (if any)
     if (data?.pages?.nodes) {
-      const pageUrls = data.pages.nodes
+      const pageUrls = sitemapData.pages.nodes
         .filter(page => page.slug !== 'home') // Exclude home page if it exists
         .map((page) => ({
           url: `${siteUrl}/${page.slug}`,
@@ -142,7 +148,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Add category pages
     if (data?.categories?.nodes) {
-      const categoryUrls = data.categories.nodes.map((category) => ({
+      const categoryUrls = sitemapData.categories.nodes.map((category) => ({
         url: `${siteUrl}/categories/${category.slug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
