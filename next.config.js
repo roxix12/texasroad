@@ -52,12 +52,13 @@ const nextConfig = {
         destination: '/posts/:slug*', // New Next.js posts route
         permanent: true,
       },
-      // 🆕 NEW: Redirect /posts/ to root for clean URLs
-      {
-        source: '/posts/:slug*',
-        destination: '/:slug*',
-        permanent: true, // 301 Redirect for SEO
-      },
+      // 🆕 NEW: Redirect /posts/ to root for clean URLs (only for individual posts)
+      // Note: Keeping both routes active for now to avoid conflicts
+      // {
+      //   source: '/posts/:slug',
+      //   destination: '/:slug',
+      //   permanent: true, // 301 Redirect for SEO
+      // },
     ]
   },
 }
