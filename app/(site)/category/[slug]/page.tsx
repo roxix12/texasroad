@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
     
     const title = `${category.name} - Blog Posts | ${siteName}`
-    const description = category.description || `Browse all posts in the ${category.name} category on ${siteName}`
+    const description = `Browse all posts in the ${category.name} category on ${siteName}`
     const canonical = `${siteUrl}/category/${category.slug}`
 
     return {
@@ -77,10 +77,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
     return (
       <>
-        <PageHero
-          title={category.name}
-          subtitle={category.description || `Browse all posts in the ${category.name} category`}
-        />
+                 <PageHero
+           title={category.name}
+           subtitle={`Browse all posts in the ${category.name} category`}
+         />
         
         <div className="py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -90,9 +90,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   <h2 className="text-2xl font-slab font-bold text-stone mb-2">
                     {postNodes.length} {postNodes.length === 1 ? 'Post' : 'Posts'} in {category.name}
                   </h2>
-                  {category.description && (
-                    <p className="text-stone/70">{category.description}</p>
-                  )}
+                                     <p className="text-stone/70">
+                     Browse all posts in the {category.name} category
+                   </p>
                 </div>
                 
                 <PostGrid posts={postNodes} />
