@@ -222,9 +222,10 @@ export default async function BlogPostPage({
 
             {/* Post Content - Images optimized with Next.js Image component */}
             {/* TODO: Test on mobile with network throttling - images should load progressively with blur */}
-            {/* TODO: Check page source - images should be served via _next/image?... */}
+            {/* TODO: Check page source - WordPress images should be served via _next/image?... */}
             {/* TODO: Run Lighthouse - LCP/CLS should improve significantly */}
-            <div className="prose-content">
+            {/* TODO: Test responsive scaling - images should fit screen width on all devices */}
+            <div className="prose-content responsive-blog-content">
               {parseHtmlToNextImage(post.content)}
             </div>
           </article>

@@ -37,7 +37,28 @@ export const toBase64 = (str: string): string => {
 }
 
 /**
- * Parse HTML content and replace <img> tags with optimized Next.js <Image> components
+ * Check if URL is from WordPress media (our domains)
+ * @param src - Image source URL
+ * @returns boolean indicating if it's WordPress media
+ */
+const isWordPressMedia = (src: string): boolean => {
+  const wordpressDomains = [
+    'admin.texasroadhouse-menus.us',
+    'texasroadhouse-menus.us'
+  ]
+  
+  try {
+    const url = new URL(src)
+    return wordpressDomains.some(domain => url.hostname.includes(domain))
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Parse HTML content and replace <img> tags with optimized components
+ * - WordPress media images → Next.js <Image> component
+ * - External images → responsive <img> with proper styling
  * @param html - HTML string to parse
  * @returns ReactNode with optimized images
  */
@@ -57,25 +78,49 @@ export function parseHtmlToNextImage(html: string): ReactNode {
         // Skip if no src
         if (!src) return domNode
         
-        // Return optimized Next.js Image component
-        return (
-          <Image
-            src={src}
-            alt={alt}
-            width={width}
-            height={height}
-            sizes="(max-width: 768px) 100vw, 800px"
-            placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(16, 10))}`}
-            loading="lazy"
-            style={{ 
-              height: 'auto', 
-              width: '100%',
-              maxWidth: '100%'
-            }}
-            className="rounded-lg shadow-sm"
-          />
-        )
+        // If it's WordPress media, use Next.js Image for optimization
+        if (isWordPressMedia(src)) {
+          return (
+            <div className="my-6 mx-auto max-w-full">
+              <Image
+                src={src}
+                alt={alt}
+                width={width}
+                height={height}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 800px"
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(16, 10))}`}
+                loading="lazy"
+                style={{ 
+                  height: 'auto', 
+                  width: '100%',
+                  maxWidth: '100%',
+                  display: 'block',
+                  margin: '0 auto'
+                }}
+                className="rounded-lg shadow-sm"
+              />
+            </div>
+          )
+        } else {
+          // For external images, use responsive img tag with proper styling
+          return (
+            <div className="my-6 mx-auto max-w-full">
+              <img
+                src={src}
+                alt={alt}
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  margin: '0 auto'
+                }}
+                className="rounded-lg shadow-sm"
+                loading="lazy"
+              />
+            </div>
+          )
+        }
       }
       
       // Return original node if not an img
