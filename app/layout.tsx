@@ -103,6 +103,25 @@ export default async function RootLayout({
           }}
         />
         
+        {/* OneSignal Push Notifications */}
+        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.OneSignalDeferred = window.OneSignalDeferred || [];
+              OneSignalDeferred.push(async function(OneSignal) {
+                await OneSignal.init({
+                  appId: "7629b842-fb4e-4821-a9dd-e60ca450a208",
+                  safari_web_id: "web.onesignal.auto.201c9c11-2835-4563-82b9-55a6f9094e87",
+                  notifyButton: {
+                    enable: true,
+                  },
+                });
+              });
+            `
+          }}
+        />
+        
         {/* Preconnect to critical domains for faster loading */}
         {pageSpeedOptimizations.preconnect.map((url) => (
           <link key={url} rel="preconnect" href={url} />
