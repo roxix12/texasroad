@@ -105,77 +105,34 @@ export default async function RootLayout({
         
         {/* OneSignal Push Notifications */}
         <Script
-          src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="onesignal-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.OneSignalDeferred = window.OneSignalDeferred || [];
-              OneSignalDeferred.push(async function(OneSignal) {
-                await OneSignal.init({
-                  appId: "7629b842-fb4e-4821-a9dd-e60ca450a208",
-                  safari_web_id: "web.onesignal.auto.201c9c11-2835-4563-82b9-55a6f9094e87",
-                  notifyButton: {
-                    enable: true,
-                    size: 'medium',
-                    theme: 'default',
-                    position: 'bottom-right',
-                    colors: {
-                      'circle.background': '#dc2626',
-                      'circle.foreground': 'white',
-                      'badge.background': '#dc2626',
-                      'badge.foreground': 'white',
-                      'badge.bordercolor': 'white',
-                      'pulse.color': '#dc2626'
-                    },
-                    text: {
-                      'tip.state.unsubscribed': 'Subscribe to notifications',
-                      'tip.state.subscribed': "You're subscribed to notifications",
-                      'tip.state.blocked': "You've blocked notifications",
-                      'message.prenotify': 'Click to subscribe to notifications',
-                      'message.action.subscribed': "Thanks for subscribing!",
-                      'message.action.resubscribed': "You're subscribed to notifications",
-                      'message.action.unsubscribed': "You won't receive notifications again",
-                      'dialog.main.title': 'Manage Site Notifications',
-                      'dialog.main.button.subscribe': 'SUBSCRIBE',
-                      'dialog.main.button.unsubscribe': 'UNSUBSCRIBE',
-                      'dialog.blocked.title': 'Unblock Notifications',
-                      'dialog.blocked.message': "Follow these instructions to allow notifications:"
-                    }
-                  },
-                  allowLocalhostAsSecureOrigin: true,
-                  welcomeNotification: {
-                    "title": "Texas Roadhouse Menu Updates",
-                    "message": "Thanks for subscribing! Get notified about new menu items, prices, and exclusive deals.",
-                    "url": "https://texasroadhouse-menus.us"
-                  },
-                  promptOptions: {
-                    slidedown: {
-                      prompts: [
-                        {
-                          type: "push",
-                          autoPrompt: true,
-                          text: {
-                            actionMessage: "We'd like to show you notifications for the latest menu updates and exclusive deals.",
-                            acceptButton: "Allow",
-                            cancelButton: "No Thanks"
-                          },
-                          delay: {
-                            pageViews: 1,
-                            timeDelay: 20
-                          }
-                        }
-                      ]
-                    }
-                  }
-                });
-              });
-            `
-          }}
-        />
+  src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+  strategy="afterInteractive"
+/>
+<Script
+  id="onesignal-init"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "7629b842-fb4e-4821-a9dd-e60ca450a208",
+          notifyButton: {
+            enable: true,
+            position: 'bottom-right'
+          },
+          allowLocalhostAsSecureOrigin: true,
+          welcomeNotification: {
+            title: "Texas Roadhouse Menu Updates",
+            message: "Thanks for subscribing! Get notified about new menu items, prices, and deals.",
+            url: "https://texasroadhouse-menus.us"
+          }
+        });
+      });
+    `
+  }}
+/>
+
         
         {/* Preconnect to critical domains for faster loading */}
         {pageSpeedOptimizations.preconnect.map((url) => (
