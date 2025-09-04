@@ -167,16 +167,20 @@ export default async function BlogPostPage({
       )}
 
       <main className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-8">
-          <article className="prose lg:prose-xl mx-auto p-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+          <article className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div className="px-6 sm:px-8 lg:px-12 py-8 sm:py-10 lg:py-12">
             {/* Post Title */}
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight tracking-tight">
               {post.title}
             </h1>
 
             {/* Post Date */}
-            <div className="text-gray-600 mb-8 text-lg">
-              <time dateTime={post.date}>
+            <div className="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg font-medium">
+              <time dateTime={post.date} className="inline-flex items-center">
+                <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
                 {new Date(post.date).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -187,7 +191,7 @@ export default async function BlogPostPage({
 
             {/* Featured Image - Optimized for mobile performance */}
             {post.featuredImage?.node?.sourceUrl && (
-              <div className="mb-8 -mx-6 lg:-mx-0">
+              <div className="mb-8 sm:mb-10 lg:mb-12 -mx-6 sm:-mx-8 lg:-mx-12">
                 {(() => {
                   const { width, height } = getImageDimensions(post.featuredImage.node.mediaDetails)
                   
@@ -233,8 +237,11 @@ export default async function BlogPostPage({
             {/* TODO: Check page source - WordPress images should be served via _next/image?... */}
             {/* TODO: Run Lighthouse - LCP/CLS should improve significantly */}
             {/* TODO: Test responsive scaling - images should fit screen width on all devices */}
-            <div className="prose-content responsive-blog-content">
-              {parseHtmlToNextImage(post.content)}
+            <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl max-w-none responsive-blog-content">
+              <div className="text-gray-800 leading-relaxed sm:leading-loose text-sm sm:text-base lg:text-lg">
+                {parseHtmlToNextImage(post.content)}
+              </div>
+            </div>
             </div>
           </article>
         </div>

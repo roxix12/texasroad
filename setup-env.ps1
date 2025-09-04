@@ -111,4 +111,3 @@ try {
 } catch {
     Write-Host "❌ Error creating .env.local file: $_" -ForegroundColor Red
 }
-"@
