@@ -213,29 +213,29 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
         </div>
       </section>
 
-      {/* Search & Filters Section */}
-      <section className="py-8 bg-white border-b border-stone-200 md:sticky md:top-0 z-50 shadow-sm">
+      {/* Search & Filters Section - Tablet optimized */}
+      <section className="py-6 md:py-8 bg-white border-b border-stone-200 md:sticky md:top-0 z-50 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center">
-            {/* Search Bar */}
-            <div className="relative flex-1 max-w-lg">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-stone-400" />
+          <div className="flex flex-col md:flex-row lg:flex-row gap-3 md:gap-4 items-center">
+            {/* Search Bar - Tablet optimized */}
+            <div className="relative flex-1 w-full md:max-w-md lg:max-w-lg">
+              <Search className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-stone-400" />
               <input
                 type="text"
                 placeholder="Search menu items..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent text-stone-700 placeholder-stone-400"
+                className="w-full pl-10 md:pl-12 pr-4 py-2.5 md:py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent text-stone-700 placeholder-stone-400 text-sm md:text-base"
               />
             </div>
 
-            {/* Category Filter */}
-            <div className="relative">
-              <Filter className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-stone-400" />
+            {/* Category Filter - Tablet optimized */}
+            <div className="relative w-full md:w-auto">
+              <Filter className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-stone-400" />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="pl-12 pr-8 py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent bg-white text-stone-700 min-w-[160px]"
+                className="w-full md:w-auto pl-10 md:pl-12 pr-8 py-2.5 md:py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent bg-white text-stone-700 min-w-[160px] md:min-w-[180px] text-sm md:text-base"
               >
                 {categories.map(category => (
                   <option key={category} value={category}>{category}</option>
@@ -243,12 +243,12 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
               </select>
             </div>
 
-            {/* Price Range Filter */}
-            <div className="relative">
+            {/* Price Range Filter - Tablet optimized */}
+            <div className="relative w-full md:w-auto">
               <select
                 value={selectedPriceRange}
                 onChange={(e) => setSelectedPriceRange(e.target.value)}
-                className="px-4 py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent bg-white text-stone-700 min-w-[120px]"
+                className="w-full md:w-auto px-3 md:px-4 py-2.5 md:py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent bg-white text-stone-700 min-w-[120px] md:min-w-[140px] text-sm md:text-base"
               >
                 {priceRanges.map(range => (
                   <option key={range.value} value={range.value}>{range.label}</option>
@@ -256,12 +256,12 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
               </select>
             </div>
 
-            {/* Sort Options */}
-            <div className="relative">
+            {/* Sort Options - Tablet optimized */}
+            <div className="relative w-full md:w-auto">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent bg-white text-stone-700 min-w-[140px]"
+                className="w-full md:w-auto px-3 md:px-4 py-2.5 md:py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-texas-yellow focus:border-transparent bg-white text-stone-700 min-w-[140px] md:min-w-[160px] text-sm md:text-base"
               >
                 <option value="popularity">Most Popular</option>
                 <option value="price-low">Price: Low to High</option>
@@ -271,8 +271,8 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
               </select>
             </div>
 
-            {/* Results Count */}
-            <div className="text-sm text-stone-600 font-medium">
+            {/* Results Count - Tablet optimized */}
+            <div className="text-xs md:text-sm text-stone-600 font-medium whitespace-nowrap">
               {filteredAndSortedItems.length} items found
             </div>
           </div>
@@ -304,17 +304,17 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
         </div>
       </section>
 
-      {/* Menu Categories Navigation */}
-      <section className="py-6 bg-stone-50 border-b border-stone-200">
+      {/* Menu Categories Navigation - Tablet optimized */}
+      <section className="py-4 md:py-6 bg-stone-50 border-b border-stone-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3">
             {categories.slice(1).map(category => {
               const count = groupedItems[category]?.length || 0
               return (
                 <button
                   key={category}
                   onClick={() => scrollToCategory(category)}
-                  className="group px-4 py-2 bg-white hover:bg-texas-yellow/10 border border-stone-200 hover:border-texas-yellow/30 rounded-full text-sm font-medium text-stone-700 hover:text-texas-yellow transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="group px-3 md:px-4 py-1.5 md:py-2 bg-white hover:bg-texas-yellow/10 border border-stone-200 hover:border-texas-yellow/30 rounded-full text-xs md:text-sm font-medium text-stone-700 hover:text-texas-yellow transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   {category} ({count})
                 </button>
@@ -341,10 +341,10 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                     <div className="w-24 h-1 bg-texas-yellow mx-auto rounded-full"></div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     {categoryItems.map(item => (
-                      <article key={item.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100">
-                        <div className="relative h-48 overflow-hidden">
+                      <article key={item.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 md:hover:-translate-y-2 border border-stone-100">
+                        <div className="relative h-40 md:h-48 overflow-hidden">
                           {item.image ? (
                             <Image
                               src={item.image}
@@ -385,17 +385,17 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                           </div>
                         </div>
 
-                        <div className="p-6">
-                          <h3 className="font-bold text-xl text-stone-900 mb-2 group-hover:text-texas-yellow transition-colors">
+                        <div className="p-4 md:p-6">
+                          <h3 className="font-bold text-lg md:text-xl text-stone-900 mb-2 group-hover:text-texas-yellow transition-colors">
                             {item.name}
                           </h3>
-                          <p className="text-stone-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                          <p className="text-stone-600 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2 md:line-clamp-3 leading-relaxed">
                             {item.description}
                           </p>
                           
                           <div className="flex justify-between items-center pt-3 border-t border-stone-100">
-                            <span className="text-sm text-stone-500 font-medium">{item.calories} cal</span>
-                            <span className="font-bold text-2xl text-texas-yellow bg-texas-yellow/10 px-3 py-1 rounded-lg">${item.price.toFixed(2)}</span>
+                            <span className="text-xs md:text-sm text-stone-500 font-medium">{item.calories} cal</span>
+                            <span className="font-bold text-xl md:text-2xl text-texas-yellow bg-texas-yellow/10 px-2 md:px-3 py-1 rounded-lg">${item.price.toFixed(2)}</span>
                           </div>
                         </div>
                       </article>
@@ -405,17 +405,17 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
               )
             })
           ) : (
-            // Show single category
+            // Show single category - Tablet optimized
             <section>
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-stone-900 mb-2">{selectedCategory}</h2>
-                <div className="w-24 h-1 bg-texas-yellow mx-auto rounded-full"></div>
+              <div className="text-center mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-stone-900 mb-2">{selectedCategory}</h2>
+                <div className="w-20 md:w-24 h-1 bg-texas-yellow mx-auto rounded-full"></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredAndSortedItems.map(item => (
-                  <article key={item.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100">
-                    <div className="relative h-48 overflow-hidden">
+                  <article key={item.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 md:hover:-translate-y-2 border border-stone-100">
+                    <div className="relative h-40 md:h-48 overflow-hidden">
                       {item.image ? (
                         <Image
                           src={item.image}
@@ -456,17 +456,17 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                       </div>
                     </div>
 
-                    <div className="p-6">
-                      <h3 className="font-bold text-xl text-stone-900 mb-2 group-hover:text-texas-yellow transition-colors">
+                    <div className="p-4 md:p-6">
+                      <h3 className="font-bold text-lg md:text-xl text-stone-900 mb-2 group-hover:text-texas-yellow transition-colors">
                         {item.name}
                       </h3>
-                      <p className="text-stone-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                      <p className="text-stone-600 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2 md:line-clamp-3 leading-relaxed">
                         {item.description}
                       </p>
                       
                       <div className="flex justify-between items-center pt-3 border-t border-stone-100">
-                        <span className="text-sm text-stone-500 font-medium">{item.calories} cal</span>
-                        <span className="font-bold text-2xl text-texas-yellow bg-texas-yellow/10 px-3 py-1 rounded-lg">${item.price.toFixed(2)}</span>
+                        <span className="text-xs md:text-sm text-stone-500 font-medium">{item.calories} cal</span>
+                        <span className="font-bold text-xl md:text-2xl text-texas-yellow bg-texas-yellow/10 px-2 md:px-3 py-1 rounded-lg">${item.price.toFixed(2)}</span>
                       </div>
                     </div>
                   </article>
