@@ -415,24 +415,41 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredAndSortedItems.map(item => (
                   <article key={item.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100">
-                    <div className="relative h-48 bg-gradient-to-br from-texas-yellow/20 to-orange-100 flex items-center justify-center">
-                      {/* Placeholder for menu item image */}
-                      <div className="text-center p-4">
-                        <div className="w-16 h-16 mx-auto mb-2 bg-texas-yellow/30 rounded-full flex items-center justify-center">
-                          <Star className="h-8 w-8 text-texas-yellow" />
+                    <div className="relative h-48 overflow-hidden">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={`${item.name} - Texas Roadhouse Menu ${item.category} - $${item.price.toFixed(2)}`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          priority={item.isPopular}
+                          quality={85}
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAABBQEBAQEBAQAAAAAAAAAEAQIDBQAGByERCRIi/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAhEQACAQIEBwAAAAAAAAAAAAABAgMABAUGEiEiFDFRkaGx/9oADAMBAAIRAxEAPwCdABGzRhhtgwdN"
+                          loading={item.isPopular ? "eager" : "lazy"}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center border-2 border-dashed border-amber-200">
+                          <div className="text-center p-4">
+                            <div className="w-20 h-20 mx-auto mb-3 bg-gradient-to-br from-texas-yellow to-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                              <Star className="h-10 w-10 text-white" />
+                            </div>
+                            <p className="text-sm text-stone-700 font-semibold">{item.name}</p>
+                            <p className="text-xs text-stone-500 mt-1">Photo coming soon</p>
+                          </div>
                         </div>
-                        <p className="text-sm text-stone-600 font-medium">{item.name}</p>
-                      </div>
+                      )}
                       
                       {item.isPopular && (
-                        <div className="absolute top-3 left-3">
+                        <div className="absolute top-3 left-3 z-10">
                           <span className="bg-texas-yellow text-texas-black text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
                             <Star className="h-3 w-3 fill-current" />
                             Popular
                           </span>
                         </div>
                       )}
-                      <div className="absolute bottom-3 right-3">
+                      <div className="absolute bottom-3 right-3 z-10">
                         <span className="bg-texas-yellow text-texas-black font-bold text-xl px-4 py-2 rounded-full shadow-xl border-2 border-white">
                           ${item.price.toFixed(2)}
                         </span>
