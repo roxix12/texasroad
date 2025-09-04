@@ -1,45 +1,10 @@
 import { MetadataRoute } from 'next'
-import { getApolloClient } from './lib/apollo-client'
-import { gql } from '@apollo/client'
-import { WORDPRESS_CONFIG } from './lib/config'
 
-// Revalidate sitemap every 60 seconds for real-time updates
-export const revalidate = 60
-
-interface SitemapPost {
-  slug: string
-  date: string
-  uri?: string
-}
-
-interface SitemapPage {
-  slug: string
-  date: string
-  uri?: string
-}
-
-interface SitemapCategory {
-  slug: string
-  name: string
-}
-
-interface SitemapData {
-  posts?: {
-    nodes: SitemapPost[]
-  }
-  pages?: {
-    nodes: SitemapPage[]
-  }
-  categories?: {
-    nodes: SitemapCategory[]
-  }
-}
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = WORDPRESS_CONFIG.SITE_URL.replace(/\/$/, '') // Remove trailing slash
-
-  // Static pages with priorities and change frequencies
-  const staticPages: MetadataRoute.Sitemap = [
+export default function sitemap(): MetadataRoute.Sitemap {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhouse-menus.us'
+  
+  // Static routes only - no external API calls to prevent build errors
+  const staticUrls: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
       lastModified: new Date(),
@@ -53,151 +18,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${siteUrl}/posts`,
+      url: `${siteUrl}/gift-cards`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${siteUrl}/gift-cards`,
+      url: `${siteUrl}/coupons`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${siteUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
       url: `${siteUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.7,
     },
     {
-      url: `${siteUrl}/legal`,
+      url: `${siteUrl}/posts`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${siteUrl}/terms-and-conditions`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${siteUrl}/cookies-policy`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
   ]
 
-  try {
-    // Comprehensive GraphQL query for sitemap data
-    const query = `
-      query SitemapQuery {
-        posts(first: 1000, where: { status: PUBLISH }) {
-          nodes {
-            slug
-            date
-            uri
-            modified
-          }
-        }
-        pages(first: 1000, where: { status: PUBLISH }) {
-          nodes {
-            slug
-            date
-            uri
-            modified
-          }
-        }
-        categories(first: 100, where: { hideEmpty: true }) {
-          nodes {
-            slug
-            name
-          }
-        }
-      }
-    `
-
-    console.log('🗺️ Generating dynamic sitemap from WordPress...')
-    
-    const client = getApolloClient()
-    const { data } = await client.query({
-      query: gql`${query}`,
-      errorPolicy: 'all',
-      fetchPolicy: 'cache-first',
-    })
-    
-    const sitemapData: SitemapData = data || {}
-
-    const dynamicUrls: MetadataRoute.Sitemap = []
-
-    // Add blog posts
-    if (sitemapData?.posts?.nodes) {
-      const postUrls = sitemapData.posts.nodes.map((post) => ({
-        url: `${siteUrl}/${post.slug}`,
-        lastModified: new Date(post.date),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-      }))
-      dynamicUrls.push(...postUrls)
-      console.log(`📝 Added ${postUrls.length} blog posts to sitemap`)
-    }
-
-    // Add WordPress pages (if any)
-    if (sitemapData?.pages?.nodes) {
-      const pageUrls = sitemapData.pages.nodes
-        .filter(page => page.slug !== 'home') // Exclude home page if it exists
-        .map((page) => ({
-          url: `${siteUrl}/${page.slug}`,
-          lastModified: new Date(page.date),
-          changeFrequency: 'weekly' as const,
-          priority: 0.7,
-        }))
-      dynamicUrls.push(...pageUrls)
-      console.log(`📄 Added ${pageUrls.length} WordPress pages to sitemap`)
-    }
-
-    // Add category pages
-    if (sitemapData?.categories?.nodes) {
-      const categoryUrls = sitemapData.categories.nodes.map((category) => ({
-        url: `${siteUrl}/categories/${category.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.5,
-      }))
-      dynamicUrls.push(...categoryUrls)
-      console.log(`🏷️ Added ${categoryUrls.length} category pages to sitemap`)
-    }
-
-    // Also add menu items from our existing data functions
-    try {
-      const { getMenus } = await import('./lib/data')
-      const menuResponse = await getMenus(1000) // Get all menu items
-      const menus = menuResponse.menus?.nodes || []
-      
-      const menuUrls = menus.map((menu) => ({
-        url: `${siteUrl}/menus-prices#${menu.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-      }))
-      dynamicUrls.push(...menuUrls)
-      console.log(`🍽️ Added ${menuUrls.length} menu items to sitemap`)
-    } catch (error) {
-      console.warn('⚠️ Could not load menu items for sitemap:', error)
-    }
-
-    const totalUrls = staticPages.length + dynamicUrls.length
-    console.log(`✅ Generated sitemap with ${totalUrls} total URLs`)
-
-    return [...staticPages, ...dynamicUrls]
-
-  } catch (error) {
-    console.error('❌ Error generating dynamic sitemap:', error)
-    console.log('📋 Falling back to static pages only')
-    
-    // Return static pages if WordPress is unavailable
-    return staticPages
-  }
-}
-
-// Optional: Export function to manually trigger sitemap regeneration
-export async function regenerateSitemap() {
-  console.log('🔄 Manually regenerating sitemap...')
-  return sitemap()
+  console.log(`✅ Generated static sitemap with ${staticUrls.length} URLs`)
+  return staticUrls
 }
