@@ -78,6 +78,15 @@ export function parseHtmlToNextImage(html: string): ReactNode {
         // Skip if no src
         if (!src) return domNode
         
+        // Debug logging for content images
+        console.log('Content Image Debug:', {
+          src,
+          alt,
+          width,
+          height,
+          isWordPressMedia: isWordPressMedia(src)
+        })
+        
         // If it's WordPress media, use Next.js Image for optimization
         if (isWordPressMedia(src)) {
           return (
@@ -99,6 +108,12 @@ export function parseHtmlToNextImage(html: string): ReactNode {
                   margin: '0 auto'
                 }}
                 className="rounded-lg shadow-sm"
+                onError={(e) => {
+                  console.error('WordPress image failed to load:', src)
+                }}
+                onLoad={() => {
+                  console.log('WordPress image loaded successfully:', src)
+                }}
               />
             </div>
           )

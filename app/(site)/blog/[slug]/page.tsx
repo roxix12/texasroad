@@ -3,35 +3,15 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import Image from 'next/image'
 import { parseHtmlToNextImage, getBlurDataURL, getImageDimensions } from '../../../lib/imageHelpers'
-
-// GraphQL query for single post with featured image
-const GET_POST_BY_SLUG = `
-  query PostBySlug($slug: ID!) {
-    post(id: $slug, idType: SLUG) {
-      title
-      content
-      date
-      featuredImage {
-        node {
-          altText
-          sourceUrl
-          mediaDetails {
-            width
-            height
-          }
-        }
-      }
-      seo {
-        fullHead
-      }
-    }
-  }
-`
+import { fetchPostBySlug } from '../../../lib/graphql/data-service'
 
 interface Post {
+  id: string
   title: string
   content: string
   date: string
+  slug: string
+  excerpt: string
   featuredImage?: {
     node: {
       altText: string
@@ -43,40 +23,10 @@ interface Post {
     }
   }
   seo: {
+    title: string
+    metaDesc: string
+    canonical: string
     fullHead: string
-  }
-}
-
-interface GraphQLResponse {
-  data: {
-    post: Post | null
-  }
-}
-
-async function fetchPostBySlug(slug: string): Promise<Post | null> {
-  try {
-    const response = await fetch(process.env.NEXT_PUBLIC_WORDPRESS_API_URL!, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: GET_POST_BY_SLUG,
-        variables: { slug },
-      }),
-      next: { revalidate: 300 }, // 5 minutes cache
-    })
-
-    if (!response.ok) {
-      console.error('Failed to fetch post:', response.status, response.statusText)
-      return null
-    }
-
-    const result: GraphQLResponse = await response.json()
-    return result.data?.post || null
-  } catch (error) {
-    console.error('Error fetching post:', error)
-    return null
   }
 }
 
@@ -85,7 +35,7 @@ export async function generateMetadata({
 }: { 
   params: { slug: string } 
 }): Promise<Metadata> {
-  const post = await fetchPostBySlug(params.slug)
+  const { post } = await fetchPostBySlug(params.slug)
   
   if (!post) {
     return {
@@ -138,7 +88,19 @@ export default async function BlogPostPage({
 }: { 
   params: { slug: string } 
 }) {
-  const post = await fetchPostBySlug(params.slug)
+  const { post, error } = await fetchPostBySlug(params.slug)
+
+  // Debug logging for post data
+  console.log('Blog Post Debug:', {
+    slug: params.slug,
+    post: post ? {
+      title: post.title,
+      hasContent: !!post.content,
+      hasFeaturedImage: !!post.featuredImage?.node?.sourceUrl,
+      featuredImageUrl: post.featuredImage?.node?.sourceUrl
+    } : null,
+    error
+  })
 
   if (!post) {
     notFound()
@@ -198,6 +160,16 @@ export default async function BlogPostPage({
               <div className="mb-8 -mx-6 lg:-mx-0">
                 {(() => {
                   const { width, height } = getImageDimensions(post.featuredImage.node.mediaDetails)
+                  
+                  // Debug logging for image loading
+                  console.log('Featured Image Debug:', {
+                    src: post.featuredImage.node.sourceUrl,
+                    alt: post.featuredImage.node.altText,
+                    width,
+                    height,
+                    mediaDetails: post.featuredImage.node.mediaDetails
+                  })
+                  
                   return (
                     <Image
                       src={post.featuredImage.node.sourceUrl}
@@ -213,6 +185,12 @@ export default async function BlogPostPage({
                         height: 'auto', 
                         width: '100%',
                         maxWidth: '100%'
+                      }}
+                      onError={(e) => {
+                        console.error('Featured image failed to load:', e)
+                      }}
+                      onLoad={() => {
+                        console.log('Featured image loaded successfully')
                       }}
                     />
                   )
