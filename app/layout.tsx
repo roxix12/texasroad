@@ -90,6 +90,19 @@ export default async function RootLayout({
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
         
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-F2E25YCMBK"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-F2E25YCMBK');
+            `
+          }}
+        />
+        
         {/* Preconnect to critical domains for faster loading */}
         {pageSpeedOptimizations.preconnect.map((url) => (
           <link key={url} rel="preconnect" href={url} />
