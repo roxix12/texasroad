@@ -103,6 +103,36 @@ export default async function BlogPostPage({
   })
 
   if (!post) {
+    // If there's a network error, show a helpful message instead of 404
+    if (error && error.networkError) {
+      return (
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          <div className="max-w-md mx-auto text-center p-6">
+            <div className="mb-4">
+              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 18.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Connection Issue</h1>
+            <p className="text-gray-600 mb-4">
+              We're having trouble connecting to our content server. Please try again in a few moments.
+            </p>
+            <div className="text-sm text-gray-500">
+              <p>Blog post slug: <code className="bg-gray-100 px-2 py-1 rounded">{params.slug}</code></p>
+              <p className="mt-2">If this problem persists, please contact support.</p>
+            </div>
+            <a 
+              href={`/blog/${params.slug}`}
+              className="mt-4 inline-block px-4 py-2 bg-texas-red text-white rounded hover:bg-red-700 transition-colors"
+            >
+              Try Again
+            </a>
+          </div>
+        </div>
+      )
+    }
+    
+    // Otherwise, show 404
     notFound()
   }
 

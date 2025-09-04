@@ -70,26 +70,62 @@ export async function fetchPostBySlug(slug: string) {
       throw new Error('Invalid slug provided')
     }
 
+    console.log('🔍 Fetching post by slug:', slug)
+    console.log('📡 WordPress API URL:', process.env.NEXT_PUBLIC_WORDPRESS_API_URL)
+
     const { data, error } = await client.query({
       query: GET_POST_BY_SLUG,
       variables: { slug: slug.trim() },
       errorPolicy: 'all',
       fetchPolicy: 'cache-first',
+      context: {
+        fetchOptions: {
+          timeout: 10000, // 10 second timeout
+        }
+      }
     })
 
     if (error) {
-      console.error('Apollo Client error:', error)
+      console.error('❌ Apollo Client error:', error)
+      // Check if it's a network error
+      if (error.networkError) {
+        console.error('🌐 Network Error Details:', {
+          message: error.networkError.message,
+          name: error.networkError.name,
+          stack: error.networkError.stack
+        })
+      }
     }
 
     // Safe post extraction
     const post = (data as any)?.post || null
+
+    if (post) {
+      console.log('✅ Post fetched successfully:', {
+        title: post.title,
+        slug: post.slug,
+        hasFeaturedImage: !!post.featuredImage?.node?.sourceUrl
+      })
+    } else {
+      console.warn('⚠️ No post found for slug:', slug)
+    }
 
     return {
       post,
       error
     }
   } catch (error) {
-    console.error('Error fetching post by slug:', error)
+    console.error('💥 Critical error fetching post by slug:', error)
+    
+    // Provide more detailed error information
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        message: error.message,
+        name: error.name,
+        stack: error.stack
+      })
+    }
+    
     return {
       post: null,
       error
