@@ -382,8 +382,8 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
             "publisher": {
               "@type": "Organization",
               "name": "Texas Roadhouse Menu",
-              "url": "https://texasroadhousemenu.me",
-              "logo": "https://texasroadhousemenu.me/logo.png"
+              "url": "https://texasroadhouse-menus.us",
+              "logo": "https://texasroadhouse-menus.us/logo.png"
             },
             "about": {
               "@type": "Thing",
@@ -403,7 +403,7 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
             "@type": "AggregateOffer",
             "name": "Texas Roadhouse Coupons & Deals",
             "description": "Collection of verified coupon codes and discount offers for Texas Roadhouse",
-            "url": "https://texasroadhousemenu.me",
+            "url": "https://texasroadhouse-menus.us",
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock",
             "validFrom": structuredDate,

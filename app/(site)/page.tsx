@@ -5,6 +5,7 @@ import { CouponSection } from '@/components/coupons'
 import { Button } from '@/components/ui'
 import { getFormattedDate, getISODate, getStructuredDate } from '@/lib/date'
 import { ConditionalYoastSEOHead } from '@/components/seo'
+import { generateUltimateSchema } from '../lib/seo/ultimate-schema'
 
 // Enable ISR with 300-second (5 min) revalidation for better performance
 export const revalidate = 300
@@ -16,7 +17,7 @@ export function generateMetadata(): Metadata {
   const description = `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`
   
   // Fast static metadata - no API dependencies
-  return {
+    return {
       title: `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()} - Texas Roadhouse Menu`,
       description: `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`,
       keywords: [
@@ -70,49 +71,14 @@ export function generateMetadata(): Metadata {
     }
 }
 
-// JSON-LD Schemas for Rich Snippets
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Texas Roadhouse Menu",
-  "alternateName": `Texas Roadhouse Menu with Prices 2025 - Updated ${getFormattedDate()}`,
-  "url": "https://texasroadhouse-menus.us",
-  "description": `Complete guide to Texas Roadhouse menu items, prices, calories, and nutrition information updated for ${getFormattedDate()}.`,
-  "dateModified": getISODate(),
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://texasroadhouse-menus.us/search?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Texas Roadhouse Menu",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://texasroadhouse-menus.us/logo.png"
-    }
-  },
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "description": "Latest Texas Roadhouse coupons and deals"
-  }
-}
-
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Texas Roadhouse Menu",
-  "url": "https://texasroadhouse-menus.us",
-  "logo": "https://texasroadhouse-menus.us/logo.png",
-  "description": `Your complete guide to Texas Roadhouse menu items, prices, calories, and nutrition information. Updated ${getFormattedDate()}.`,
-  "dateModified": getISODate(),
-  "sameAs": [
-    "https://www.facebook.com/texasroadhousemenu",
-    "https://www.twitter.com/txroadhousemenu"
-  ]
-}
+// ULTIMATE SEO SCHEMA for #1 Google Ranking
+const { 
+  localBusinessSchema, 
+  menuSchema, 
+  faqSchema, 
+  websiteSchema, 
+  breadcrumbSchema 
+} = generateUltimateSchema()
 
 // Lightning-fast static coupon data - no API calls needed
 function getStaticCoupons() {
@@ -165,30 +131,30 @@ function FeaturedContent() {
   // Ultra-fast static content - no async operations
   const couponData = getStaticCoupons()
 
-  return (
-    <>
-      {/* Coupons & Discount Codes Section */}
-      <CouponSection 
-        dynamicCoupons={couponData.coupons}
-        lastUpdated={new Date(couponData.metadata.last_updated).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        })}
-      />
+    return (
+      <>
+        {/* Coupons & Discount Codes Section */}
+        <CouponSection 
+          dynamicCoupons={couponData.coupons}
+          lastUpdated={new Date(couponData.metadata.last_updated).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          })}
+        />
 
         {/* Quick Links Section - Fast static content */}
         <section className="py-12 bg-sand/30">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
-              <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl text-stone mb-4">
+                <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl text-stone mb-4">
                 Explore Texas Roadhouse
-              </h2>
-              <p className="text-lg text-stone/70 max-w-2xl mx-auto">
+                </h2>
+                <p className="text-lg text-stone/70 max-w-2xl mx-auto">
                 Find everything you need for your next Texas Roadhouse visit
-              </p>
-            </div>
-            
+                </p>
+              </div>
+              
             <div className="grid md:grid-cols-3 gap-6">
               <Link href="/menus-prices" className="group p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
                 <h3 className="font-slab font-bold text-xl text-stone mb-2 group-hover:text-texas-yellow">
@@ -283,13 +249,26 @@ export default function HomePage() {
       {/* Fallback JSON-LD Schemas for Rich Snippets (when no Yoast) */}
       {!homePageSEO.hasYoastSEO && (
         <>
+          {/* ULTIMATE SEO SCHEMA for #1 Google Ranking */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(menuSchema) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
           />
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
           />
         </>
       )}
@@ -327,7 +306,7 @@ export default function HomePage() {
        </section>
 
       {/* Featured Content - No Suspense needed for static content */}
-      <FeaturedContent />
+        <FeaturedContent />
     </>
   )
 }
