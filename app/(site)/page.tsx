@@ -120,27 +120,36 @@ function getStaticCoupons() {
     coupons: [
       {
         code: "ROADHOUSE15",
+        title: "15% Off Texas Roadhouse",
         discount: "15% Off",
         description: "Save 15% on your next Texas Roadhouse visit",
-        category: "General",
-        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-        termsConditions: "Valid on dine-in orders. Cannot be combined with other offers."
+        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        terms: "Valid on dine-in orders. Cannot be combined with other offers.",
+        type: "code" as const,
+        verified: "Verified",
+        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         code: "STEAKDEAL",
+        title: "$5 Off Steak Entrees",
         discount: "$5 Off",
         description: "$5 off any steak entree",
-        category: "Steaks",
-        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-        termsConditions: "Valid on steak entrees only. Minimum order required."
+        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        terms: "Valid on steak entrees only. Minimum order required.",
+        type: "deal" as const,
+        verified: "Verified",
+        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       },
       {
         code: "FAMILYFEAST",
+        title: "20% Off Family Meals",
         discount: "20% Off",
         description: "20% off family meal packages",
-        category: "Family Deals",
-        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-        termsConditions: "Valid on family packages for 4 or more people."
+        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        terms: "Valid on family packages for 4 or more people.",
+        type: "discount" as const,
+        verified: "Verified",
+        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       }
     ],
     metadata: {

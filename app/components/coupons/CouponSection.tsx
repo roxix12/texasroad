@@ -25,11 +25,16 @@ interface FAQItem {
   answer: string
 }
 
-export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSectionProps = {}) {
+export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSectionProps) {
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null)
   const [copiedCode, setCopiedCode] = useState<string | null>(null)
   const [loadedCoupons, setLoadedCoupons] = useState<GeneratedCoupon[]>([])
-  const [couponMetadata, setCouponMetadata] = useState<any>(null)
+  const [couponMetadata, setCouponMetadata] = useState<{
+    total_count: number;
+    last_updated: string;
+    source: string;
+    version: string;
+  } | null>(null)
   const [timeUntilUpdate, setTimeUntilUpdate] = useState<string>('Calculating...')
   const [isLoading, setIsLoading] = useState(true)
   

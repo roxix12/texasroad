@@ -1,5 +1,5 @@
 // Yoast SEO integration for WordPress GraphQL
-import { replaceYoastUrls, sanitizeYoastSEO, sanitizeSchemaData } from './url-sanitization'
+import { replaceYoastUrls, sanitizeSchemaData } from './url-sanitization'
 
 export interface YoastSEO {
   title?: string | null

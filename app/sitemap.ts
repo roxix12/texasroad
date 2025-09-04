@@ -122,7 +122,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       fetchPolicy: 'cache-first',
     })
     
-    const sitemapData: SitemapData = (data as any) || {}
+    const sitemapData: SitemapData = data || {}
 
     const dynamicUrls: MetadataRoute.Sitemap = []
 
