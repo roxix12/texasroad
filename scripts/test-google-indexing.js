@@ -29,7 +29,8 @@ async function testGoogleIndexingAPI() {
     console.log('1. Go to Google Cloud Console');
     console.log('2. Create a Service Account with Indexing API access');
     console.log('3. Download the JSON key file');
-    console.log('4. Add these to your .env.local:');
+    console.log('4. Add these to your 
+      .env.local:');
     console.log('   GOOGLE_CLIENT_EMAIL=your-service-account@project.iam.gserviceaccount.com');
     console.log('   GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"');
     console.log('5. Add the service account email as Owner in Google Search Console\n');

@@ -1,0 +1,312 @@
+{
+  "lastUpdated": "2025-09-04T02:14:18.726Z",
+  "totalImages": 35,
+  "categories": {
+    "Starters": [
+      "cactus-blossom.jpg",
+      "fried-mozzarella.jpg",
+      "rattlesnake-bites.jpg",
+      "buffalo-wings.jpg",
+      "loaded-sweet-potato.jpg"
+    ],
+    "Steaks": [
+      "prime-ribeye.jpg",
+      "choice-sirloin.jpg",
+      "dallas-filet.jpg",
+      "ny-strip.jpg"
+    ],
+    "Ribs": [
+      "fall-off-ribs.jpg"
+    ],
+    "Combos": [
+      "bbq-combo.jpg"
+    ],
+    "Chicken": [
+      "grilled-chicken.jpg",
+      "chicken-critters.jpg",
+      "herb-crusted-chicken.jpg"
+    ],
+    "Seafood": [
+      "grilled-salmon.jpg",
+      "grilled-shrimp.jpg"
+    ],
+    "Burgers": [
+      "roadhouse-burger.jpg",
+      "bbq-bacon-burger.jpg",
+      "pulled-pork-sandwich.jpg"
+    ],
+    "Sides": [
+      "seasoned-rice.jpg",
+      "mashed-potatoes.jpg",
+      "green-beans.jpg",
+      "mac-cheese.jpg",
+      "steak-fries.jpg"
+    ],
+    "Salads": [
+      "house-salad.jpg",
+      "grilled-chicken-salad.jpg"
+    ],
+    "Desserts": [
+      "big-ol-brownie.jpg",
+      "apple-pie.jpg"
+    ],
+    "Kids": [
+      "kids-burger.jpg",
+      "kids-chicken.jpg"
+    ],
+    "Drinks": [
+      "legendary-margarita.jpg",
+      "texas-tea.jpg",
+      "iced-tea.jpg",
+      "coca-cola.jpg",
+      "fresh-coffee.jpg"
+    ]
+  },
+  "images": [
+    {
+      "filename": "cactus-blossom.jpg",
+      "name": "Cactus Blossom",
+      "category": "Starters",
+      "path": "/menu/cactus-blossom.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "fried-mozzarella.jpg",
+      "name": "Fried Mozzarella",
+      "category": "Starters",
+      "path": "/menu/fried-mozzarella.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "rattlesnake-bites.jpg",
+      "name": "Rattlesnake Bites",
+      "category": "Starters",
+      "path": "/menu/rattlesnake-bites.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "buffalo-wings.jpg",
+      "name": "Boneless Buffalo Wings",
+      "category": "Starters",
+      "path": "/menu/buffalo-wings.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "loaded-sweet-potato.jpg",
+      "name": "Loaded Sweet Potato",
+      "category": "Starters",
+      "path": "/menu/loaded-sweet-potato.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "prime-ribeye.jpg",
+      "name": "USDA Prime Ribeye",
+      "category": "Steaks",
+      "path": "/menu/prime-ribeye.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "choice-sirloin.jpg",
+      "name": "USDA Choice Sirloin",
+      "category": "Steaks",
+      "path": "/menu/choice-sirloin.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "dallas-filet.jpg",
+      "name": "Dallas Filet",
+      "category": "Steaks",
+      "path": "/menu/dallas-filet.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "ny-strip.jpg",
+      "name": "New York Strip",
+      "category": "Steaks",
+      "path": "/menu/ny-strip.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "fall-off-ribs.jpg",
+      "name": "Fall-Off-The-Bone Ribs",
+      "category": "Ribs",
+      "path": "/menu/fall-off-ribs.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "bbq-combo.jpg",
+      "name": "BBQ Combo",
+      "category": "Combos",
+      "path": "/menu/bbq-combo.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "grilled-chicken.jpg",
+      "name": "Grilled Chicken",
+      "category": "Chicken",
+      "path": "/menu/grilled-chicken.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "chicken-critters.jpg",
+      "name": "Chicken Critters",
+      "category": "Chicken",
+      "path": "/menu/chicken-critters.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "herb-crusted-chicken.jpg",
+      "name": "Herb Crusted Chicken",
+      "category": "Chicken",
+      "path": "/menu/herb-crusted-chicken.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "grilled-salmon.jpg",
+      "name": "Grilled Salmon",
+      "category": "Seafood",
+      "path": "/menu/grilled-salmon.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "grilled-shrimp.jpg",
+      "name": "Grilled Shrimp",
+      "category": "Seafood",
+      "path": "/menu/grilled-shrimp.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "roadhouse-burger.jpg",
+      "name": "Roadhouse Burger",
+      "category": "Burgers",
+      "path": "/menu/roadhouse-burger.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "bbq-bacon-burger.jpg",
+      "name": "BBQ Bacon Cheeseburger",
+      "category": "Burgers",
+      "path": "/menu/bbq-bacon-burger.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "pulled-pork-sandwich.jpg",
+      "name": "Pulled Pork Sandwich",
+      "category": "Burgers",
+      "path": "/menu/pulled-pork-sandwich.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "seasoned-rice.jpg",
+      "name": "Seasoned Rice",
+      "category": "Sides",
+      "path": "/menu/seasoned-rice.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "mashed-potatoes.jpg",
+      "name": "Mashed Potatoes",
+      "category": "Sides",
+      "path": "/menu/mashed-potatoes.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "green-beans.jpg",
+      "name": "Green Beans",
+      "category": "Sides",
+      "path": "/menu/green-beans.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "mac-cheese.jpg",
+      "name": "Mac & Cheese",
+      "category": "Sides",
+      "path": "/menu/mac-cheese.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "steak-fries.jpg",
+      "name": "Steak Fries",
+      "category": "Sides",
+      "path": "/menu/steak-fries.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "house-salad.jpg",
+      "name": "House Salad",
+      "category": "Salads",
+      "path": "/menu/house-salad.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "grilled-chicken-salad.jpg",
+      "name": "Grilled Chicken Salad",
+      "category": "Salads",
+      "path": "/menu/grilled-chicken-salad.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "big-ol-brownie.jpg",
+      "name": "Big Ol' Brownie",
+      "category": "Desserts",
+      "path": "/menu/big-ol-brownie.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "apple-pie.jpg",
+      "name": "Apple Pie",
+      "category": "Desserts",
+      "path": "/menu/apple-pie.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "kids-burger.jpg",
+      "name": "Kids Burger",
+      "category": "Kids",
+      "path": "/menu/kids-burger.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "kids-chicken.jpg",
+      "name": "Kids Chicken",
+      "category": "Kids",
+      "path": "/menu/kids-chicken.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "legendary-margarita.jpg",
+      "name": "Legendary Margarita",
+      "category": "Drinks",
+      "path": "/menu/legendary-margarita.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "texas-tea.jpg",
+      "name": "Texas Tea",
+      "category": "Drinks",
+      "path": "/menu/texas-tea.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "iced-tea.jpg",
+      "name": "Fresh Brewed Iced Tea",
+      "category": "Drinks",
+      "path": "/menu/iced-tea.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "coca-cola.jpg",
+      "name": "Coca-Cola Products",
+      "category": "Drinks",
+      "path": "/menu/coca-cola.jpg",
+      "status": "placeholder_needed"
+    },
+    {
+      "filename": "fresh-coffee.jpg",
+      "name": "Fresh Coffee",
+      "category": "Drinks",
+      "path": "/menu/fresh-coffee.jpg",
+      "status": "placeholder_needed"
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "lastUpdated": "2025-01-15T00:00:00Z",
+  "metadata": {
+    "source": "Official Texas Roadhouse Menu Analysis",
+    "version": "2025.1",
+    "totalItems": 95,
+    "categories": 13
+  },
+  "categories": [
+    {
+      "id": "starters",
+      "name": "Just for Starters", 
+      "slug": "starters",
+      "description": "Shareable appetizers to start your meal right",
+      "featured": true,
+      "image": "/images/categories/starters.jpg"
+    },
+    {
+      "id": "salads",
+      "name": "Salads",
+      "slug": "salads", 
+      "description": "Fresh, hearty salads with your choice of protein",
+      "featured": false,
+      "image": "/images/categories/salads.jpg"
+    },
+    {
+      "id": "steaks",
+      "name": "Hand-Cut Steaks",
+      "slug": "hand-cut-steaks",
+      "description": "Premium USDA Choice steaks, hand-cut fresh daily",
+      "featured": true,
+      "image": "/images/categories/steaks.jpg"
+    },
+    {
+      "id": "ribs", 
+      "name": "Fall-Off-The-Bone Ribs",
+      "slug": "ribs",
+      "description": "Slow-cooked St. Louis style ribs with signature sauce",
+      "featured": true,
+      "image": "/images/categories/ribs.jpg"
+    },
+    {
+      "id": "combos",
+      "name": "Texas Size Combos", 
+      "slug": "combos",
+      "description": "Perfect combinations for hearty appetites",
+      "featured": false,
+      "image": "/images/categories/combos.jpg"
+    },
+    {
+      "id": "seafood",
+      "name": "Dockside Favorites",
+      "slug": "dockside-favorites", 
+      "description": "Fresh seafood grilled to perfection",
+      "featured": false,
+      "image": "/images/categories/seafood.jpg"
+    },
+    {
+      "id": "chicken",
+      "name": "Chicken Specialties",
+      "slug": "chicken-specialties",
+      "description": "Tender chicken prepared multiple delicious ways", 
+      "featured": false,
+      "image": "/images/categories/chicken.jpg"
+    },
+    {
+      "id": "country",
+      "name": "Country Dinners",
+      "slug": "country-dinners",
+      "description": "Hearty country-style meals with comfort flavors",
+      "featured": false,
+      "image": "/images/categories/country.jpg"
+    },
+    {
+      "id": "burgers",
+      "name": "Burgers & Sandwiches", 
+      "slug": "burgers-sandwiches",
+      "description": "Juicy burgers and hearty sandwiches",
+      "featured": false,
+      "image": "/images/categories/burgers.jpg"
+    },
+    {
+      "id": "sides",
+      "name": "Sides & Extras",
+      "slug": "sides-extras", 
+      "description": "Perfect sides to complete your meal",
+      "featured": false,
+      "image": "/images/categories/sides.jpg"
+    },
+    {
+      "id": "kids",
+      "name": "Kids & Ranger Meals",
+      "slug": "kids-ranger-meals",
+      "description": "Kid-friendly portions and flavors", 
+      "featured": false,
+      "image": "/images/categories/kids.jpg"
+    },
+    {
+      "id": "desserts", 
+      "name": "Desserts",
+      "slug": "desserts",
+      "description": "Sweet endings to your Texas Roadhouse experience",
+      "featured": false,
+      "image": "/images/categories/desserts.jpg"
+    },
+    {
+      "id": "family",
+      "name": "Family Meals, Deals & Bundles",
+      "slug": "family-meals",
+      "description": "Family-sized portions perfect for sharing",
+      "featured": false, 
+      "image": "/images/categories/family.jpg"
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "cactus-blossom",
+      "name": "Cactus Blossom",
+      "slug": "cactus-blossom",
+      "category": "starters",
+      "price": 9.99,
+      "calories": 2250,
+      "description": "Our signature appetizer! A bloomin' fried onion with tangy horseradish sauce.",
+      "ingredients": ["Sweet onion", "Seasoned flour", "Horseradish sauce"],
+      "allergens": ["gluten", "dairy"],
+      "isPopular": true,
+      "isSignature": true,
+      "isNew": false,
+      "spiceLevel": 1,
+      "prepTime": "8-10 minutes",
+      "image": "/images/menu/cactus-blossom.jpg",
+      "nutritionFacts": {
+        "calories": 2250,
+        "fat": 145,
+        "saturatedFat": 45,
+        "cholesterol": 0,
+        "sodium": 3840,
+        "carbs": 210,
+        "fiber": 15,
+        "sugars": 45,
+        "protein": 30
+      },
+      "tags": ["vegetarian", "shareable", "signature"]
+    },
+    {
+      "id": "fried-pickles", 
+      "name": "Fried Pickles",
+      "slug": "fried-pickles",
+      "category": "starters",
+      "price": 9.49,
+      "calories": 550,
+      "description": "Sliced dill pickles battered and fried golden brown, served with ranch dressing.",
+      "ingredients": ["Dill pickle spears", "Seasoned batter", "Ranch dressing"],
+      "allergens": ["gluten", "dairy"],
+      "isPopular": true,
+      "isSignature": false,
+      "isNew": false,
+      "spiceLevel": 0,
+      "prepTime": "6-8 minutes", 
+      "image": "/images/menu/fried-pickles.jpg",
+      "nutritionFacts": {
+        "calories": 550,
+        "fat": 35,
+        "saturatedFat": 8,
+        "cholesterol": 25,
+        "sodium": 2180,
+        "carbs": 48,
+        "fiber": 4,
+        "sugars": 8,
+        "protein": 12
+      },
+      "tags": ["vegetarian", "crispy"]
+    },
+    {
+      "id": "hand-cut-sirloin-6oz",
+      "name": "Hand-Cut Sirloin 6oz", 
+      "slug": "hand-cut-sirloin-6oz",
+      "category": "steaks",
+      "price": 13.49,
+      "calories": 250,
+      "description": "USDA Choice sirloin, hand-cut fresh and grilled to order. Served with choice of two sides.",
+      "ingredients": ["USDA Choice sirloin", "Texas Roadhouse seasoning"],
+      "allergens": [],
+      "isPopular": true,
+      "isSignature": false,
+      "isNew": false,
+      "spiceLevel": 0,
+      "prepTime": "12-18 minutes",
+      "image": "/images/menu/sirloin-6oz.jpg",
+      "cookingTemps": ["Rare", "Medium Rare", "Medium", "Medium Well", "Well Done"],
+      "nutritionFacts": {
+        "calories": 250,
+        "fat": 12,
+        "saturatedFat": 5,
+        "cholesterol": 85,
+        "sodium": 580,
+        "carbs": 0,
+        "fiber": 0,
+        "sugars": 0,
+        "protein": 35
+      },
+      "tags": ["gluten-free", "high-protein", "lean"]
+    },
+    {
+      "id": "hand-cut-sirloin-8oz",
+      "name": "Hand-Cut Sirloin 8oz",
+      "slug": "hand-cut-sirloin-8oz", 
+      "category": "steaks",
+      "price": 15.49,
+      "calories": 330,
+      "description": "USDA Choice sirloin, hand-cut fresh and grilled to order. Served with choice of two sides.",
+      "ingredients": ["USDA Choice sirloin", "Texas Roadhouse seasoning"],
+      "allergens": [],
+      "isPopular": true,
+      "isSignature": false,
+      "isNew": false,
+      "spiceLevel": 0,
+      "prepTime": "12-18 minutes",
+      "image": "/images/menu/sirloin-8oz.jpg", 
+      "cookingTemps": ["Rare", "Medium Rare", "Medium", "Medium Well", "Well Done"],
+      "nutritionFacts": {
+        "calories": 330,
+        "fat": 16,
+        "saturatedFat": 7,
+        "cholesterol": 115,
+        "sodium": 770,
+        "carbs": 0,
+        "fiber": 0,
+        "sugars": 0,
+        "protein": 46
+      },
+      "tags": ["gluten-free", "high-protein"]
+    },
+    {
+      "id": "ribeye-12oz",
+      "name": "Ft. Worth Ribeye 12oz",
+      "slug": "ft-worth-ribeye-12oz",
+      "category": "steaks", 
+      "price": 22.99,
+      "calories": 960,
+      "description": "Hand-cut ribeye, seasoned and grilled to perfection. Known for its marbling and flavor.",
+      "ingredients": ["USDA Choice ribeye", "Texas Roadhouse seasoning"],
+      "allergens": [],
+      "isPopular": true,
+      "isSignature": true,
+      "isNew": false,
+      "spiceLevel": 0,
+      "prepTime": "15-20 minutes",
+      "image": "/images/menu/ribeye-12oz.jpg",
+      "cookingTemps": ["Rare", "Medium Rare", "Medium", "Medium Well", "Well Done"],
+      "nutritionFacts": {
+        "calories": 960,
+        "fat": 75,
+        "saturatedFat": 32,
+        "cholesterol": 190,
+        "sodium": 970,
+        "carbs": 0,
+        "fiber": 0,
+        "sugars": 0,
+        "protein": 65
+      },
+      "tags": ["gluten-free", "signature", "marbled"]
+    },
+    {
+      "id": "half-slab-ribs",
+      "name": "1/2 Slab Fall-Off-The-Bone Ribs",
+      "slug": "half-slab-ribs",
+      "category": "ribs",
+      "price": 20.49,
+      "calories": 900,
+      "description": "St. Louis style ribs, slow-cooked and slathered in our signature BBQ sauce.",
+      "ingredients": ["St. Louis ribs", "Texas Roadhouse BBQ sauce", "Dry rub seasoning"],
+      "allergens": ["gluten"],
+      "isPopular": true,
+      "isSignature": true,
+      "isNew": false,
+      "spiceLevel": 1,
+      "prepTime": "25-30 minutes",
+      "image": "/images/menu/half-slab-ribs.jpg",
+      "nutritionFacts": {
+        "calories": 900,
+        "fat": 55,
+        "saturatedFat": 20,
+        "cholesterol": 180,
+        "sodium": 1850,
+        "carbs": 35,
+        "fiber": 2,
+        "sugars": 30,
+        "protein": 70
+      },
+      "tags": ["signature", "slow-cooked", "bbq"]
+    }
+  ],
+  "priceRanges": [
+    {"label": "Under $10", "min": 0, "max": 9.99},
+    {"label": "$10 - $15", "min": 10, "max": 15.99}, 
+    {"label": "$16 - $20", "min": 16, "max": 20.99},
+    {"label": "$21 - $25", "min": 21, "max": 25.99},
+    {"label": "Over $25", "min": 26, "max": 999}
+  ],
+  "dietaryFilters": [
+    {"id": "gluten-free", "name": "Gluten-Free", "description": "Items without gluten-containing ingredients"},
+    {"id": "vegetarian", "name": "Vegetarian", "description": "No meat or fish"},
+    {"id": "high-protein", "name": "High Protein", "description": "25g+ protein per serving"},
+    {"id": "under-500-cal", "name": "Under 500 Calories", "description": "Lower calorie options"},
+    {"id": "signature", "name": "Signature Items", "description": "Texas Roadhouse specialties"}
+  ]
+}

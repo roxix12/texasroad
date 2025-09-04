@@ -17,9 +17,14 @@ const footerLinks = {
   ],
   company: [
     { label: 'About Us', href: '/about' },
+    { label: 'Gift Cards', href: '/gift-cards' },
     { label: 'Contact', href: '/contact' },
     { label: 'Blog', href: '/posts' },
-    { label: 'Legal', href: '/legal' },
+  ],
+  legal: [
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms & Conditions', href: '/terms-and-conditions' },
+    { label: 'Cookies Policy', href: '/cookies-policy' },
   ],
   social: [
     { 
@@ -63,7 +68,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         {/* Main footer content */}
         <div className="py-8 sm:py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
             {/* Newsletter signup */}
             <div className="sm:col-span-2 lg:col-span-2">
               <h3 className="font-slab font-slab-bold text-lg sm:text-xl mb-3 sm:mb-4 text-texas-yellow">
@@ -131,6 +136,25 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Legal links */}
+            <div>
+              <h3 className="font-slab font-slab-bold text-base sm:text-lg mb-3 sm:mb-4 text-texas-yellow">
+                Legal
+              </h3>
+              <ul className="space-y-1.5 sm:space-y-2">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href as any}
+                      className="text-white/80 hover:text-texas-yellow transition-colors duration-200 text-sm sm:text-base touch-manipulation block py-1"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
               
               <div className="mt-4 sm:mt-6">
                 <h4 className="font-medium mb-2 text-texas-yellow text-sm sm:text-base">Official Site</h4>
@@ -167,6 +191,17 @@ export function Footer() {
             </div>
             
             <div className="text-center sm:text-right max-w-full sm:max-w-md">
+              <div className="flex flex-wrap justify-center sm:justify-end gap-3 mb-3 text-xs">
+                <Link href="/privacy-policy" className="text-white/60 hover:text-texas-yellow transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms-and-conditions" className="text-white/60 hover:text-texas-yellow transition-colors">
+                  Terms & Conditions
+                </Link>
+                <Link href="/cookies-policy" className="text-white/60 hover:text-texas-yellow transition-colors">
+                  Cookies Policy
+                </Link>
+              </div>
               <p className="text-white/60 text-xs leading-relaxed px-2 sm:px-0">
                 <strong>Disclaimer:</strong> Texas Roadhouse Menu is an independent informational site. 
                 We are not affiliated with or endorsed by Texas Roadhouse. 

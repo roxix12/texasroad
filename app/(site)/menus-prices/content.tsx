@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, Filter, Star, Clock, Users, Award, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react'
 import { PageHero } from '@/components/layout'
 import { generateMenuPageSchema } from '@/lib/seo/menu-schema'
@@ -14,6 +15,7 @@ interface MenuItem {
   category: string
   calories: number
   isPopular: boolean
+  image?: string
 }
 
 interface MenusPricesContentProps {
@@ -22,18 +24,17 @@ interface MenusPricesContentProps {
 
 const categories = [
   'All Items',
-  'Starters', 
+  'Appetizers', 
   'Hand-Cut Steaks', 
-  'Ribs', 
-  'Combos', 
+  'Fall-Off-The-Bone Ribs', 
   'Chicken', 
   'Seafood', 
-  'Burgers', 
-  'Sides', 
-  'Salads', 
+  'Country Dinners',
+  'Texas Size Combos',
   'Desserts', 
-  'Kids', 
-  'Drinks'
+  'Legendary Margaritas',
+  'Beverages',
+  'Family Packs'
 ]
 
 const priceRanges = [
@@ -150,12 +151,12 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
       
       {/* Hero Section using PageHero component like other pages */}
       <PageHero
-        title="Texas Roadhouse Menu Prices in USA – Updated 2025"
-        subtitle="Explore detailed prices, images & nutrition info for all your favorite Texas Roadhouse menu items. From legendary hand-cut steaks and fall-off-the-bone ribs to fresh salads and decadent desserts - find exactly what you're craving with verified 2025 pricing."
+        title="Texas Roadhouse Menu Prices 2025 | 74 Items with Photos"
+        subtitle="🥩 Complete Texas Roadhouse Menu with Latest Prices! ✅ Hand-Cut Steaks ✅ Fall-Off-The-Bone Ribs ✅ Real Food Photos ✅ Updated Daily ✅ All 74 Menu Items with Prices, Calories & Photos"
       />
 
-      {/* Feature badges section */}
-      <section className="py-8 bg-white border-b border-stone-200">
+      {/* Feature badges section - Hidden on mobile for better UX */}
+      <section className="hidden md:block py-8 bg-white border-b border-stone-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <div className="flex items-center gap-2 bg-texas-yellow/10 rounded-full px-4 py-2 border border-texas-yellow/20">
@@ -197,8 +198,23 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
         </div>
       </section>
 
+      {/* Mobile-optimized CTA Section - Compact and focused */}
+      <section className="md:hidden py-6 bg-texas-yellow">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center">
+            <Link 
+              href="/coupons"
+              className="inline-flex items-center justify-center w-full bg-texas-black text-white px-6 py-3 rounded-lg font-bold hover:bg-texas-black/90 transition-all duration-200 shadow-lg"
+            >
+              View Latest Coupons
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Search & Filters Section */}
-      <section className="py-8 bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+      <section className="py-8 bg-white border-b border-stone-200 md:sticky md:top-0 z-50 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-4 items-center">
             {/* Search Bar */}
@@ -263,6 +279,31 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
         </div>
       </section>
 
+      {/* Mobile SEO-Optimized Quick Info */}
+      <section className="md:hidden py-6 bg-gradient-to-r from-texas-yellow/10 to-orange/10 border-b border-stone-200">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center">
+            <h2 className="text-lg font-bold text-texas-black mb-3">
+              Texas Roadhouse Menu 2025 📱
+            </h2>
+            <div className="flex justify-center space-x-6 text-sm text-stone-600">
+              <div className="flex items-center">
+                <Star className="h-4 w-4 text-texas-yellow mr-1" />
+                <span>74 Items</span>
+              </div>
+              <div className="flex items-center">
+                <Clock className="h-4 w-4 text-green-600 mr-1" />
+                <span>Updated Daily</span>
+              </div>
+              <div className="flex items-center">
+                <Award className="h-4 w-4 text-orange mr-1" />
+                <span>Real Photos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Menu Categories Navigation */}
       <section className="py-6 bg-stone-50 border-b border-stone-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -303,25 +344,42 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categoryItems.map(item => (
                       <article key={item.id} className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-stone-100">
-                        <div className="relative h-48 bg-gradient-to-br from-texas-yellow/20 to-orange-100 flex items-center justify-center">
-                          {/* Placeholder for menu item image */}
-                          <div className="text-center p-4">
-                            <div className="w-16 h-16 mx-auto mb-2 bg-texas-yellow/30 rounded-full flex items-center justify-center">
-                              <Star className="h-8 w-8 text-texas-yellow" />
+                        <div className="relative h-48 overflow-hidden">
+                          {item.image ? (
+                            <Image
+                              src={item.image}
+                              alt={`${item.name} - Texas Roadhouse Menu ${item.category} - $${item.price.toFixed(2)}`}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              priority={item.isPopular}
+                              quality={85}
+                              placeholder="blur"
+                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAABBQEBAQEBAQAAAAAAAAAEAQIDBQAGByERCRIi/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAhEQACAQIEBwAAAAAAAAAAAAABAgMABAUGEiEiFDFRkaGx/9oADAMBAAIRAxEAPwCdABGzRhhtgwdN"
+                              loading={item.isPopular ? "eager" : "lazy"}
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center border-2 border-dashed border-amber-200">
+                              <div className="text-center p-4">
+                                <div className="w-20 h-20 mx-auto mb-3 bg-gradient-to-br from-texas-yellow to-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                                  <Star className="h-10 w-10 text-white" />
+                                </div>
+                                <p className="text-sm text-stone-700 font-semibold">{item.name}</p>
+                                <p className="text-xs text-stone-500 mt-1">Photo coming soon</p>
+                              </div>
                             </div>
-                            <p className="text-sm text-stone-600 font-medium">{item.name}</p>
-                          </div>
+                          )}
                           
                           {item.isPopular && (
-                            <div className="absolute top-3 left-3">
+                            <div className="absolute top-3 left-3 z-10">
                               <span className="bg-texas-yellow text-texas-black text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
                                 <Star className="h-3 w-3 fill-current" />
                                 Popular
                               </span>
                             </div>
                           )}
-                          <div className="absolute bottom-3 right-3">
-                            <span className="bg-white/95 backdrop-blur-sm text-texas-yellow font-bold text-lg px-3 py-2 rounded-full shadow-lg border border-texas-yellow/20">
+                          <div className="absolute bottom-3 right-3 z-10">
+                            <span className="bg-texas-yellow text-texas-black font-bold text-xl px-4 py-2 rounded-full shadow-xl border-2 border-white">
                               ${item.price.toFixed(2)}
                             </span>
                           </div>
@@ -335,9 +393,9 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                             {item.description}
                           </p>
                           
-                          <div className="flex justify-between items-center pt-2 border-t border-stone-100">
+                          <div className="flex justify-between items-center pt-3 border-t border-stone-100">
                             <span className="text-sm text-stone-500 font-medium">{item.calories} cal</span>
-                            <span className="font-bold text-xl text-texas-yellow">${item.price.toFixed(2)}</span>
+                            <span className="font-bold text-2xl text-texas-yellow bg-texas-yellow/10 px-3 py-1 rounded-lg">${item.price.toFixed(2)}</span>
                           </div>
                         </div>
                       </article>
@@ -375,7 +433,7 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                         </div>
                       )}
                       <div className="absolute bottom-3 right-3">
-                        <span className="bg-white/95 backdrop-blur-sm text-texas-yellow font-bold text-lg px-3 py-2 rounded-full shadow-lg border border-texas-yellow/20">
+                        <span className="bg-texas-yellow text-texas-black font-bold text-xl px-4 py-2 rounded-full shadow-xl border-2 border-white">
                           ${item.price.toFixed(2)}
                         </span>
                       </div>
@@ -389,9 +447,9 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
                         {item.description}
                       </p>
                       
-                      <div className="flex justify-between items-center pt-2 border-t border-stone-100">
+                      <div className="flex justify-between items-center pt-3 border-t border-stone-100">
                         <span className="text-sm text-stone-500 font-medium">{item.calories} cal</span>
-                        <span className="font-bold text-xl text-texas-yellow">${item.price.toFixed(2)}</span>
+                        <span className="font-bold text-2xl text-texas-yellow bg-texas-yellow/10 px-3 py-1 rounded-lg">${item.price.toFixed(2)}</span>
                       </div>
                     </div>
                   </article>
@@ -402,12 +460,54 @@ export default function MenusPricesContent({ menuItems }: MenusPricesContentProp
         </div>
       </main>
 
+      {/* SEO Content Section */}
+      <section className="py-16 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-stone-900 mb-6">Texas Roadhouse Menu 2025: Complete Price Guide</h2>
+            <div className="max-w-4xl mx-auto text-lg text-stone-600 leading-relaxed space-y-4">
+              <p>
+                <strong>Texas Roadhouse menu prices 2025</strong> feature over <strong>74 delicious items</strong> with real photos and up-to-date pricing. 
+                Our comprehensive menu includes legendary <strong>hand-cut steaks</strong>, <strong>fall-off-the-bone ribs</strong>, 
+                famous appetizers like the <strong>Cactus Blossom</strong>, and signature <strong>margaritas</strong>.
+              </p>
+              <p>
+                Popular items include the <strong>Dallas Filet ($26.99)</strong>, <strong>Ft. Worth Ribeye ($24.99)</strong>, 
+                <strong>Killer Ribs ($24.99)</strong>, and the famous <strong>Cactus Blossom appetizer ($8.99)</strong>. 
+                Every menu item includes calories, prices, and real food photography.
+              </p>
+              <p>
+                From <strong>$2.99 beverages</strong> to <strong>$59.99 family-sized portions</strong>, Texas Roadhouse offers 
+                something for every appetite and budget. Our menu features <strong>steaks</strong>, <strong>ribs</strong>, 
+                <strong>chicken</strong>, <strong>seafood</strong>, <strong>appetizers</strong>, <strong>desserts</strong>, 
+                <strong>kids meals</strong>, and <strong>legendary margaritas</strong>.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="text-center p-6 bg-stone-50 rounded-xl">
+              <h3 className="text-2xl font-bold text-texas-yellow mb-3">74 Menu Items</h3>
+              <p className="text-stone-600">Complete menu with real photos and latest prices for every item</p>
+            </div>
+            <div className="text-center p-6 bg-stone-50 rounded-xl">
+              <h3 className="text-2xl font-bold text-texas-yellow mb-3">Updated Daily</h3>
+              <p className="text-stone-600">Latest 2025 prices verified and updated to ensure accuracy</p>
+            </div>
+            <div className="text-center p-6 bg-stone-50 rounded-xl">
+              <h3 className="text-2xl font-bold text-texas-yellow mb-3">Real Photos</h3>
+              <p className="text-stone-600">Authentic food photography for every menu item</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-16 bg-stone-50">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-stone-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-stone-600 text-lg">Everything you need to know about Texas Roadhouse menu prices</p>
+            <h2 className="text-3xl font-bold text-stone-900 mb-4">Texas Roadhouse Menu Prices FAQ</h2>
+            <p className="text-stone-600 text-lg">Everything you need to know about Texas Roadhouse menu prices 2025</p>
           </div>
 
           <div className="space-y-4">

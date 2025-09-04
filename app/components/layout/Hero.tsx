@@ -100,19 +100,23 @@ export function Hero({ title, subtitle, primaryCta, secondaryCta, className = ''
 export function PageHero({ 
   title, 
   subtitle, 
-  breadcrumbs 
+  breadcrumbs,
+  backgroundImage,
+  className = ''
 }: { 
   title: string
   subtitle?: string
-  breadcrumbs?: React.ReactNode 
+  breadcrumbs?: React.ReactNode
+  backgroundImage?: string
+  className?: string
 }) {
   return (
-    <section className="relative py-6 sm:py-8 md:py-12 lg:py-16 overflow-hidden">
+    <section className={`relative py-6 sm:py-8 md:py-12 lg:py-16 overflow-hidden ${className}`}>
       {/* Beautiful Wood Texture Background */}
       <div 
         className="absolute inset-0 hero-wood-texture"
         style={{
-          backgroundImage: 'url(/yellowcedar-tile.jpg)'
+          backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'url(/yellowcedar-tile.jpg)'
         }}
       >
         {/* Lighter overlay for better wood visibility */}

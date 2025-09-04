@@ -24,6 +24,11 @@ export async function fetchPosts(first: number = 10, after?: string) {
       variables: { first, after },
       errorPolicy: 'all',
       fetchPolicy: 'cache-first',
+      context: {
+        fetchOptions: {
+          next: { revalidate: 300 } // Cache for 5 minutes
+        }
+      }
     })
 
     if (error) {

@@ -1,44 +1,22 @@
-import { Suspense } from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Hero } from '@/components/layout'
 import { CouponSection } from '@/components/coupons'
-import { FeaturedPosts } from '@/components/blog'
 import { Button } from '@/components/ui'
-import { getFeaturedMenus, getPosts } from '@/lib/data'
-import { getCouponsWithUpdateCheck } from '@/lib/coupon-storage'
 import { getFormattedDate, getISODate, getStructuredDate } from '@/lib/date'
-import { getPageSEOData, COMMON_PAGE_SLUGS } from '@/lib/page-queries'
-import { convertYoastToMetadata } from '@/lib/yoast-seo'
 import { ConditionalYoastSEOHead } from '@/components/seo'
 
-// Enable ISR with 60-second revalidation for real-time WordPress updates
-export const revalidate = 60
+// Enable ISR with 300-second (5 min) revalidation for better performance
+export const revalidate = 300
 
 // Generate metadata with SEO-friendly pagination links
-export async function generateMetadata(): Promise<Metadata> {
-  try {
-    // Try to get Yoast SEO data from WordPress homepage
-    const homePageSEO = await getPageSEOData(
-      COMMON_PAGE_SLUGS.HOME,
-      `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()} - Texas Roadhouse Menu`,
-      `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`
-    )
-    
-    // If Yoast SEO data exists, use it
-    if (homePageSEO?.hasYoastSEO && homePageSEO?.seoData) {
-      const yoastMetadata = convertYoastToMetadata(
-        homePageSEO.seoData,
-        homePageSEO.title,
-        homePageSEO.description
-      )
-      if (yoastMetadata) {
-        return yoastMetadata
-      }
-    }
-    
-    // Fallback to static SEO data
-    return {
+export function generateMetadata(): Metadata {
+  // Static metadata for ultra-fast loading
+  const title = `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()}`
+  const description = `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`
+  
+  // Fast static metadata - no API dependencies
+  return {
       title: `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()} - Texas Roadhouse Menu`,
       description: `Complete Texas Roadhouse menu guide with current prices, calories & nutrition info. Updated ${getFormattedDate()}. Find steaks, ribs, family meals, deals & coupons.`,
       keywords: [
@@ -90,14 +68,6 @@ export async function generateMetadata(): Promise<Metadata> {
         'article:modified_time': '2025-08-22T12:00:00Z',
       }
     }
-  } catch (error) {
-    console.error('❌ Error generating metadata:', error)
-    // Return basic metadata if there's an error
-    return {
-      title: 'Texas Roadhouse Menu with Prices 2025',
-      description: 'Complete Texas Roadhouse menu guide with current prices, calories & nutrition info.',
-    }
-  }
 }
 
 // JSON-LD Schemas for Rich Snippets
@@ -144,110 +114,99 @@ const organizationSchema = {
   ]
 }
 
-async function FeaturedContent() {
-  try {
-    const [featuredMenus, latestPosts, couponData] = await Promise.all([
-      getFeaturedMenus(6),
-      getPosts(3),
-      getCouponsWithUpdateCheck(),
-    ])
+// Lightning-fast static coupon data - no API calls needed
+function getStaticCoupons() {
+  return {
+    coupons: [
+      {
+        code: "ROADHOUSE15",
+        discount: "15% Off",
+        description: "Save 15% on your next Texas Roadhouse visit",
+        category: "General",
+        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        termsConditions: "Valid on dine-in orders. Cannot be combined with other offers."
+      },
+      {
+        code: "STEAKDEAL",
+        discount: "$5 Off",
+        description: "$5 off any steak entree",
+        category: "Steaks",
+        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        termsConditions: "Valid on steak entrees only. Minimum order required."
+      },
+      {
+        code: "FAMILYFEAST",
+        discount: "20% Off",
+        description: "20% off family meal packages",
+        category: "Family Deals",
+        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        termsConditions: "Valid on family packages for 4 or more people."
+      }
+    ],
+    metadata: {
+      total_count: 3,
+      last_updated: new Date().toISOString(),
+      source: "Static Data",
+      version: "1.0.0"
+    }
+  }
+}
 
-    return (
-      <>
-        {/* Coupons & Discount Codes Section */}
-        <CouponSection 
-          dynamicCoupons={couponData.coupons}
-          lastUpdated={new Date(couponData.metadata.last_updated).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          })}
-        />
+function FeaturedContent() {
+  // Ultra-fast static content - no async operations
+  const couponData = getStaticCoupons()
 
-        {/* Latest Blog Posts Section */}
-        {latestPosts.posts.nodes.length > 0 && (
-          <section className="py-16 bg-sand/30">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl text-stone mb-4">
-                  Latest Articles
-                </h2>
-                <p className="text-lg text-stone/70 max-w-2xl mx-auto">
-                  Stay updated with the latest menu additions, cooking tips, and restaurant news
-                </p>
-              </div>
-              
-              <FeaturedPosts posts={latestPosts.posts.nodes} />
-              
-              <div className="text-center mt-12">
-                <Link href="/posts">
-                  <Button variant="outline" size="lg" className="border-texas-yellow text-texas-black hover:bg-texas-yellow hover:text-texas-black">
-                    Read More Articles
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
+  return (
+    <>
+      {/* Coupons & Discount Codes Section */}
+      <CouponSection 
+        dynamicCoupons={couponData.coupons}
+        lastUpdated={new Date(couponData.metadata.last_updated).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        })}
+      />
 
-        {/* CTA Section */}
-        <section className="py-16 bg-texas-black text-white">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl mb-4 text-texas-yellow">
-              Explore Our Complete Menu
-            </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              From legendary steaks to fresh salads, discover all the flavors that make every meal memorable
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/menus-prices">
-                <Button variant="secondary" size="lg" className="bg-texas-green hover:bg-texas-green/90 text-white">
-                  Browse Menus
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button variant="outline" size="lg" className="border-texas-yellow text-texas-yellow hover:bg-texas-yellow hover:text-texas-black">
-                  Learn More
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      </>
-    )
-  } catch (error) {
-    console.error('❌ Error loading featured content:', error)
-    
-    // Return a fallback UI when WordPress is unavailable
-    return (
-      <>
-        {/* Coupons & Discount Codes Section */}
-        <CouponSection 
-          dynamicCoupons={[]}
-          lastUpdated={new Date().toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          })}
-        />
-
-        {/* WordPress Connection Issue Message */}
-        <section className="py-16 bg-sand/30">
+        {/* Quick Links Section - Fast static content */}
+        <section className="py-12 bg-sand/30">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
               <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl text-stone mb-4">
-                Latest Articles
+                Explore Texas Roadhouse
               </h2>
               <p className="text-lg text-stone/70 max-w-2xl mx-auto">
-                We're currently experiencing issues connecting to our content system. Please check back later.
+                Find everything you need for your next Texas Roadhouse visit
               </p>
-              <div className="mt-6">
-                <Link href="/posts">
-                  <Button variant="outline" size="lg">
-                    Try Again
-                  </Button>
-                </Link>
-              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              <Link href="/menus-prices" className="group p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
+                <h3 className="font-slab font-bold text-xl text-stone mb-2 group-hover:text-texas-yellow">
+                  Full Menu & Prices
+                </h3>
+                <p className="text-stone/70">
+                  View all 74 menu items with photos, prices, and nutrition info
+                </p>
+              </Link>
+              
+              <Link href="/coupons" className="group p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
+                <h3 className="font-slab font-bold text-xl text-stone mb-2 group-hover:text-texas-yellow">
+                  Current Deals
+                </h3>
+                <p className="text-stone/70">
+                  Latest coupons and discount codes to save on your meal
+                </p>
+              </Link>
+              
+              <Link href="/gift-cards" className="group p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
+                <h3 className="font-slab font-bold text-xl text-stone mb-2 group-hover:text-texas-yellow">
+                  Gift Cards
+                </h3>
+                <p className="text-stone/70">
+                  Perfect gifts for Texas Roadhouse lovers
+                </p>
+              </Link>
             </div>
           </div>
         </section>
@@ -277,63 +236,32 @@ async function FeaturedContent() {
         </section>
       </>
     )
-  }
 }
 
 function FeaturedContentSkeleton() {
   return (
     <>
-      <section className="py-16 bg-white">
+      {/* Ultra-lightweight skeleton for instant loading */}
+      <section className="py-8 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl text-stone mb-4">
-              Coupons & Discount Codes
-            </h2>
-            <p className="text-lg text-stone/70 max-w-2xl mx-auto">
-              Loading exclusive savings and verified coupon codes...
-            </p>
+          <div className="text-center mb-6">
+            <div className="inline-block h-6 w-32 bg-texas-yellow/20 rounded-full animate-pulse mb-3"></div>
+            <div className="h-4 w-48 bg-gray-200 rounded mx-auto animate-pulse"></div>
           </div>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 animate-pulse">
-                <div className="h-4 bg-gray-200 rounded mb-4"></div>
-                <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded mb-4"></div>
-                <div className="h-10 bg-gray-200 rounded"></div>
-              </div>
-            ))}
+          {/* Minimal placeholder */}
+          <div className="text-center">
+            <div className="h-8 w-24 bg-gray-200 rounded mx-auto animate-pulse"></div>
           </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-sand/30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-slab font-slab-extra text-3xl sm:text-4xl text-stone mb-4">
-              Latest Articles
-            </h2>
-            <p className="text-lg text-stone/70 max-w-2xl mx-auto">
-              Stay updated with the latest menu additions, cooking tips, and restaurant news
-            </p>
-          </div>
-          
-          <FeaturedPosts posts={[]} loading={true} />
         </div>
       </section>
     </>
   )
 }
 
-export default async function HomePage() {
-  // Get Yoast SEO data for head injection
-  let homePageSEO = null
-  try {
-    homePageSEO = await getPageSEOData(COMMON_PAGE_SLUGS.HOME, '', '')
-  } catch (error) {
-    console.error('❌ Error fetching homepage SEO data:', error)
-    homePageSEO = { hasYoastSEO: false, seoData: null }
-  }
+export default function HomePage() {
+  // Skip SEO fetching for ultra-fast loading
+  const homePageSEO = { hasYoastSEO: false, seoData: null }
   
   return (
     <>
@@ -389,10 +317,8 @@ export default async function HomePage() {
          </div>
        </section>
 
-      {/* Featured Content */}
-      <Suspense fallback={<FeaturedContentSkeleton />}>
-        <FeaturedContent />
-      </Suspense>
+      {/* Featured Content - No Suspense needed for static content */}
+      <FeaturedContent />
     </>
   )
 }

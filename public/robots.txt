@@ -1,0 +1,38 @@
+User-agent: *
+Allow: /
+
+# Important pages for crawling
+Allow: /menus-prices
+Allow: /gift-cards
+Allow: /coupons
+Allow: /about
+Allow: /contact
+Allow: /posts
+
+# Static assets
+Allow: /images/
+Allow: /menu/
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.webp
+Allow: /*.svg
+
+# Disallow admin or private areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# XML Sitemap location
+Sitemap: https://texasroadhouse-menus.us/sitemap.xml
+
+# Disallow WordPress admin
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /wp-content/uploads/
+
+# Admin subdomain protection
+User-agent: *
+Disallow: https://admin.texasroadhouse-menus.us/
+
+# Priority crawling for menu page
+Crawl-delay: 1 

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-// Query for fetching multiple posts with pagination
+// Lightweight query for fetching posts (removed heavy SEO data for performance)
 export const GET_POSTS = gql`
   query GetPosts($first: Int!, $after: String) {
     posts(first: $first, after: $after, where: { status: PUBLISH }) {
@@ -23,36 +23,44 @@ export const GET_POSTS = gql`
             slug
           }
         }
-        seo {
-          title
-          metaDesc
-          canonical
-          metaKeywords
-          metaRobotsNoindex
-          metaRobotsNofollow
-          opengraphTitle
-          opengraphDescription
-          opengraphImage {
-            sourceUrl
-            altText
-          }
-          twitterTitle
-          twitterDescription
-          twitterImage {
-            sourceUrl
-            altText
-          }
-          schema {
-            raw
-          }
-          fullHead
-        }
       }
       pageInfo {
         hasNextPage
         hasPreviousPage
         startCursor
         endCursor
+      }
+    }
+  }
+`
+
+// Separate query for detailed SEO data when needed
+export const GET_POST_SEO = gql`
+  query GetPostSEO($slug: String!) {
+    postBy(slug: $slug) {
+      seo {
+        title
+        metaDesc
+        canonical
+        metaKeywords
+        metaRobotsNoindex
+        metaRobotsNofollow
+        opengraphTitle
+        opengraphDescription
+        opengraphImage {
+          sourceUrl
+          altText
+        }
+        twitterTitle
+        twitterDescription
+        twitterImage {
+          sourceUrl
+          altText
+        }
+        schema {
+          raw
+        }
+        fullHead
       }
     }
   }

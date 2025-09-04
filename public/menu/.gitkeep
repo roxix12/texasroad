@@ -1,0 +1,19 @@
+# Menu Images Directory
+
+This directory will contain Texas Roadhouse menu item images.
+
+Current status: Ready for images to be added.
+
+Add high-quality JPG images with these exact filenames for automatic display:
+
+Key Items:
+- cactus-blossom.jpg
+- prime-ribeye.jpg
+- fall-off-ribs.jpg
+- buffalo-wings.jpg
+- roadhouse-burger.jpg
+- grilled-chicken.jpg
+- mashed-potatoes.jpg
+- legendary-margarita.jpg
+
+See images-list.json for complete list of required images.

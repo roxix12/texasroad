@@ -14,7 +14,7 @@
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/ribeye-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Ribeye-12oz-Ribs-1024x559.webp.bv.webp",
         "altText": "Grilled Ribeye Steak"
       }
     }
@@ -28,13 +28,15 @@
       "description": "Slow-cooked St. Louis style ribs, served with our signature barbecue sauce and two sides.",
       "category": "Ribs",
       "calories": 890,
-      "allergens": ["gluten"],
+      "allergens": [
+        "gluten"
+      ],
       "isNew": false,
       "isPopular": true
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/ribs-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Killer-Ribs-1024x559.webp.bv.webp",
         "altText": "BBQ Ribs"
       }
     }
@@ -54,7 +56,7 @@
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/chicken-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Grilled-BBQ-Chicken-1024x559.webp.bv.webp",
         "altText": "Grilled Chicken Breast"
       }
     }
@@ -68,13 +70,16 @@
       "description": "Hand-battered and fried golden, topped with cream gravy. Served with two sides.",
       "category": "Country Dinners",
       "calories": 780,
-      "allergens": ["gluten", "dairy"],
+      "allergens": [
+        "gluten",
+        "dairy"
+      ],
       "isNew": true,
       "isPopular": false
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/country-fried-steak-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Country-Fried-Sirloin-1024x559.webp.bv.webp",
         "altText": "Country Fried Steak"
       }
     }
@@ -88,13 +93,16 @@
       "description": "Farm-raised catfish, hand-battered and fried golden. Served with tartar sauce and two sides.",
       "category": "Seafood",
       "calories": 650,
-      "allergens": ["gluten", "fish"],
+      "allergens": [
+        "gluten",
+        "fish"
+      ],
       "isNew": false,
       "isPopular": false
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/catfish-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Fried-Catfish-1024x559.webp.bv.webp",
         "altText": "Fried Catfish"
       }
     }
@@ -108,13 +116,15 @@
       "description": "Crispy potato skins loaded with cheese, bacon, and green onions. Served with sour cream.",
       "category": "Appetizers",
       "calories": 520,
-      "allergens": ["dairy"],
+      "allergens": [
+        "dairy"
+      ],
       "isNew": false,
       "isPopular": true
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/potato-skins-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Tater-Skins-1024x559.png.bv.webp",
         "altText": "Loaded Potato Skins"
       }
     }
@@ -128,13 +138,15 @@
       "description": "Colossal fried onion served with our signature Cactus Blossom sauce.",
       "category": "Appetizers",
       "calories": 1230,
-      "allergens": ["gluten"],
+      "allergens": [
+        "gluten"
+      ],
       "isNew": false,
       "isPopular": true
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/cactus-blossom-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Cactus-Blossom-1024x559.webp.bv.webp",
         "altText": "Cactus Blossom Onion"
       }
     }
@@ -148,13 +160,15 @@
       "description": "Fresh mixed greens, tomatoes, cucumbers, and croutons with your choice of dressing.",
       "category": "Salads",
       "calories": 180,
-      "allergens": ["gluten"],
+      "allergens": [
+        "gluten"
+      ],
       "isNew": false,
       "isPopular": false
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/house-salad-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Beef-Tips-1024x559.webp.bv.webp",
         "altText": "House Salad"
       }
     }
@@ -168,13 +182,15 @@
       "description": "Fresh Atlantic salmon grilled and seasoned. Served with rice and seasonal vegetables.",
       "category": "Seafood",
       "calories": 580,
-      "allergens": ["fish"],
+      "allergens": [
+        "fish"
+      ],
       "isNew": true,
       "isPopular": false
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/salmon-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Grilled-Salmon-1024x559.webp.bv.webp",
         "altText": "Grilled Salmon"
       }
     }
@@ -188,13 +204,15 @@
       "description": "Two 3oz filet medallions grilled to order. Served with garlic mashed potatoes and seasonal vegetables.",
       "category": "Steaks",
       "calories": 450,
-      "allergens": ["dairy"],
+      "allergens": [
+        "dairy"
+      ],
       "isNew": false,
       "isPopular": true
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/filet-medallions-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Filet-Medallions-1024x559.png.bv.webp",
         "altText": "Filet Medallions"
       }
     }
@@ -208,13 +226,17 @@
       "description": "Six layers of chocolate cake with chocolate icing. Served warm with vanilla ice cream.",
       "category": "Desserts",
       "calories": 890,
-      "allergens": ["gluten", "dairy", "eggs"],
+      "allergens": [
+        "gluten",
+        "dairy",
+        "eggs"
+      ],
       "isNew": false,
       "isPopular": true
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/chocolate-cake-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhosue-Strawberry-Cheesecake-1024x559.webp.bv.webp",
         "altText": "Big Chocolate Cake"
       }
     }
@@ -234,7 +256,7 @@
     },
     "featuredImage": {
       "node": {
-        "sourceUrl": "/images/honey-ham-placeholder.jpg",
+        "sourceUrl": "/menu/Texas-Roadhouse-Pulled-Pork-Dinner-1024x559.webp.bv.webp",
         "altText": "Honey Glazed Ham"
       }
     }

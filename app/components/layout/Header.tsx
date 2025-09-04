@@ -11,6 +11,7 @@ import { NavItem } from '@/lib/types'
 const navigation: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Menu & Prices', href: '/menus-prices' },
+  { label: 'Gift Cards', href: '/gift-cards' },
   { label: 'Coupons', href: '/coupons' },
   { label: 'Blog', href: '/posts' },
   { label: 'About', href: '/about' },
@@ -29,7 +30,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 shadow-md" style={{backgroundColor: '#110302'}}>
+    <header className="md:sticky md:top-0 z-50 shadow-md" style={{backgroundColor: '#110302'}}>
       <nav className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="flex h-14 sm:h-16 justify-between items-center">
           {/* Logo */}

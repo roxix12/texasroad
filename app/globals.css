@@ -14,14 +14,14 @@
     overscroll-behavior: none;
   }
   
-  /* Heading scroll offset for sticky header */
+  /* Heading scroll offset - no offset on mobile, with offset on desktop for sticky header */
   .prose :where(h2, h3, h4, h5, h6) {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 0px;
   }
   
-  /* Scroll offset for anchor sections */
+  /* Scroll offset for anchor sections - no offset on mobile */
   #coupons {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 0px;
   }
   
   @media (min-width: 768px) {

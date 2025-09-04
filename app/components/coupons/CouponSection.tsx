@@ -71,19 +71,13 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
     }
   }, [dynamicCoupons])
 
-  // Countdown timer for next update (8 AM Eastern Time daily)
+  // Simplified countdown timer (update every 30 seconds instead of every second for performance)
   useEffect(() => {
     const calculateTimeUntilUpdate = () => {
       const now = new Date()
-      
-      // Calculate next 8 AM Eastern Time
-      // Eastern Time is UTC-5 (EST) or UTC-4 (EDT)
-      // Using a fixed offset approach: 8 AM Eastern = 1 PM UTC (EST) or 12 PM UTC (EDT)
-      // For simplicity, we'll use 1 PM UTC as the base and adjust
       const nextUpdate = new Date()
       nextUpdate.setUTCHours(13, 0, 0, 0) // 1 PM UTC = 8 AM EST
       
-      // If it's already past 1 PM UTC today, set for tomorrow
       if (nextUpdate <= now) {
         nextUpdate.setUTCDate(nextUpdate.getUTCDate() + 1)
       }
@@ -91,18 +85,16 @@ export default function CouponSection({ dynamicCoupons, lastUpdated }: CouponSec
       const timeDiff = nextUpdate.getTime() - now.getTime()
       const hours = Math.floor(timeDiff / (1000 * 60 * 60))
       const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60))
-      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000)
       
-      return `${hours}h ${minutes}m ${seconds}s`
+      return `${hours}h ${minutes}m`
     }
 
+    // Update every 30 seconds instead of every second for better performance
     const timer = setInterval(() => {
       setTimeUntilUpdate(calculateTimeUntilUpdate())
-    }, 1000)
+    }, 30000)
 
-    // Initial calculation
     setTimeUntilUpdate(calculateTimeUntilUpdate())
-
     return () => clearInterval(timer)
   }, [])
 

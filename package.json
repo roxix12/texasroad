@@ -13,6 +13,8 @@
     "test-wp": "node scripts/test-wp-connection.js",
     "test-indexing": "node scripts/test-google-indexing.js",
     "test-contact": "node scripts/test-contact-email.js",
+    "test-gift-cards": "node scripts/test-gift-cards.js",
+    "setup-menu-images": "node scripts/download-menu-images.js",
     "update-coupons": "node scripts/update-coupons.js",
     "verify-production": "node scripts/verify-production.js",
     "deploy": "npm run verify-production && npm run build"
@@ -43,6 +45,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "critters": "^0.0.23",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.0.0",
     "prettier": "^3.1.0",

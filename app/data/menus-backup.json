@@ -1,0 +1,242 @@
+[
+  {
+    "id": "1",
+    "slug": "ribeye-12oz",
+    "title": "Ribeye 12oz",
+    "menuFields": {
+      "price": 21.99,
+      "description": "Hand-cut ribeye, seasoned & grilled to perfection. Served with your choice of two made-from-scratch sides.",
+      "category": "Steaks",
+      "calories": 680,
+      "allergens": [],
+      "isNew": false,
+      "isPopular": true
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/ribeye-placeholder.jpg",
+        "altText": "Grilled Ribeye Steak"
+      }
+    }
+  },
+  {
+    "id": "2",
+    "slug": "fall-off-the-bone-ribs",
+    "title": "Fall-Off-The-Bone Ribs",
+    "menuFields": {
+      "price": 18.49,
+      "description": "Slow-cooked St. Louis style ribs, served with our signature barbecue sauce and two sides.",
+      "category": "Ribs",
+      "calories": 890,
+      "allergens": ["gluten"],
+      "isNew": false,
+      "isPopular": true
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/ribs-placeholder.jpg",
+        "altText": "BBQ Ribs"
+      }
+    }
+  },
+  {
+    "id": "3",
+    "slug": "grilled-chicken-breast",
+    "title": "Grilled Chicken Breast",
+    "menuFields": {
+      "price": 14.99,
+      "description": "Tender, juicy chicken breast grilled and seasoned to perfection. Served with two sides.",
+      "category": "Chicken",
+      "calories": 420,
+      "allergens": [],
+      "isNew": false,
+      "isPopular": false
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/chicken-placeholder.jpg",
+        "altText": "Grilled Chicken Breast"
+      }
+    }
+  },
+  {
+    "id": "4",
+    "slug": "country-fried-steak",
+    "title": "Country Fried Steak",
+    "menuFields": {
+      "price": 16.99,
+      "description": "Hand-battered and fried golden, topped with cream gravy. Served with two sides.",
+      "category": "Country Dinners",
+      "calories": 780,
+      "allergens": ["gluten", "dairy"],
+      "isNew": true,
+      "isPopular": false
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/country-fried-steak-placeholder.jpg",
+        "altText": "Country Fried Steak"
+      }
+    }
+  },
+  {
+    "id": "5",
+    "slug": "fried-catfish",
+    "title": "Fried Catfish",
+    "menuFields": {
+      "price": 15.49,
+      "description": "Farm-raised catfish, hand-battered and fried golden. Served with tartar sauce and two sides.",
+      "category": "Seafood",
+      "calories": 650,
+      "allergens": ["gluten", "fish"],
+      "isNew": false,
+      "isPopular": false
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/catfish-placeholder.jpg",
+        "altText": "Fried Catfish"
+      }
+    }
+  },
+  {
+    "id": "6",
+    "slug": "loaded-potato-skins",
+    "title": "Loaded Potato Skins",
+    "menuFields": {
+      "price": 8.99,
+      "description": "Crispy potato skins loaded with cheese, bacon, and green onions. Served with sour cream.",
+      "category": "Appetizers",
+      "calories": 520,
+      "allergens": ["dairy"],
+      "isNew": false,
+      "isPopular": true
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/potato-skins-placeholder.jpg",
+        "altText": "Loaded Potato Skins"
+      }
+    }
+  },
+  {
+    "id": "7",
+    "slug": "cactus-blossom",
+    "title": "Cactus Blossom",
+    "menuFields": {
+      "price": 7.99,
+      "description": "Colossal fried onion served with our signature Cactus Blossom sauce.",
+      "category": "Appetizers",
+      "calories": 1230,
+      "allergens": ["gluten"],
+      "isNew": false,
+      "isPopular": true
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/cactus-blossom-placeholder.jpg",
+        "altText": "Cactus Blossom Onion"
+      }
+    }
+  },
+  {
+    "id": "8",
+    "slug": "house-salad",
+    "title": "House Salad",
+    "menuFields": {
+      "price": 6.49,
+      "description": "Fresh mixed greens, tomatoes, cucumbers, and croutons with your choice of dressing.",
+      "category": "Salads",
+      "calories": 180,
+      "allergens": ["gluten"],
+      "isNew": false,
+      "isPopular": false
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/house-salad-placeholder.jpg",
+        "altText": "House Salad"
+      }
+    }
+  },
+  {
+    "id": "9",
+    "slug": "grilled-salmon",
+    "title": "Grilled Salmon",
+    "menuFields": {
+      "price": 19.99,
+      "description": "Fresh Atlantic salmon grilled and seasoned. Served with rice and seasonal vegetables.",
+      "category": "Seafood",
+      "calories": 580,
+      "allergens": ["fish"],
+      "isNew": true,
+      "isPopular": false
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/salmon-placeholder.jpg",
+        "altText": "Grilled Salmon"
+      }
+    }
+  },
+  {
+    "id": "10",
+    "slug": "filet-medallions",
+    "title": "Filet Medallions",
+    "menuFields": {
+      "price": 24.99,
+      "description": "Two 3oz filet medallions grilled to order. Served with garlic mashed potatoes and seasonal vegetables.",
+      "category": "Steaks",
+      "calories": 450,
+      "allergens": ["dairy"],
+      "isNew": false,
+      "isPopular": true
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/filet-medallions-placeholder.jpg",
+        "altText": "Filet Medallions"
+      }
+    }
+  },
+  {
+    "id": "11",
+    "slug": "chocolate-cake",
+    "title": "Big Chocolate Cake",
+    "menuFields": {
+      "price": 6.99,
+      "description": "Six layers of chocolate cake with chocolate icing. Served warm with vanilla ice cream.",
+      "category": "Desserts",
+      "calories": 890,
+      "allergens": ["gluten", "dairy", "eggs"],
+      "isNew": false,
+      "isPopular": true
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/chocolate-cake-placeholder.jpg",
+        "altText": "Big Chocolate Cake"
+      }
+    }
+  },
+  {
+    "id": "12",
+    "slug": "honey-glazed-ham",
+    "title": "Honey Glazed Ham",
+    "menuFields": {
+      "price": 13.99,
+      "description": "Sliced ham with honey glaze. Served with sweet potato and green beans.",
+      "category": "Country Dinners",
+      "calories": 620,
+      "allergens": [],
+      "isNew": false,
+      "isPopular": false
+    },
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "/images/honey-ham-placeholder.jpg",
+        "altText": "Honey Glazed Ham"
+      }
+    }
+  }
+]
