@@ -1,14 +1,26 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
+import Image from 'next/image'
+import { parseHtmlToNextImage, getBlurDataURL, getImageDimensions } from '../../../lib/imageHelpers'
 
-// GraphQL query for single post
+// GraphQL query for single post with featured image
 const GET_POST_BY_SLUG = `
-  query GetPostBySlug($slug: String!) {
-    postBy(slug: $slug) {
+  query PostBySlug($slug: ID!) {
+    post(id: $slug, idType: SLUG) {
       title
       content
       date
+      featuredImage {
+        node {
+          altText
+          sourceUrl
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
       seo {
         fullHead
       }
@@ -20,6 +32,16 @@ interface Post {
   title: string
   content: string
   date: string
+  featuredImage?: {
+    node: {
+      altText: string
+      sourceUrl: string
+      mediaDetails: {
+        width: number
+        height: number
+      }
+    }
+  }
   seo: {
     fullHead: string
   }
@@ -27,7 +49,7 @@ interface Post {
 
 interface GraphQLResponse {
   data: {
-    postBy: Post | null
+    post: Post | null
   }
 }
 
@@ -51,7 +73,7 @@ async function fetchPostBySlug(slug: string): Promise<Post | null> {
     }
 
     const result: GraphQLResponse = await response.json()
-    return result.data?.postBy || null
+    return result.data?.post || null
   } catch (error) {
     console.error('Error fetching post:', error)
     return null
@@ -171,11 +193,40 @@ export default async function BlogPostPage({
               </time>
             </div>
 
-            {/* Post Content */}
-            <div 
-              className="prose-content"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            {/* Featured Image - Optimized for mobile performance */}
+            {post.featuredImage?.node?.sourceUrl && (
+              <div className="mb-8 -mx-6 lg:-mx-0">
+                {(() => {
+                  const { width, height } = getImageDimensions(post.featuredImage.node.mediaDetails)
+                  return (
+                    <Image
+                      src={post.featuredImage.node.sourceUrl}
+                      alt={post.featuredImage.node.altText || post.title}
+                      width={width}
+                      height={height}
+                      priority={true} // Above the fold
+                      sizes="(max-width: 768px) 100vw, 1024px"
+                      placeholder="blur"
+                      blurDataURL={getBlurDataURL(16, 10)}
+                      className="w-full h-auto rounded-lg shadow-lg"
+                      style={{ 
+                        height: 'auto', 
+                        width: '100%',
+                        maxWidth: '100%'
+                      }}
+                    />
+                  )
+                })()}
+              </div>
+            )}
+
+            {/* Post Content - Images optimized with Next.js Image component */}
+            {/* TODO: Test on mobile with network throttling - images should load progressively with blur */}
+            {/* TODO: Check page source - images should be served via _next/image?... */}
+            {/* TODO: Run Lighthouse - LCP/CLS should improve significantly */}
+            <div className="prose-content">
+              {parseHtmlToNextImage(post.content)}
+            </div>
           </article>
         </div>
       </main>
