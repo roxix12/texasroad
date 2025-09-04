@@ -4,7 +4,7 @@ import { menuData } from './data/complete-menu-74'
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://texasroadhouse-menus.us'
   
-  // High-priority core pages for #1 Google ranking
+  // ONLY REAL PAGES - No 404 errors for Google!
   const staticUrls: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
@@ -42,94 +42,150 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.6,
     },
-  ]
-
-  // SEO-CRITICAL: Individual menu item pages for long-tail keywords
-  const menuUrls: MetadataRoute.Sitemap = menuData.map((item) => ({
-    url: `${siteUrl}/menus-prices/${item.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8, // High priority for menu items
-  }))
-
-  // Category pages for semantic SEO
-  const categories = [
-    'appetizers', 'steaks', 'ribs', 'chicken', 'burgers', 'salads', 
-    'sides', 'desserts', 'kids-menu', 'beverages', 'family-packs', 'combos'
-  ]
-  
-  const categoryUrls: MetadataRoute.Sitemap = categories.map((category) => ({
-    url: `${siteUrl}/menus-prices/category/${category}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.75,
-  }))
-
-  // Location-based SEO pages (major US cities)
-  const locations = [
-    'new-york', 'los-angeles', 'chicago', 'houston', 'phoenix', 'philadelphia',
-    'san-antonio', 'san-diego', 'dallas', 'san-jose', 'austin', 'jacksonville',
-    'fort-worth', 'columbus', 'charlotte', 'san-francisco', 'indianapolis',
-    'seattle', 'denver', 'washington-dc', 'boston', 'nashville', 'baltimore',
-    'oklahoma-city', 'louisville', 'portland', 'las-vegas', 'milwaukee',
-    'albuquerque', 'tucson', 'fresno', 'sacramento', 'mesa', 'kansas-city',
-    'atlanta', 'colorado-springs', 'omaha', 'raleigh', 'miami', 'cleveland',
-    'tulsa', 'oakland', 'minneapolis', 'wichita', 'arlington', 'bakersfield'
-  ]
-
-  const locationUrls: MetadataRoute.Sitemap = locations.map((location) => ({
-    url: `${siteUrl}/locations/${location}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
-
-  // Price-focused landing pages for commercial intent
-  const pricePages = [
-    'steak-prices', 'rib-prices', 'appetizer-prices', 'family-meal-prices',
-    'lunch-prices', 'dinner-prices', 'kids-meal-prices', 'dessert-prices'
-  ]
-
-  const priceUrls: MetadataRoute.Sitemap = pricePages.map((page) => ({
-    url: `${siteUrl}/${page}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.85,
-  }))
-
-  // Legal pages (required for E-A-T)
-  const legalUrls: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/privacy-policy`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${siteUrl}/terms-and-conditions`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${siteUrl}/cookies-policy`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'yearly',
       priority: 0.3,
     },
   ]
 
-  const allUrls = [
-    ...staticUrls,
-    ...menuUrls,
-    ...categoryUrls,
-    ...locationUrls,
-    ...priceUrls,
-    ...legalUrls
+  // MENU CATEGORY ANCHORS - Using # for existing menu page sections
+  const menuCategoryUrls: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/menus-prices#appetizers`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/menus-prices#steaks`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/menus-prices#ribs`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/menus-prices#chicken`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/menus-prices#burgers`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/menus-prices#salads`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/menus-prices#sides`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/menus-prices#desserts`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/menus-prices#kids-menu`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/menus-prices#beverages`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.75,
+    },
+    {
+      url: `${siteUrl}/menus-prices#family-packs`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    },
+    {
+      url: `${siteUrl}/menus-prices#combos`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
   ]
 
-  console.log(`🚀 SEO OPTIMIZED SITEMAP: ${allUrls.length} URLs for #1 Google ranking`)
-  console.log(`📊 Breakdown: ${staticUrls.length} core + ${menuUrls.length} menu + ${categoryUrls.length} categories + ${locationUrls.length} locations + ${priceUrls.length} price pages`)
+  // INDIVIDUAL MENU ITEM ANCHORS - Direct links to specific items
+  const popularMenuItems = [
+    'cactus-blossom',
+    'sirloin-6oz', 
+    'baby-back-ribs',
+    'grilled-bbq-chicken',
+    'country-fried-chicken',
+    'legendary-margarita',
+    'fresh-baked-bread',
+    'loaded-sweet-potato',
+    'caesar-salad',
+    'chocolate-cake'
+  ]
+
+  const menuItemUrls: MetadataRoute.Sitemap = popularMenuItems.map((slug) => ({
+    url: `${siteUrl}/menus-prices#${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.75,
+  }))
+
+  // BLOG POST PLACEHOLDERS - Ready for when you publish new blogs
+  // Add your actual blog post slugs here when you create them
+  const blogUrls: MetadataRoute.Sitemap = [
+    // Example: When you create blogs, add them like this:
+    // {
+    //   url: `${siteUrl}/posts/texas-roadhouse-secret-recipes`,
+    //   lastModified: new Date(),
+    //   changeFrequency: 'monthly' as const,
+    //   priority: 0.6,
+    // },
+    // {
+    //   url: `${siteUrl}/posts/best-texas-roadhouse-deals-2025`,
+    //   lastModified: new Date(),
+    //   changeFrequency: 'weekly' as const,
+    //   priority: 0.65,
+    // },
+  ]
+
+  const allUrls = [
+    ...staticUrls,
+    ...menuCategoryUrls,
+    ...menuItemUrls,
+    ...blogUrls
+  ]
+
+  console.log(`🎯 CLEAN SITEMAP: ${allUrls.length} REAL URLs (no 404s!)`)
+  console.log(`📊 Breakdown: ${staticUrls.length} pages + ${menuCategoryUrls.length} categories + ${menuItemUrls.length} popular items + ${blogUrls.length} blogs`)
   
   return allUrls
 }
