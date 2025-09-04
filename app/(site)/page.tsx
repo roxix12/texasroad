@@ -30,11 +30,11 @@ export function generateMetadata(): Metadata {
       openGraph: {
         title: `Texas Roadhouse Menu with Prices 2025 | Complete Guide - Updated ${getFormattedDate()}`,
         description: `Latest Texas Roadhouse menu with prices, calories & nutrition. Updated ${getFormattedDate()}. Find steaks, ribs, family meals & exclusive deals.`,
-        url: 'https://texasroadhousemenu.me',
+        url: 'https://texasroadhouse-menus.us',
         siteName: 'Texas Roadhouse Menu',
         images: [
           {
-            url: 'https://texasroadhousemenu.me/images/texas-roadhouse-menu-2025.jpg',
+            url: 'https://texasroadhouse-menus.us/images/texas-roadhouse-menu-2025.jpg',
             width: 1200,
             height: 630,
             alt: `Texas Roadhouse Menu with Prices 2025 - Complete Guide - Updated ${getFormattedDate()}`
@@ -47,10 +47,10 @@ export function generateMetadata(): Metadata {
         card: 'summary_large_image',
         title: `Texas Roadhouse Menu with Prices 2025 | Updated ${getFormattedDate()}`,
         description: `Complete Texas Roadhouse menu with current prices, calories & nutrition. Updated ${getFormattedDate()}. Find steaks, ribs, family meals & deals.`,
-        images: ['https://texasroadhousemenu.me/images/texas-roadhouse-menu-2025.jpg'],
+        images: ['https://texasroadhouse-menus.us/images/texas-roadhouse-menu-2025.jpg'],
       },
       alternates: {
-        canonical: 'https://texasroadhousemenu.me',
+        canonical: 'https://texasroadhouse-menus.us',
       },
       robots: {
         index: true,
@@ -76,12 +76,12 @@ const websiteSchema = {
   "@type": "WebSite",
   "name": "Texas Roadhouse Menu",
   "alternateName": `Texas Roadhouse Menu with Prices 2025 - Updated ${getFormattedDate()}`,
-  "url": "https://texasroadhousemenu.me",
+  "url": "https://texasroadhouse-menus.us",
   "description": `Complete guide to Texas Roadhouse menu items, prices, calories, and nutrition information updated for ${getFormattedDate()}.`,
   "dateModified": getISODate(),
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://texasroadhousemenu.me/search?q={search_term_string}",
+    "target": "https://texasroadhouse-menus.us/search?q={search_term_string}",
     "query-input": "required name=search_term_string"
   },
   "publisher": {
@@ -89,7 +89,7 @@ const websiteSchema = {
     "name": "Texas Roadhouse Menu",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://texasroadhousemenu.me/logo.png"
+      "url": "https://texasroadhouse-menus.us/logo.png"
     }
   },
   "offers": {
@@ -104,8 +104,8 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Texas Roadhouse Menu",
-  "url": "https://texasroadhousemenu.me",
-  "logo": "https://texasroadhousemenu.me/logo.png",
+  "url": "https://texasroadhouse-menus.us",
+  "logo": "https://texasroadhouse-menus.us/logo.png",
   "description": `Your complete guide to Texas Roadhouse menu items, prices, calories, and nutrition information. Updated ${getFormattedDate()}.`,
   "dateModified": getISODate(),
   "sameAs": [
