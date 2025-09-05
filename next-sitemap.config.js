@@ -7,6 +7,7 @@ module.exports = {
   priority: 0.7,
   exclude: ['/api/*', '/_next/*', '/admin/*'],
   generateIndexSitemap: false,
+
   robotsTxtOptions: {
     policies: [
       {
@@ -19,8 +20,8 @@ module.exports = {
       'https://texasroadhouse-menus.us/sitemap.xml'
     ]
   },
+
   transform: async (config, path) => {
-    // Custom priority for different page types
     if (path === '/') {
       return {
         loc: path,
@@ -48,7 +49,6 @@ module.exports = {
       }
     }
 
-    // Default return
     return {
       loc: path,
       changefreq: config.changefreq,
@@ -56,4 +56,32 @@ module.exports = {
       lastmod: new Date().toISOString(),
     }
   },
-}
+
+  // 👇 Yeh add karna hai: WordPress se blog slugs fetch kar ke sitemap me inject karega
+  additionalPaths: async (config) => {
+    const res = await fetch('https://admin.texasroadhouse-menus.us/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          {
+            posts(first: 1000) {
+              nodes {
+                slug
+              }
+            }
+          }
+        `
+      }),
+    });
+
+    const { data } = await res.json();
+
+    return data.posts.nodes.map((post) => ({
+      loc: `/blog/${post.slug}`,
+      changefreq: 'weekly',
+      priority: 0.8,
+      lastmod: new Date().toISOString(),
+    }));
+  },
+};
