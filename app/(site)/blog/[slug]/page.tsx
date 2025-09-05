@@ -96,80 +96,47 @@ async function fetchPostData(slug: string) {
   }
 }
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: { slug: string } 
-}): Promise<Metadata> {
-  const { post } = await fetchPostData(params.slug)
-  
-  if (!post) {
-    return {
-      title: 'Post Not Found - Texas Roadhouse Menu',
-      description: 'The requested blog post could not be found.'
-    }
-  }
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const { data } = await getClient().query({
+    query: GET_POST_SEO,
+    variables: { id: params.slug, idType: "SLUG" },
+  });
 
-  // Use Yoast SEO data with fallbacks
-  const title = post.seo?.title || post.title
-  const description = post.seo?.metaDesc || `Read about ${post.title} on Texas Roadhouse Menu blog.`
-  const canonical = post.seo?.canonical || `https://texasroadhouse-menus.us/blog/${params.slug}`
-  
-  // OpenGraph data from Yoast SEO
-  const ogTitle = post.seo?.opengraphTitle || title
-  const ogDescription = post.seo?.opengraphDescription || description
-  const ogImage = post.seo?.opengraphImage?.sourceUrl || post.featuredImage?.node?.sourceUrl
-  
-  // Twitter data from Yoast SEO  
-  const twitterTitle = post.seo?.twitterTitle || title
-  const twitterDescription = post.seo?.twitterDescription || description
-  const twitterImage = post.seo?.twitterImage?.sourceUrl || ogImage
+  const post = data?.post;
+  const seo = post?.seo;
 
-  // Check if post should be indexed (respect Yoast noindex setting)
-  const shouldIndex = !post.seo?.metaRobotsNoindex
-  const shouldFollow = !post.seo?.metaRobotsNofollow
+  // Normalize admin domain -> public domain for meta images only
+  const normalizeImageUrl = (url?: string) =>
+    url?.replace(
+      "https://admin.texasroadhouse-menus.us",
+      "https://texasroadhouse-menus.us"
+    );
+
+  const ogImage = seo?.opengraphImage?.sourceUrl
+    ? normalizeImageUrl(seo.opengraphImage.sourceUrl)
+    : undefined;
+
+  const twImage = seo?.twitterImage?.sourceUrl
+    ? normalizeImageUrl(seo.twitterImage.sourceUrl)
+    : ogImage; // fallback to OG image if twitter image missing
 
   return {
-    title,
-    description,
-    keywords: post.seo?.metaKeywords || `Texas Roadhouse, menu, prices, ${post.title}`,
+    title: seo?.title || post?.title,
+    description: seo?.metaDesc,
     openGraph: {
-      title: ogTitle,
-      description: ogDescription,
-      type: 'article',
-      publishedTime: post.date,
-      siteName: 'Texas Roadhouse Menu',
-      url: canonical,
-      images: ogImage ? [
-        {
-          url: ogImage,
-          width: post.seo?.opengraphImage?.mediaDetails?.width || post.featuredImage?.node?.mediaDetails?.width || 1200,
-          height: post.seo?.opengraphImage?.mediaDetails?.height || post.featuredImage?.node?.mediaDetails?.height || 630,
-          alt: post.seo?.opengraphImage?.altText || post.featuredImage?.node?.altText || title
-        }
-      ] : []
+      title: seo?.opengraphTitle || seo?.title || post?.title,
+      description: seo?.opengraphDescription || seo?.metaDesc,
+      images: ogImage ? [{ url: ogImage }] : [],
+      url: `https://texasroadhouse-menus.us/blog/${params.slug}`,
+      type: "article",
     },
     twitter: {
-      card: 'summary_large_image',
-      title: twitterTitle,
-      description: twitterDescription,
-      images: twitterImage ? [twitterImage] : []
+      card: "summary_large_image",
+      title: seo?.twitterTitle || seo?.opengraphTitle || seo?.title || post?.title,
+      description: seo?.twitterDescription || seo?.opengraphDescription || seo?.metaDesc,
+      images: twImage ? [twImage] : [],
     },
-    alternates: {
-      canonical
-    },
-    robots: {
-      index: shouldIndex,
-      follow: shouldFollow,
-      googleBot: {
-        index: shouldIndex,
-        follow: shouldFollow,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1
-      }
-    }
-  }
+  };
 }
 
 // Generate static params for popular blog posts (for static generation)
