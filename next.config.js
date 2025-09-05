@@ -11,17 +11,24 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'texasroadhouse-menus.us', // ✅ frontend domain only
+        hostname: 'texasroadhouse-menus.us',
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'admin.texasroadhouse-menus.us', // keep if needed
+        hostname: 'admin.texasroadhouse-menus.us',
+        port: '',
+        pathname: '/**',
       },
     ],
-    formats: ['image/avif', 'image/webp'], // ✅ modern formats
+    formats: ['image/avif', 'image/webp'], // ✅ Modern formats for better performance
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days cache
+    dangerouslyAllowSVG: false, // Security: disable SVG for remote images
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: false, // Enable Next.js image optimization
   },
 
   reactStrictMode: true,

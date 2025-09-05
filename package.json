@@ -21,7 +21,7 @@
     "deploy": "npm run verify-production && npm run build"
   },
   "dependencies": {
-    "@apollo/client": "^4.0.0",
+    "@apollo/client": "^4.0.4",
     "@google/generative-ai": "^0.24.1",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.0.0",
