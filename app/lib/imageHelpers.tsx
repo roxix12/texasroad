@@ -108,12 +108,6 @@ export function parseHtmlToNextImage(html: string): ReactNode {
                   margin: '0 auto'
                 }}
                 className="rounded-lg shadow-sm"
-                onError={(e) => {
-                  console.error('WordPress image failed to load:', src)
-                }}
-                onLoad={() => {
-                  console.log('WordPress image loaded successfully:', src)
-                }}
               />
             </div>
           )

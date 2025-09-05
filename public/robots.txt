@@ -1,102 +1,12 @@
-# ULTIMATE SEO ROBOTS.TXT for #1 Google Ranking
-# Texas Roadhouse Menu Prices - texasroadhouse-menus.us
-
-# Allow all major search engines full access
+# *
 User-agent: *
 Allow: /
-
-# Prioritize important pages for crawling
-Allow: /menus-prices
-Allow: /menus-prices/*
-Allow: /coupons
-Allow: /gift-cards
-Allow: /contact
-Allow: /posts
-Allow: /locations/*
-Allow: /steak-prices
-Allow: /rib-prices
-Allow: /appetizer-prices
-Allow: /family-meal-prices
-
-# Block admin, API, and development files
-Disallow: /admin/
 Disallow: /api/
 Disallow: /_next/
-Disallow: /private/
-Disallow: *.log
-Disallow: /temp/
-Disallow: /backup/
+Disallow: /admin/
 
-# WordPress admin areas (if any)
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-Disallow: /wp-content/plugins/
-Disallow: /wp-content/themes/
+# Host
+Host: https://texasroadhouse-menus.us
 
-# Major search engines - full access
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
-
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
-
-User-agent: Slurp
-Allow: /
-Crawl-delay: 1
-
-User-agent: DuckDuckBot
-Allow: /
-Crawl-delay: 1
-
-User-agent: Baiduspider
-Allow: /
-Crawl-delay: 2
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-# Aggressive crawlers - slower access
-User-agent: AhrefsBot
-Crawl-delay: 10
-Disallow: /api/
-
-User-agent: MJ12bot
-Crawl-delay: 10
-Disallow: /api/
-
-User-agent: DotBot
-Crawl-delay: 10
-Disallow: /api/
-
-User-agent: SemrushBot
-Crawl-delay: 5
-
-User-agent: MajesticSEO
-Crawl-delay: 5
-
-# Block spam bots
-User-agent: EmailCollector
-Disallow: /
-
-User-agent: EmailSiphon
-Disallow: /
-
-User-agent: WebBandit
-Disallow: /
-
-User-agent: EmailWolf
-Disallow: /
-
-User-agent: ExtractorPro
-Disallow: /
-
-# Sitemap location (critical for indexing)
+# Sitemaps
 Sitemap: https://texasroadhouse-menus.us/sitemap.xml
-
-# Host directive for canonical domain
-Host: texasroadhouse-menus.us

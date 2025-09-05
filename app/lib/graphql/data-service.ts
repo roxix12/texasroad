@@ -12,6 +12,44 @@ import { Post as WPPost, WPCategory, SiteSEOResponse } from '../types'
 // Initialize Apollo Client
 const client = getApolloClient()
 
+// Fetch all posts for sitemap and blog listing
+export async function fetchAllPosts() {
+  try {
+    console.log('🔍 Fetching all posts for blog listing...')
+    
+    const { data, error } = await client.query({
+      query: GET_POSTS,
+      variables: { first: 100 }, // Get up to 100 posts
+      errorPolicy: 'all',
+      fetchPolicy: 'cache-first',
+      context: {
+        fetchOptions: {
+          timeout: 10000,
+          next: { revalidate: 3600 } // Cache for 1 hour
+        }
+      }
+    })
+
+    if (error) {
+      console.error('❌ Apollo Client error:', error)
+      if (error.networkError) {
+        console.error('❌ Network error details:', error.networkError)
+      }
+      return []
+    }
+
+    // Safe data extraction with null checks
+    const posts = (data as any)?.posts?.nodes || []
+    const safePosts = Array.isArray(posts) ? posts : []
+
+    console.log(`✅ Fetched ${safePosts.length} posts successfully`)
+    return safePosts
+  } catch (error) {
+    console.error('❌ Error fetching all posts:', error)
+    return []
+  }
+}
+
 // Fetch multiple posts with pagination
 export async function fetchPosts(first: number = 10, after?: string) {
   try {

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postbuild": "next-sitemap",
     "format": "prettier --write .",
     "fix-ports": "node scripts/fix-port-conflict.js",
     "dev:clean": "npm run fix-ports && npm run dev",

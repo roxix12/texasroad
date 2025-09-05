@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import Image from 'next/image'
 import { parseHtmlToNextImage, getBlurDataURL, getImageDimensions } from '../../../lib/imageHelpers'
-import { fetchPostBySlug } from '../../../lib/graphql/data-service'
+import { fetchPostBySlug, fetchAllPosts } from '../../../lib/graphql/data-service'
 
 interface Post {
   id: string
@@ -80,6 +80,26 @@ export async function generateMetadata({
     alternates: {
       canonical: `https://texasroadhouse-menus.us/blog/${params.slug}`,
     },
+  }
+}
+
+// Generate static params for popular blog posts (for static generation)
+export async function generateStaticParams() {
+  try {
+    console.log('🔍 Generating static params for blog posts...')
+    
+    const posts = await fetchAllPosts()
+    
+    // Generate params for the first 20 most recent posts
+    const staticParams = posts.slice(0, 20).map((post: any) => ({
+      slug: post.slug
+    }))
+    
+    console.log(`✅ Generated static params for ${staticParams.length} blog posts`)
+    return staticParams
+  } catch (error) {
+    console.error('❌ Error generating static params:', error)
+    return []
   }
 }
 
@@ -220,12 +240,6 @@ export default async function BlogPostPage({
                         width: '100%',
                         maxWidth: '100%'
                       }}
-                      onError={(e) => {
-                        console.error('Featured image failed to load:', e)
-                      }}
-                      onLoad={() => {
-                        console.log('Featured image loaded successfully')
-                      }}
                     />
                   )
                 })()}
@@ -250,9 +264,5 @@ export default async function BlogPostPage({
   )
 }
 
-// Generate static params for popular blog posts (optional - for better performance)
-export async function generateStaticParams() {
-  // You can add logic here to pre-generate popular blog post pages
-  // For now, we'll let them generate on-demand
-  return []
-}
+// Enable static generation with revalidation
+export const revalidate = 3600 // Revalidate every hour
