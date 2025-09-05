@@ -6,41 +6,36 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'admin.texasroadhouse-menus.us',
+        hostname: 'texasroadhouse-menus.us', // ✅ frontend domain only
       },
       {
         protocol: 'https',
-        hostname: 'texasroadhouse-menus.us',
-      },
-      {
-        protocol: 'https',
-        hostname: '*',
+        hostname: 'admin.texasroadhouse-menus.us', // keep if needed
       },
     ],
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/avif', 'image/webp'], // ✅ modern formats
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
-    qualities: [75, 85, 90, 95], // Add image qualities for Next.js 16 compatibility
   },
-  typedRoutes: true,
+
+  reactStrictMode: true,
+  poweredByHeader: false,
+  compress: true,
+
   experimental: {
     optimizePackageImports: ['lucide-react'],
     scrollRestoration: true,
   },
-  // Performance optimizations
-  poweredByHeader: false,
-  reactStrictMode: true,
-  compress: true,
-  
+
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      // Production client-side optimizations
       config.optimization.splitChunks = {
         chunks: 'all',
         cacheGroups: {
@@ -64,21 +59,12 @@ const nextConfig = {
     }
     return config
   },
-  
-  // Headers for better caching
+
+  // Headers for caching and security
   async headers() {
     return [
       {
-        source: '/images/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/menu/:path*',
+        source: '/:all*(svg|jpg|jpeg|png|gif|webp|avif)',
         headers: [
           {
             key: 'Cache-Control',
@@ -89,32 +75,18 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
         ],
       },
     ]
   },
 
-  // Clean redirects - only essential ones remain
   async redirects() {
     return [
-      // Add specific redirects here only when needed
-      // No legacy redirects - clean slate
+      // add custom redirects if needed
     ]
   },
 }
