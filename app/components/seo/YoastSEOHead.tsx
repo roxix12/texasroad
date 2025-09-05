@@ -9,6 +9,7 @@ interface YoastSEOHeadProps {
   fallbackTitle?: string
   fallbackDescription?: string
   fallbackFavicon?: string
+  excludeFAQSchema?: boolean // New prop to exclude FAQ schema when custom FAQ exists
 }
 
 /**
@@ -21,19 +22,38 @@ export function YoastSEOHead({
   fallbackSchema,
   fallbackTitle,
   fallbackDescription,
-  fallbackFavicon 
+  fallbackFavicon,
+  excludeFAQSchema = false
 }: YoastSEOHeadProps) {
   try {
     // Process all Yoast SEO data
     const processed = processYoastSEOHead(seoData, siteSEO, fallbackTitle, fallbackDescription)
     
-    // Determine final values with fallbacks
-    const finalSchema = processed.schemaData || fallbackSchema
+    // Filter out FAQPage schema if excludeFAQSchema is true to prevent duplicates
+    let finalSchema = processed.schemaData || fallbackSchema
+    
+    if (finalSchema && excludeFAQSchema) {
+      try {
+        const schemaArray = JSON.parse(finalSchema)
+        if (Array.isArray(schemaArray)) {
+          // Filter out any FAQPage schemas
+          const filteredSchema = schemaArray.filter(item => item['@type'] !== 'FAQPage')
+          finalSchema = filteredSchema.length > 0 ? JSON.stringify(filteredSchema) : null
+        } else if (schemaArray && schemaArray['@type'] === 'FAQPage') {
+          // Single FAQPage schema, remove it entirely
+          finalSchema = null
+        }
+      } catch (e) {
+        // If parsing fails, keep original schema but log warning
+        console.warn('Failed to parse Yoast schema for FAQ filtering:', e)
+      }
+    }
+    
     const finalFavicon = processed.favicon || fallbackFavicon
 
     return (
       <>
-        {/* Yoast SEO Schema Injection */}
+        {/* Yoast SEO Schema Injection (FAQPage filtered for /menus-prices) */}
         {finalSchema && (
           <Script
             id="yoast-seo-schema"
@@ -100,6 +120,7 @@ interface ConditionalYoastSEOHeadProps {
   fallbackTitle?: string
   fallbackDescription?: string
   fallbackFavicon?: string
+  excludeFAQSchema?: boolean
 }
 
 /**

@@ -163,7 +163,7 @@ export default function MenusPricesPage() {
         }}
       />
       
-      {/* FAQ Schema */}
+      {/* Custom FAQ Schema - ONLY source of FAQPage for this page */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

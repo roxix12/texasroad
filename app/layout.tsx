@@ -71,6 +71,10 @@ export default async function RootLayout({
   
   // Fetch site-wide Yoast SEO settings
   const siteSEOResponse = await getSiteSEOSettings()
+  
+  // Check if we should exclude FAQ schema (for pages with custom FAQ schema)
+  // Note: This is a server-side component, so we can't access pathname directly
+  // We'll handle FAQ exclusion at the page level instead
 
   return (
     <html lang="en" className={`${inter.variable} ${robotoSlab.variable}`}>
@@ -142,11 +146,12 @@ export default async function RootLayout({
           <link key={url} rel="dns-prefetch" href={url} />
         ))}
         
-        {/* Site-wide Yoast SEO Integration */}
+        {/* Site-wide Yoast SEO Integration (FAQ schemas excluded - managed per page) */}
         <YoastSEOHead
           siteSEO={siteSEOResponse?.seo}
           fallbackTitle={siteSEOResponse?.generalSettings?.title || 'Texas Roadhouse Menu'}
           fallbackDescription={siteSEOResponse?.generalSettings?.description || 'Texas Roadhouse Menu with Prices'}
+          excludeFAQSchema={true}
           fallbackFavicon="/favicon.ico"
           fallbackSchema={JSON.stringify(organizationSchema)}
         />
