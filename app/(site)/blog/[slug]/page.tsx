@@ -22,11 +22,52 @@ interface Post {
       }
     }
   }
+  author?: {
+    node?: {
+      name?: string
+    }
+  }
+  categories?: {
+    nodes?: Array<{
+      name: string
+      slug: string
+    }>
+  }
   seo: {
-    title: string
-    metaDesc: string
-    canonical: string
-    fullHead: string
+    title?: string
+    metaDesc?: string
+    canonical?: string
+    fullHead?: string
+    metaKeywords?: string
+    metaRobotsNoindex?: boolean
+    metaRobotsNofollow?: boolean
+    opengraphTitle?: string
+    opengraphDescription?: string
+    opengraphImage?: {
+      sourceUrl?: string
+      altText?: string
+      mediaDetails?: {
+        width?: number
+        height?: number
+      }
+    }
+    twitterTitle?: string
+    twitterDescription?: string
+    twitterImage?: {
+      sourceUrl?: string
+      altText?: string
+      mediaDetails?: {
+        width?: number
+        height?: number
+      }
+    }
+    schema?: {
+      raw?: string
+    }
+    breadcrumbs?: Array<{
+      text: string
+      url: string
+    }>
   }
 }
 
@@ -44,42 +85,65 @@ export async function generateMetadata({
     }
   }
 
-  // Extract basic meta from Yoast SEO fullHead if available
-  let title = post.title
-  let description = `Read about ${post.title} on Texas Roadhouse Menu blog.`
+  // Use Yoast SEO data with fallbacks
+  const title = post.seo?.title || post.title
+  const description = post.seo?.metaDesc || `Read about ${post.title} on Texas Roadhouse Menu blog.`
+  const canonical = post.seo?.canonical || `https://texasroadhouse-menus.us/blog/${params.slug}`
+  
+  // OpenGraph data from Yoast SEO
+  const ogTitle = post.seo?.opengraphTitle || title
+  const ogDescription = post.seo?.opengraphDescription || description
+  const ogImage = post.seo?.opengraphImage?.sourceUrl || post.featuredImage?.node?.sourceUrl
+  
+  // Twitter data from Yoast SEO  
+  const twitterTitle = post.seo?.twitterTitle || title
+  const twitterDescription = post.seo?.twitterDescription || description
+  const twitterImage = post.seo?.twitterImage?.sourceUrl || ogImage
 
-  // Try to extract title and description from Yoast SEO fullHead
-  if (post.seo?.fullHead) {
-    const titleMatch = post.seo.fullHead.match(/<title[^>]*>(.*?)<\/title>/i)
-    const descMatch = post.seo.fullHead.match(/<meta[^>]*name="description"[^>]*content="([^"]*)"[^>]*>/i)
-    
-    if (titleMatch?.[1]) {
-      title = titleMatch[1]
-    }
-    if (descMatch?.[1]) {
-      description = descMatch[1]
-    }
-  }
+  // Check if post should be indexed (respect Yoast noindex setting)
+  const shouldIndex = !post.seo?.metaRobotsNoindex
+  const shouldFollow = !post.seo?.metaRobotsNofollow
 
   return {
     title,
     description,
+    keywords: post.seo?.metaKeywords || `Texas Roadhouse, menu, prices, ${post.title}`,
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: ogDescription,
       type: 'article',
       publishedTime: post.date,
       siteName: 'Texas Roadhouse Menu',
-      url: `https://texasroadhouse-menus.us/blog/${params.slug}`,
+      url: canonical,
+      images: ogImage ? [
+        {
+          url: ogImage,
+          width: post.seo?.opengraphImage?.mediaDetails?.width || post.featuredImage?.node?.mediaDetails?.width || 1200,
+          height: post.seo?.opengraphImage?.mediaDetails?.height || post.featuredImage?.node?.mediaDetails?.height || 630,
+          alt: post.seo?.opengraphImage?.altText || post.featuredImage?.node?.altText || title
+        }
+      ] : []
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: twitterTitle,
+      description: twitterDescription,
+      images: twitterImage ? [twitterImage] : []
     },
     alternates: {
-      canonical: `https://texasroadhouse-menus.us/blog/${params.slug}`,
+      canonical
     },
+    robots: {
+      index: shouldIndex,
+      follow: shouldFollow,
+      googleBot: {
+        index: shouldIndex,
+        follow: shouldFollow,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1
+      }
+    }
   }
 }
 
@@ -182,6 +246,53 @@ export default async function BlogPostPage({
                 document.head.appendChild(tag.cloneNode(true));
               });
             `
+          }}
+        />
+      )}
+
+      {/* Yoast SEO Structured Data (JSON-LD) */}
+      {post.seo?.schema?.raw && (
+        <Script
+          id={`yoast-schema-${params.slug}`}
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: post.seo.schema.raw
+          }}
+        />
+      )}
+
+      {/* Fallback Structured Data if Yoast schema is not available */}
+      {!post.seo?.schema?.raw && (
+        <Script
+          id={`fallback-schema-${params.slug}`}
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": post.title,
+              "description": post.seo?.metaDesc || post.excerpt || `Read about ${post.title}`,
+              "author": {
+                "@type": "Person",
+                "name": post.author?.node?.name || "Texas Roadhouse Menu Team"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Texas Roadhouse Menu",
+                "url": "https://texasroadhouse-menus.us"
+              },
+              "datePublished": post.date,
+              "dateModified": post.date,
+              "url": `https://texasroadhouse-menus.us/blog/${params.slug}`,
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": `https://texasroadhouse-menus.us/blog/${params.slug}`
+              },
+              "image": post.featuredImage?.node?.sourceUrl || "https://texasroadhouse-menus.us/texas-roadhouse-og.jpg",
+              "articleSection": post.categories?.nodes?.[0]?.name || "Restaurant News"
+            })
           }}
         />
       )}
