@@ -90,6 +90,28 @@ async function fetchWordPressContent(): Promise<SitemapResponse | null> {
   }
 }
 
+// Helper function to safely format dates for sitemap
+function formatSitemapDate(dateString: string | null | undefined): string {
+  if (!dateString) {
+    return new Date().toISOString()
+  }
+  
+  try {
+    const date = new Date(dateString)
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      console.warn(`⚠️ Invalid date format: ${dateString}, using current date`)
+      return new Date().toISOString()
+    }
+    
+    return date.toISOString()
+  } catch (error) {
+    console.warn(`⚠️ Date parsing error for: ${dateString}, using current date`)
+    return new Date().toISOString()
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const baseUrl = 'https://texasroadhouse-menus.us'
@@ -155,7 +177,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           ?.filter(post => post.status === 'publish')
           ?.map(post => ({
             url: `${baseUrl}/blog/${post.slug}`,
-            lastModified: post.modifiedGmt || currentDate,
+            lastModified: formatSitemapDate(post.modifiedGmt),
             changeFrequency: 'weekly' as const,
             priority: 0.8,
           })) || []
@@ -165,7 +187,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           ?.filter(page => page.status === 'publish')
           ?.map(page => ({
             url: `${baseUrl}/${page.slug}`,
-            lastModified: page.modifiedGmt || currentDate,
+            lastModified: formatSitemapDate(page.modifiedGmt),
             changeFrequency: 'monthly' as const,
             priority: 0.6,
           })) || []
