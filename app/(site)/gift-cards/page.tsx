@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { PageHero } from '@/components/layout'
+import { GiftCardsSEOSection } from '@/components/seo/gift-cards-seo-section'
 import GiftCardContent from './content'
 
 export const metadata: Metadata = {
@@ -43,6 +44,9 @@ export default function GiftCardsPage() {
         backgroundImage="/images/gift-cards/hero-gift-cards.jpg"
         className="bg-gradient-to-r from-red-900 via-red-800 to-amber-600"
       />
+      
+      {/* SEO-Optimized Gift Cards Content Section */}
+      <GiftCardsSEOSection />
       
       <GiftCardContent />
     </div>

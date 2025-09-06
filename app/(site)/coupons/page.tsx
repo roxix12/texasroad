@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { generatePageSEO } from '@/lib/seo-config'
 import { PageHero } from '@/components/layout'
+import { CouponsSEOSection } from '@/components/seo/coupons-seo-section'
 import { Star, Clock, CheckCircle, Tag, Users, Award } from 'lucide-react'
 // Static coupon data to avoid import issues
 const couponsData = {
@@ -75,6 +76,9 @@ export default function CouponsPage() {
         title="Texas Roadhouse Coupons & Deals 2025"
         subtitle="Save big on legendary steaks, fall-off-the-bone ribs, and family favorites with our verified coupons and exclusive deals."
       />
+
+      {/* SEO-Optimized Coupons Content Section */}
+      <CouponsSEOSection />
 
       {/* Feature badges */}
       <section className="py-8 bg-white border-b border-stone-200">

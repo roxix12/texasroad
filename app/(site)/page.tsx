@@ -5,6 +5,7 @@ import { CouponSection } from '@/components/coupons'
 import { Button } from '@/components/ui'
 import { getFormattedDate, getISODate, getStructuredDate } from '@/lib/date'
 import { ConditionalYoastSEOHead } from '@/components/seo'
+import { HomepageMenuSection } from '@/components/seo/homepage-menu-section'
 import { generateUltimateSchema } from '../lib/seo/ultimate-schema'
 
 // Enable ISR with 300-second (5 min) revalidation for better performance
@@ -304,6 +305,9 @@ export default function HomePage() {
            </div>
          </div>
        </section>
+
+      {/* SEO-Optimized Menu Section */}
+      <HomepageMenuSection />
 
       {/* Featured Content - No Suspense needed for static content */}
         <FeaturedContent />
